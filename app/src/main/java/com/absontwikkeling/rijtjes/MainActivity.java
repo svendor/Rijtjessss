@@ -12,7 +12,12 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
+// Sven:
 // I want to die
 // Again
 
+// Arun:
+// TEST plz goed nu
+
+// Bassie.c:
 // This is a 1,2,3,test
