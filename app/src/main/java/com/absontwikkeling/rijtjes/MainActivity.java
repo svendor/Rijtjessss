@@ -14,8 +14,10 @@ public class MainActivity extends AppCompatActivity {
         questionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent intQuestion = new Intent(MainActivity.this, createList.class);
-                startActivity(intQuestion);
+                Intent iCreateList = new Intent(MainActivity.this, createList.class);
+                //wordList list = new wordList();
+                //iCreateList.putExtra("list", list);
+                startActivity(iCreateList);
             }
         });
     }

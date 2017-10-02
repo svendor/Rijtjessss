@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class question extends AppCompatActivity {
 
@@ -56,6 +59,15 @@ public class question extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
+        Intent i = getIntent();
+        wordList list = (wordList)i.getExtras().getParcelable("list");
+
+        TextView AnswerOutput = (TextView) findViewById(R.id.answerOutput);
+        AnswerOutput.setText(list.wordAns.toString());
+
+        TextView questionOutput = (TextView) findViewById(R.id.questionOutput);
+        questionOutput.setText(list.wordQue.toString());
 
         setupCheckAnswerButton();
     }
