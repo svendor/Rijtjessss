@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.absontwikkeling.rijtjes.MainActivity">
+    tools:context="com.absontwikkeling.rijtjes.createList">
 
     <Button
-        android:id="@+id/createListButton"
+        android:id="@+id/questionLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Questions" />
+        android:text="Button"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
 </android.support.constraint.ConstraintLayout>
