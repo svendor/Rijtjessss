@@ -60,15 +60,6 @@ public class question extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
-        Intent i = getIntent();
-        wordList list = (wordList)i.getExtras().getParcelable("list");
-
-        TextView AnswerOutput = (TextView) findViewById(R.id.answerOutput);
-        AnswerOutput.setText(list.wordAns.toString());
-
-        TextView questionOutput = (TextView) findViewById(R.id.questionOutput);
-        questionOutput.setText(list.wordQue.toString());
-
         setupCheckAnswerButton();
     }
 }
