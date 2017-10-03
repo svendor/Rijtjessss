@@ -34,23 +34,21 @@
         android:layout_height="wrap_content"
         android:text="Lijst is klaar"
         android:onClick="finishList"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
         android:id="@+id/nextQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
         android:onClick="nextQuestion"
         android:text="Volgende vraag"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/finishList" />
 
     <EditText
         android:id="@+id/dataBaseName"
@@ -118,5 +116,16 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/questionWord"
         tools:layout_editor_absoluteY="87dp" />
+
+    <Button
+        android:id="@+id/deleteTableButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:onClick="onClick_deleteCurrentList"
+        android:text="Verwijder deze lijst"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.absontwikkeling.rijtjes;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,24 +12,44 @@ import android.widget.TextView;
 
 public class createList extends AppCompatActivity {
 
-    DBHandler dbHandler;
     TextView debugTV;
-    EditText dataBaseName;
     EditText questionWord;
     EditText answerWord;
+    DBAdapter dbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_list);
-        dbHandler = new DBHandler(this);
+
+        openDB();
         debugTV = (TextView) findViewById(R.id.textView4);
         questionWord = (EditText) findViewById(R.id.questionWord);
         answerWord = (EditText) findViewById(R.id.answerWord);
-        //printDatabase();
+    }
 
-        //finishListButtonListener();
-        //nextQuestionButtonListener();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closeDB();
+    }
+
+    private void openDB() {
+        dbAdapter = new DBAdapter(this);
+        dbAdapter.open();
+    }
+
+    private void closeDB() {
+        dbAdapter.close();
+    }
+
+    private void addQuestion(questionObj object) {
+        final String QUESTION = object.get_question();
+        final String ANSWER = object.get_answer();
+        long questionID = dbAdapter.insertRow(QUESTION, ANSWER);
+
+        Cursor c = dbAdapter.getRow(questionID);
+        debugTV.setText(displayQuery(dbAdapter.getAllRows()));
     }
 
     public void finishList(View v) {
@@ -38,19 +59,32 @@ public class createList extends AppCompatActivity {
 
     public void nextQuestion(View v) {
         questionObj queOb = new questionObj(questionWord.getText().toString(), answerWord.getText().toString());
-
-        final String QUESTION = queOb.get_question();
-        final String ANSWER = queOb.get_answer();
-        debugTV.setText(QUESTION + "\n" + ANSWER);
-
-        dbHandler.newQuestion(queOb);
-        // printDatabase();
+        addQuestion(queOb);
     }
 
-    public void printDatabase() {
-        String dbString = dbHandler.databaseToString();
-        debugTV.setText(dbString);
+    public void onClick_deleteCurrentList(View v) {
+        dbAdapter.deleteAll();
+    }
 
+    private String displayQuery(Cursor cursor) {
+        String message = "";
+        if (cursor.moveToFirst()) {
+            do {
+                // Process the data:
+                int id = cursor.getInt(DBAdapter.COL_ROWID);
+                String question = cursor.getString(DBAdapter.COL_QUESTION);
+                String answer = cursor.getString(DBAdapter.COL_ANSWER);
+
+                // Append data to the message:
+                message += "Vraag #" + id
+                        +", Vraag = " + question
+                        +", Antwoord = " + answer
+                        +"\n";
+            } while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        return message;
     }
 
 }
