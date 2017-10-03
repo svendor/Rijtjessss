@@ -9,8 +9,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class question extends AppCompatActivity {
 
     // Creates method for checking the answer. Currently both the answer and input are supplied by user.
