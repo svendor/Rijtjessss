@@ -20,7 +20,7 @@ public class question extends AppCompatActivity {
         }
 
         if (!whitespace) {
-            inputString = inputString.replaceAll("\\s","");
+            inputString = inputString.replaceAll("\\s","_");
             answer = answer.replaceAll("\\s","");
         }
 

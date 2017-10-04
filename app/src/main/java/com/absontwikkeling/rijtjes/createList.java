@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,6 +14,7 @@ public class createList extends AppCompatActivity {
     TextView debugTV;
     EditText questionWord;
     EditText answerWord;
+    EditText tableName;
     DBAdapter dbAdapter;
 
     @Override
@@ -24,6 +24,7 @@ public class createList extends AppCompatActivity {
 
         openDB();
         debugTV = (TextView) findViewById(R.id.textView4);
+        tableName = (EditText) findViewById(R.id.dataBaseName);
         questionWord = (EditText) findViewById(R.id.questionWord);
         answerWord = (EditText) findViewById(R.id.answerWord);
     }
@@ -46,10 +47,12 @@ public class createList extends AppCompatActivity {
     private void addQuestion(questionObj object) {
         final String QUESTION = object.get_question();
         final String ANSWER = object.get_answer();
-        long questionID = dbAdapter.insertRow(QUESTION, ANSWER);
+        final String TABLE_NAME = object.get_table_name();
+        dbAdapter.createTable(TABLE_NAME);
+        long questionID = dbAdapter.insertRow(QUESTION, ANSWER, TABLE_NAME);
 
         Cursor c = dbAdapter.getRow(questionID);
-        debugTV.setText(displayQuery(dbAdapter.getAllRows()));
+        debugTV.setText(displayQuery(dbAdapter.getAllRows(TABLE_NAME)));
     }
 
     public void finishList(View v) {
@@ -58,12 +61,14 @@ public class createList extends AppCompatActivity {
     }
 
     public void nextQuestion(View v) {
-        questionObj queOb = new questionObj(questionWord.getText().toString(), answerWord.getText().toString());
+        questionObj queOb = new questionObj(questionWord.getText().toString(), answerWord.getText().toString(), tableName.getText().toString());
+        questionWord.setText("");
+        answerWord.setText("");
         addQuestion(queOb);
     }
 
     public void onClick_deleteCurrentList(View v) {
-        dbAdapter.deleteAll();
+        dbAdapter.deleteAll(tableName.getText().toString().replaceAll("\\s","_"));
     }
 
     private String displayQuery(Cursor cursor) {
