@@ -56,7 +56,11 @@ public class createList extends AppCompatActivity {
     }
 
     public void finishList(View v) {
-        Intent i = new Intent(this, question.class);
+        Intent i = new Intent(this, displayList.class);
+
+        dbAdapter.createTableMain();
+        dbAdapter.insertRowMain(tableName.getText().toString());
+
         startActivity(i);
     }
 

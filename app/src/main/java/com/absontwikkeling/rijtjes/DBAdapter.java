@@ -20,7 +20,14 @@ public class DBAdapter {
     public static final int COL_QUESTION = 1;
     public static final int COL_ANSWER = 2;
 
+    public static final String KEY_ROWID_MAIN = "_id";
+    public static final int COL_ROWID_MAIN = 0;
+    public static final String KEY_TABLE_NAME_MAIN = "table_name";
+    public static final int COL_TABLE_NAME_MAIN = 1;
+    public static final String MAIN_TABLE_NAME = "list_table";
+
     public static final String[] ALL_KEYS = new String[] {KEY_ROWID, KEY_QUESTION, KEY_ANSWER};
+    public static final String[] ALL_KEYS_MAIN = new String[] {KEY_ROWID_MAIN, KEY_TABLE_NAME_MAIN};
     public static final String DATABASE_NAME = "wordLists";
     public static final String DATABASE_TABLE = "mainTable";
     public static final int DATABASE_VERSION = 2;
@@ -39,12 +46,18 @@ public class DBAdapter {
 
     //	Public methods:
 
+    public void createTableMain() {
+        db.execSQL("create table if not exists " + MAIN_TABLE_NAME + " ("
+                + KEY_ROWID_MAIN + " integer primary key autoincrement, "
+                + KEY_TABLE_NAME_MAIN + " string not null);");
+    }
+
     public void createTable(String tableName) {
         tableName = tableName.replaceAll("\\s","_");
         db.execSQL("create table if not exists " + tableName + " ("
-        + KEY_ROWID + " integer primary key autoincrement, "
-        + KEY_QUESTION + " string not null, "
-        + KEY_ANSWER + " string not null);");
+                + KEY_ROWID + " integer primary key autoincrement, "
+                + KEY_QUESTION + " string not null, "
+                + KEY_ANSWER + " string not null);");
     }
 
     public DBAdapter(Context ctx) {
@@ -61,6 +74,14 @@ public class DBAdapter {
     // Close the database connection.
     public void close() {
         myDBHelper.close();
+    }
+
+    public long insertRowMain(String tableName) {
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_TABLE_NAME_MAIN, tableName);
+
+        return db.insert(MAIN_TABLE_NAME, null, values);
     }
 
     // Add a new set of values to the database.
@@ -90,6 +111,16 @@ public class DBAdapter {
             } while (c.moveToNext());
         }
         c.close();
+    }
+
+    public Cursor getAllRowsMain() {
+        String where = null;
+        Cursor c = db.query(true, MAIN_TABLE_NAME, ALL_KEYS_MAIN,
+                where, null, null, null, null, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+        return c;
     }
 
     // Return all data in the database.
