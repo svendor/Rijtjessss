@@ -113,6 +113,13 @@ public class DBAdapter {
         c.close();
     }
 
+    public boolean existsMain(String table_name) {
+        Cursor c = db.rawQuery("SELECT * FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + " = '" + table_name + "'", null);
+        boolean exist = (c.getCount() > 0);
+        c.close();
+        return exist;
+    }
+
     public Cursor getAllRowsMain() {
         String where = null;
         Cursor c = db.query(true, MAIN_TABLE_NAME, ALL_KEYS_MAIN,
@@ -127,6 +134,16 @@ public class DBAdapter {
     public Cursor getAllRows(String tableName) {
         String where = null;
         Cursor c = 	db.query(true, tableName, ALL_KEYS,
+                where, null, null, null, null, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+        return c;
+    }
+
+    public Cursor getRowMain(String tableName) {
+        String where = KEY_TABLE_NAME_MAIN + "=" + tableName;
+        Cursor c = db.query(true, tableName, ALL_KEYS_MAIN,
                 where, null, null, null, null, null);
         if (c != null) {
             c.moveToFirst();

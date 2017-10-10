@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".createList" />
+        <activity android:name=".displayList"/>
         <activity android:name=".question" />
         <activity
             android:name=".HETFUCKINGMENU"
