@@ -29,7 +29,7 @@
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:text="Deze tekst heeft de kleur jemoeder."
+            android:text="Deze tekst is zwart."
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="70dp" />
 
