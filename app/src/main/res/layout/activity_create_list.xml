@@ -28,7 +28,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <Button style="@style/Widget.AppCompat.Button.Borderless"
+    <Button
         android:id="@+id/finishList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-    <Button style="@style/Widget.AppCompat.Button.Borderless"
+    <Button
         android:id="@+id/nextQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
         app:layout_constraintBottom_toTopOf="@+id/questionWord"
         tools:layout_editor_absoluteY="87dp" />
 
-    <Button style="@style/Widget.AppCompat.Button.Borderless"
+    <Button
         android:id="@+id/deleteTableButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
