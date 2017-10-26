@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#E0E0E0</color>
     <color name="colorAccent">#00d5ff</color>
     <color name="jemoeder">#00FF00</color>
+    <color name="colortext">#000000</color>
 </resources>

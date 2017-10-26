@@ -6,8 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">#FF00FF</item>
-        <item name="android:titleTextStyle">@color/jemoeder</item>
+        <item name="android:textColor">@color/colortext</item>
+        <item name="android:titleTextStyle">@color/colortext</item>
+        <item name="buttonStyle">@style/AppTheme.button</item>
     </style>
 
     <style name="bekijken" parent="Theme.AppCompat.Light.DarkActionBar">
