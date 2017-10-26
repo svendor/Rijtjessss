@@ -102,15 +102,20 @@ public class DBAdapter {
         return db.delete(tableName, row_ID, null) != 0;
     }
 
+    public void deleteRowMain(String tableName) {
+        db.execSQL("DELETE FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + "='" + tableName + "';");
+    }
+
     public void deleteAll(String tableName) {
-        Cursor c = getAllRows(tableName);
-        long rowId = c.getColumnIndexOrThrow(KEY_ROWID);
-        if (c.moveToFirst()) {
-            do {
-                deleteRow(c.getLong((int) rowId), tableName);
-            } while (c.moveToNext());
-        }
-        c.close();
+        //Cursor c = getAllRows(tableName);
+        //long rowId = c.getColumnIndexOrThrow(KEY_ROWID);
+        //if (c.moveToFirst()) {
+        //    do {
+        //        deleteRow(c.getLong((int) rowId), tableName);
+        //    } while (c.moveToNext());
+        //}
+        //c.close();
+        db.delete(tableName, null, null);
     }
 
     public boolean existsMain(String table_name) {

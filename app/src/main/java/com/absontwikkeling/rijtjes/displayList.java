@@ -48,7 +48,7 @@ public class displayList extends AppCompatActivity {
     private void createButtonListInLayout(Cursor c) {
         if (c.moveToFirst()) {
             do {
-                Button button  = new Button(this);
+                Button button = new Button(this);
                 button.setText(c.getString(DBAdapter.COL_TABLE_NAME_MAIN));
                 linearLayoutList.addView(button);
             } while(c.moveToNext());

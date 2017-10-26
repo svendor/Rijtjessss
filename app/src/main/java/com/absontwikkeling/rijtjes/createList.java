@@ -76,6 +76,9 @@ public class createList extends AppCompatActivity {
 
     public void onClick_deleteCurrentList(View v) {
         dbAdapter.deleteAll(tableName.getText().toString().replaceAll("\\s","_"));
+        dbAdapter.deleteRowMain(tableName.getText().toString());
+        Intent i = new Intent(this, displayList.class);
+        startActivity(i);
     }
 
     private String displayQuery(Cursor cursor) {
