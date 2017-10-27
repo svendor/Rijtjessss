@@ -64,7 +64,7 @@ public class displayList extends AppCompatActivity {
                 button.setLayoutParams(params);
                 button.setGravity(8);
                 button.setPadding(30,40,0,0);
-                //button.setBackgroundResource(0); maakt background doorzichtig geloof ik, maar niet zeker, want zie niet of de buttons nog werken -Arun
+                button.setBackgroundResource(0); //maakt background doorzichtig geloof ik, maar niet zeker, want zie niet of de buttons nog werken -Arun
                 linearLayoutList.addView(button);
             } while(c.moveToNext());
         }
