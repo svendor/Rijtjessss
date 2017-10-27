@@ -56,11 +56,11 @@ public class displayList extends AppCompatActivity {
                 button.setTextColor(Color.parseColor("#454545"));
                 button.setBackgroundResource(R.drawable.button);
                 button.setHeight(100);
-                button.setWidth(1000);
+                button.setWidth(2000);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(10, 10, 10, 10);
+                params.setMargins(0, 0, 0, 10);
                 button.setLayoutParams(params);
                 button.setGravity(8);
                 button.setPadding(30,40,0,0);
