@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -63,6 +64,7 @@ public class displayList extends AppCompatActivity {
                 button.setLayoutParams(params);
                 button.setGravity(8);
                 button.setPadding(30,40,0,0);
+                //button.setBackgroundResource(0); maakt background doorzichtig geloof ik, maar niet zeker, want zie niet of de buttons nog werken -Arun
                 linearLayoutList.addView(button);
             } while(c.moveToNext());
         }
