@@ -1,9 +1,11 @@
 package com.absontwikkeling.rijtjes;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,6 +52,7 @@ public class displayList extends AppCompatActivity {
         if (c.moveToFirst()) {
             do {Button button = new Button(this);
                 button.setText(c.getString(DBAdapter.COL_TABLE_NAME_MAIN));
+                button.setTextColor(Color.parseColor("#454545"));
                 button.setBackgroundResource(R.drawable.button);
                 button.setHeight(100);
                 button.setWidth(1000);
@@ -58,6 +61,8 @@ public class displayList extends AppCompatActivity {
                         LinearLayout.LayoutParams.WRAP_CONTENT);
                 params.setMargins(10, 10, 10, 10);
                 button.setLayoutParams(params);
+                button.setGravity(8);
+                button.setPadding(30,40,0,0);
                 linearLayoutList.addView(button);
             } while(c.moveToNext());
         }
