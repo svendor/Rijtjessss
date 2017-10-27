@@ -23,8 +23,8 @@ public class displayList extends AppCompatActivity {
 
         openDB();
 
-        showList = (TextView) findViewById(R.id.showList);
-        showList.setText(displayQuery(DLdbAdapter.getAllRowsMain()));
+       // showList = (TextView) findViewById(R.id.showList);
+       //  showList.setText(displayQuery(DLdbAdapter.getAllRowsMain()));
 
         linearLayoutList = (LinearLayout) findViewById(R.id.displayListLinearLayout);
         createButtonListInLayout(DLdbAdapter.getAllRowsMain());
@@ -45,11 +45,19 @@ public class displayList extends AppCompatActivity {
         DLdbAdapter.close();
     }
 
+
     private void createButtonListInLayout(Cursor c) {
         if (c.moveToFirst()) {
-            do {
-                Button button = new Button(this);
+            do {Button button = new Button(this);
                 button.setText(c.getString(DBAdapter.COL_TABLE_NAME_MAIN));
+                button.setBackgroundResource(R.drawable.button);
+                button.setHeight(100);
+                button.setWidth(1000);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(10, 10, 10, 10);
+                button.setLayoutParams(params);
                 linearLayoutList.addView(button);
             } while(c.moveToNext());
         }
