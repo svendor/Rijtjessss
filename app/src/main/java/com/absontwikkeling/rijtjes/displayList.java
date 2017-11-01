@@ -1,11 +1,13 @@
 package com.absontwikkeling.rijtjes;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -17,18 +19,21 @@ public class displayList extends AppCompatActivity {
 
     DBAdapter DLdbAdapter;
     LinearLayout linearLayoutList;
-    TextView showList;
+    // TextView showList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_list);
 
+        // Opens database
         openDB();
 
-       // showList = (TextView) findViewById(R.id.showList);
-       //  showList.setText(displayQuery(DLdbAdapter.getAllRowsMain()));
+        // Debugging for displayQuery()
+        // showList = (TextView) findViewById(R.id.showList);
+        // showList.setText(displayQuery(DLdbAdapter.getAllRowsMain()));
 
+        // Creates list of buttons
         linearLayoutList = (LinearLayout) findViewById(R.id.displayListLinearLayout);
         createButtonListInLayout(DLdbAdapter.getAllRowsMain());
     }
@@ -52,7 +57,11 @@ public class displayList extends AppCompatActivity {
     private void createButtonListInLayout(Cursor c) {
         if (c.moveToFirst()) {
             do {Button button = new Button(this);
-                button.setText(c.getString(DBAdapter.COL_TABLE_NAME_MAIN));
+
+                // Define button
+                // Layout
+                final String tableName = c.getString(DBAdapter.COL_TABLE_NAME_MAIN);
+                button.setText(tableName);
                 button.setTextColor(Color.parseColor("#454545"));
                 button.setBackgroundResource(R.drawable.button);
                 button.setHeight(100);
@@ -64,11 +73,26 @@ public class displayList extends AppCompatActivity {
                 button.setLayoutParams(params);
                 button.setGravity(8);
                 button.setPadding(30,40,0,0);
-                button.setBackgroundResource(0); //maakt background doorzichtig geloof ik, maar niet zeker, want zie niet of de buttons nog werken -Arun
+                button.setBackgroundResource(0); // Maakt background doorzichtig geloof ik, maar niet zeker, want zie niet of de buttons nog werken -Arun
+                // Function
+                View.OnClickListener buttonListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(displayList.this, editWordList.class);
+                        i.putExtra("tableName" ,tableName);
+                        startActivity(i);
+                    }
+                };
+                button.setOnClickListener(buttonListener);
+
+                // Add button to activity
                 linearLayoutList.addView(button);
             } while(c.moveToNext());
         }
     }
+
+    /*
+    ################### Function to check if main table works ###########################
 
     private String displayQuery(Cursor cursor) {
         String message = "";
@@ -85,4 +109,5 @@ public class displayList extends AppCompatActivity {
         cursor.close();
         return message;
     }
+    */
 }

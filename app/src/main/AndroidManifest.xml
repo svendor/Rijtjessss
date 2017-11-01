@@ -19,12 +19,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".createList" />
-        <activity android:name=".displayList"/>
+        <activity android:name=".displayList" />
         <activity android:name=".question" />
         <activity
             android:name=".HETFUCKINGMENU"
             android:label="@string/title_activity_hetfuckingmenu"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".editWordList"></activity>
     </application>
 
 </manifest>

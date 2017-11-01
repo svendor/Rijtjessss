@@ -45,13 +45,13 @@ public class createList extends AppCompatActivity {
     }
 
     private void addQuestion(questionObj object) {
-        final String QUESTION = object.get_question();
-        final String ANSWER = object.get_answer();
+        // final String QUESTION = object.get_question();
+        // final String ANSWER = object.get_answer();
         final String TABLE_NAME = object.get_table_name();
         dbAdapter.createTable(TABLE_NAME);
-        long questionID = dbAdapter.insertRow(QUESTION, ANSWER, TABLE_NAME);
+        // long questionID = dbAdapter.insertRow(QUESTION, ANSWER, TABLE_NAME);
 
-        Cursor c = dbAdapter.getRow(questionID);
+        // Cursor c = dbAdapter.getRow(questionID);
         debugTV.setText(displayQuery(dbAdapter.getAllRows(TABLE_NAME)));
     }
 

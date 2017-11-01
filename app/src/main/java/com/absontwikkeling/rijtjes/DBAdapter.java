@@ -12,24 +12,26 @@ public class DBAdapter {
     // For logging:
     private static final String TAG = "DBAdapter";
 
-    // DB mainTable Fields
+    // DB wordList Fields
     public static final String KEY_ROWID = "_id";
-    public static final int COL_ROWID = 0;
     public static final String KEY_QUESTION = "question";
     public static final String KEY_ANSWER = "answer";
+    public static final int COL_ROWID = 0;
     public static final int COL_QUESTION = 1;
     public static final int COL_ANSWER = 2;
+    public static final String[] ALL_KEYS = new String[] {KEY_ROWID, KEY_QUESTION, KEY_ANSWER};
 
+    // DB mainTable Fields (The table which indexes the wordLists)
     public static final String KEY_ROWID_MAIN = "_id";
-    public static final int COL_ROWID_MAIN = 0;
     public static final String KEY_TABLE_NAME_MAIN = "table_name";
+    public static final int COL_ROWID_MAIN = 0;
     public static final int COL_TABLE_NAME_MAIN = 1;
     public static final String MAIN_TABLE_NAME = "list_table";
-
-    public static final String[] ALL_KEYS = new String[] {KEY_ROWID, KEY_QUESTION, KEY_ANSWER};
     public static final String[] ALL_KEYS_MAIN = new String[] {KEY_ROWID_MAIN, KEY_TABLE_NAME_MAIN};
-    public static final String DATABASE_NAME = "wordLists";
     public static final String DATABASE_TABLE = "mainTable";
+
+    // DB General info
+    public static final String DATABASE_NAME = "wordLists";
     public static final int DATABASE_VERSION = 2;
 
     private static final String DATABASE_CREATE_SQL =
@@ -44,14 +46,16 @@ public class DBAdapter {
     private DatabaseHelper myDBHelper;
     private SQLiteDatabase db;
 
-    //	Public methods:
+    // ############### Public methods: #################
 
+    // Create mainTable if it doesn't exist yet
     public void createTableMain() {
         db.execSQL("create table if not exists " + MAIN_TABLE_NAME + " ("
                 + KEY_ROWID_MAIN + " integer primary key autoincrement, "
                 + KEY_TABLE_NAME_MAIN + " string not null);");
     }
 
+    // Create table for wordList
     public void createTable(String tableName) {
         tableName = tableName.replaceAll("\\s","_");
         db.execSQL("create table if not exists " + tableName + " ("
@@ -76,6 +80,7 @@ public class DBAdapter {
         myDBHelper.close();
     }
 
+    // Add a new set of values to the mainTable
     public long insertRowMain(String tableName) {
 
         ContentValues values = new ContentValues();
@@ -102,10 +107,12 @@ public class DBAdapter {
         return db.delete(tableName, row_ID, null) != 0;
     }
 
+    // Delete a row from mainTable, by tableName
     public void deleteRowMain(String tableName) {
         db.execSQL("DELETE FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + "='" + tableName + "';");
     }
 
+    // Deletes a table
     public void deleteAll(String tableName) {
         //Cursor c = getAllRows(tableName);
         //long rowId = c.getColumnIndexOrThrow(KEY_ROWID);
@@ -118,6 +125,7 @@ public class DBAdapter {
         db.delete(tableName, null, null);
     }
 
+    // Check if a row in mainTable exists
     public boolean existsMain(String table_name) {
         Cursor c = db.rawQuery("SELECT * FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + " = '" + table_name + "'", null);
         boolean exist = (c.getCount() > 0);
@@ -125,6 +133,7 @@ public class DBAdapter {
         return exist;
     }
 
+    // Get's all rows from mainTable
     public Cursor getAllRowsMain() {
         String where = null;
         Cursor c = db.query(true, MAIN_TABLE_NAME, ALL_KEYS_MAIN,
@@ -137,14 +146,14 @@ public class DBAdapter {
 
     // Return all data in the database.
     public Cursor getAllRows(String tableName) {
-        String where = null;
         Cursor c = 	db.query(true, tableName, ALL_KEYS,
-                where, null, null, null, null, null);
+                null, null, null, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }
         return c;
     }
+
 
     public Cursor getRowMain(String tableName) {
         String where = KEY_TABLE_NAME_MAIN + "=" + tableName;
