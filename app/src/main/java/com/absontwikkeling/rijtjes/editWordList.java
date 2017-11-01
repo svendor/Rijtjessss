@@ -51,18 +51,20 @@ public class editWordList extends AppCompatActivity {
         dbAdapter.close();
     }
 
+    private void showList(Cursor questonCursor, Cursor answerCursor) {
+
+    }
+
     private String displayQuery(Cursor cursor) {
         String message = "";
         if (cursor.moveToFirst()) {
             do {
                 // Process the data:
-                int id = cursor.getInt(DBAdapter.COL_ROWID);
                 String question = cursor.getString(DBAdapter.COL_QUESTION);
                 String answer = cursor.getString(DBAdapter.COL_ANSWER);
 
                 // Append data to the message:
-                message += "Vraag #" + id
-                        +", Vraag = " + question
+                message += "Vraag = " + question
                         +", Antwoord = " + answer
                         +"\n";
             } while(cursor.moveToNext());
