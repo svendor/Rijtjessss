@@ -56,9 +56,9 @@ public class displayList extends AppCompatActivity {
 
     private void createButtonListInLayout(Cursor c) {
         if (c.moveToFirst()) {
-            do {Button button = new Button(this);
-
+            do {
                 // Define button
+                Button button = new Button(this);
                 // Layout
                 final String tableName = c.getString(DBAdapter.COL_TABLE_NAME_MAIN);
                 button.setText(tableName);

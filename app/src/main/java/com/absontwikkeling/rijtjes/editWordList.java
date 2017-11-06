@@ -5,13 +5,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class editWordList extends AppCompatActivity {
 
     TextView debugListTV;
     DBAdapter dbAdapter;
-    String TABLE_NAME;
+    LinearLayout linearLayoutQuestion;
+    LinearLayout linearLayoutAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +24,21 @@ public class editWordList extends AppCompatActivity {
         // Opens database
         openDB();
 
+        linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
+        linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
+
         // Gets information from intent
         Intent i = getIntent();
-        final String TABLE_NAME = i.getStringExtra("tableName").replaceAll("\\s","_");
+        final String table_name = i.getStringExtra("tableName");
+        final String TABLE_NAME = table_name.replaceAll("\\s","");
 
+        // Gives debug textView text
         debugListTV = (TextView) findViewById(R.id.debugListTV);
         try {
             Cursor c = dbAdapter.getAllRows(TABLE_NAME);
-            debugListTV.setText(displayQuery(c));
+            String text = table_name + "\n" + displayQuery(c);
+            debugListTV.setText(text);
+            // showList(c);
         } catch (SQLiteException e) {
             if (e.getMessage().contains("no such table")) {
                 debugListTV.setText("Oeps, we hebben niks gevonden.");
@@ -51,8 +61,20 @@ public class editWordList extends AppCompatActivity {
         dbAdapter.close();
     }
 
-    private void showList(Cursor questonCursor, Cursor answerCursor) {
+    private void showList(Cursor c) {
+        if (c.moveToFirst()) {
+            do {
+                EditText queET = new EditText(this);
+                queET.setText(c.getString(dbAdapter.COL_QUESTION));
+                linearLayoutQuestion.addView(queET);
 
+                EditText ansET = new EditText(this);
+                ansET.setText(c.getString(dbAdapter.COL_ANSWER));
+                linearLayoutAnswer.addView(ansET);
+
+            } while (c.moveToNext());
+        }
+        c.close();
     }
 
     private String displayQuery(Cursor cursor) {
