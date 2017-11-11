@@ -57,8 +57,7 @@ public class DBAdapter {
 
     // Create table for wordList
     public void createTable(String tableName) {
-        tableName = tableName.replaceAll("\\s","");
-        db.execSQL("create table if not exists " + tableName + " ("
+        db.execSQL("create table if not exists '" + tableName.replaceAll("\\s", "_") + "' ("
                 + KEY_ROWID + " integer primary key autoincrement, "
                 + KEY_QUESTION + " string not null, "
                 + KEY_ANSWER + " string not null);");
@@ -97,13 +96,13 @@ public class DBAdapter {
         initialValues.put(KEY_ANSWER, answer);
 
         // Insert it into the database.
-        return db.insert(tableName, null, initialValues);
+        return db.insert(tableName.replaceAll("\\s", "_"), null, initialValues);
     }
 
     // Delete a row from the database, by rowId (primary key)
     public boolean deleteRow(long rowId, String tableName) {
         String row_ID = KEY_ROWID + "=" + rowId;
-        return db.delete(tableName, row_ID, null) != 0;
+        return db.delete(tableName.replaceAll("\\s", "_"), row_ID, null) != 0;
     }
 
     // Delete a row from mainTable, by tableName
@@ -113,11 +112,11 @@ public class DBAdapter {
 
     // Deletes a table
     public void deleteAll(String tableName) {
-        Cursor c = getAllRows(tableName);
+        Cursor c = getAllRows(tableName.replaceAll("\\s", "_"));
         long rowId = c.getColumnIndexOrThrow(KEY_ROWID);
         if (c.moveToFirst()) {
             do {
-                deleteRow(c.getLong((int) rowId), tableName);
+                deleteRow(c.getLong((int) rowId), tableName.replaceAll("\\s", "_"));
             } while (c.moveToNext());
         }
         c.close();
@@ -126,7 +125,6 @@ public class DBAdapter {
 
     // Check if a row in mainTable exists
     public boolean existsMain(String table_name) {
-        table_name = table_name.replaceAll("\\s", "");
         Cursor c = db.rawQuery("SELECT * FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + " = '" + table_name + "'", null);
         boolean exist = (c.getCount() > 0);
         c.close();
@@ -144,10 +142,9 @@ public class DBAdapter {
         return c;
     }
 
-    // Return all data in the database.
+    // Return all data in the table.
     public Cursor getAllRows(String tableName) {
-        Cursor c = 	db.query(true, tableName, ALL_KEYS,
-                null, null, null, null, null, null);
+        Cursor c = db.rawQuery("SELECT * FROM ["+tableName.replaceAll("\\s", "_")+"]", null);
         if (c != null) {
             c.moveToFirst();
         }

@@ -52,7 +52,8 @@ public class createList extends AppCompatActivity {
         long questionID = dbAdapter.insertRow(QUESTION, ANSWER, TABLE_NAME);
 
         Cursor c = dbAdapter.getRow(questionID);
-        debugTV.setText(displayQuery(dbAdapter.getAllRows(TABLE_NAME)));
+        String text = displayQuery(dbAdapter.getAllRows(TABLE_NAME)) + TABLE_NAME;
+        debugTV.setText(text);
     }
 
     public void finishList(View v) {
@@ -75,7 +76,7 @@ public class createList extends AppCompatActivity {
     }
 
     public void onClick_deleteCurrentList(View v) {
-        dbAdapter.deleteAll(tableName.getText().toString().replaceAll("\\s",""));
+        dbAdapter.deleteAll(tableName.getText().toString());
         dbAdapter.deleteRowMain(tableName.getText().toString());
         Intent i = new Intent(this, displayList.class);
         startActivity(i);

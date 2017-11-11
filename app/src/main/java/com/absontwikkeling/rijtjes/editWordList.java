@@ -24,21 +24,18 @@ public class editWordList extends AppCompatActivity {
         // Opens database
         openDB();
 
-        linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
-        linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
-
         // Gets information from intent
         Intent i = getIntent();
         final String table_name = i.getStringExtra("tableName");
-        final String TABLE_NAME = table_name.replaceAll("\\s","");
 
         // Gives debug textView text
         debugListTV = (TextView) findViewById(R.id.debugListTV);
         try {
-            Cursor c = dbAdapter.getAllRows(TABLE_NAME);
+            Cursor c = dbAdapter.getAllRows(table_name);
             String text = table_name + "\n" + displayQuery(c);
-            debugListTV.setText(text);
-            // showList(c);
+            // debugListTV.setText(text);
+            showList(c);
+            c.close();
         } catch (SQLiteException e) {
             if (e.getMessage().contains("no such table")) {
                 debugListTV.setText("Oeps, we hebben niks gevonden.");
@@ -62,19 +59,39 @@ public class editWordList extends AppCompatActivity {
     }
 
     private void showList(Cursor c) {
-        if (c.moveToFirst()) {
+        linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
+        linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
+
+         if (c.moveToFirst()) {
             do {
                 EditText queET = new EditText(this);
-                queET.setText(c.getString(dbAdapter.COL_QUESTION));
+                queET.setText(c.getString(1));
+                queET.setHeight(100);
+                queET.setWidth(2000);
+                LinearLayout.LayoutParams paramsQ = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                paramsQ.setMargins(0, 0, 0, 10);
+                queET.setLayoutParams(paramsQ);
+                queET.setGravity(8);
+                queET.setPadding(30,40,0,0);
                 linearLayoutQuestion.addView(queET);
 
                 EditText ansET = new EditText(this);
-                ansET.setText(c.getString(dbAdapter.COL_ANSWER));
+                ansET.setText(c.getString(2));
+                ansET.setHeight(100);
+                ansET.setWidth(2000);
+                LinearLayout.LayoutParams paramsA = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                paramsA.setMargins(0, 0, 0, 10);
+                ansET.setLayoutParams(paramsA);
+                ansET.setGravity(8);
+                ansET.setPadding(30,40,0,0);
                 linearLayoutAnswer.addView(ansET);
 
             } while (c.moveToNext());
         }
-        c.close();
     }
 
     private String displayQuery(Cursor cursor) {
@@ -91,8 +108,6 @@ public class editWordList extends AppCompatActivity {
                         +"\n";
             } while(cursor.moveToNext());
         }
-
-        cursor.close();
         return message;
     }
 
