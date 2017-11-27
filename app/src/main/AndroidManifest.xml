@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".createList" />
+        <activity android:name=".createList"
+            android:label="@string/create_list_page_name"/>
         <activity android:name=".displayList" />
         <activity android:name=".question" />
         <activity
