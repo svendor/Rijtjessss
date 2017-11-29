@@ -5,9 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class editWordList extends AppCompatActivity {
 
@@ -15,6 +18,9 @@ public class editWordList extends AppCompatActivity {
     DBAdapter dbAdapter;
     LinearLayout linearLayoutQuestion;
     LinearLayout linearLayoutAnswer;
+    public static int entryAmount = 0;
+    public static int[] listIndex = new int[100];
+    public static String table_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +32,15 @@ public class editWordList extends AppCompatActivity {
 
         // Gets information from intent
         Intent i = getIntent();
-        final String table_name = i.getStringExtra("tableName");
+        table_name = i.getStringExtra("tableName");
 
         // Gives debug textView text
         debugListTV = (TextView) findViewById(R.id.debugListTV);
         try {
             Cursor c = dbAdapter.getAllRows(table_name);
-            String text = table_name + "\n" + displayQuery(c);
+            // String text = table_name + "\n" + displayQuery(c);
             // debugListTV.setText(text);
-            showList(c);
+            entryAmount = showList(c, listIndex);
             c.close();
         } catch (SQLiteException e) {
             if (e.getMessage().contains("no such table")) {
@@ -58,13 +64,32 @@ public class editWordList extends AppCompatActivity {
         dbAdapter.close();
     }
 
-    private void showList(Cursor c) {
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
+
+    // https://stackoverflow.com/questions/1714297/android-view-setidint-id-programmatically-how-to-avoid-id-conflicts
+    private static int generateViewId() {
+        for (;;) {
+            final int result = sNextGeneratedId.get();
+            // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
+            int newValue = result + 1;
+            if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
+            if (sNextGeneratedId.compareAndSet(result, newValue)) {
+                return result;
+            }
+        }
+    }
+
+    private int showList(Cursor c, int[] listIndex) {
+        // Find layouts
         linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
         linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
 
-         if (c.moveToFirst()) {
+        int i = 0;
+        if (c.moveToFirst()) {
             do {
+                //Define question edittext
                 EditText queET = new EditText(this);
+                queET.setId(generateViewId());
                 queET.setText(c.getString(1));
                 queET.setHeight(100);
                 queET.setWidth(2000);
@@ -77,7 +102,13 @@ public class editWordList extends AppCompatActivity {
                 queET.setPadding(30,40,0,0);
                 linearLayoutQuestion.addView(queET);
 
+                // Index edittext id's
+                listIndex[i] = sNextGeneratedId.get()-1;
+                i++;
+
+                // Define answer edittext
                 EditText ansET = new EditText(this);
+                ansET.setId(generateViewId());
                 ansET.setText(c.getString(2));
                 ansET.setHeight(100);
                 ansET.setWidth(2000);
@@ -90,8 +121,28 @@ public class editWordList extends AppCompatActivity {
                 ansET.setPadding(30,40,0,0);
                 linearLayoutAnswer.addView(ansET);
 
+                // Index edittext id's
+                listIndex[i] = sNextGeneratedId.get()-1;
+                i++;
+
             } while (c.moveToNext());
         }
+        return i;
+    }
+
+    public void updateList(View v) {
+        dbAdapter.deleteAll(table_name);
+        int i = 0;
+        do {
+            EditText queET = (EditText) findViewById(listIndex[i]);
+            String question = queET.getText().toString();
+            i++;
+            EditText ansET = (EditText) findViewById((listIndex[i]));
+            String answer = ansET.getText().toString();
+            i++;
+
+            dbAdapter.insertRow(question, answer, table_name);
+        } while (i < entryAmount);
     }
 
     private String displayQuery(Cursor cursor) {
