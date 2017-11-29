@@ -2,6 +2,10 @@
     <string name="app_name">EEn test</string>
     <string name="bekijken_page_name">Bekijken</string>
     <string name="title_activity_hetfuckingmenu">HETFUCKINGMENU</string>
+    <string name="create_list_page_name">Lijst maken</string>
+    <string name="display_list_page_name">Lijst</string>
+    <string name="edit_word_list_page_name">Aanpassen</string>
+    <string name="question_page_name">Maak Lijst</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
