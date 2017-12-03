@@ -20,20 +20,21 @@
         </activity>
         <activity
             android:name=".createList"
-            android:label="@string/create_list_page_name"/>
+            android:label="@string/create_list_page_name" />
         <activity
             android:name=".displayList"
-            android:label="@string/display_list_page_name"/>
+            android:label="@string/display_list_page_name" />
         <activity
             android:name=".question"
-            android:label="@string/question_page_name"/>
+            android:label="@string/question_page_name" />
         <activity
             android:name=".HETFUCKINGMENU"
             android:label="@string/title_activity_hetfuckingmenu"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".editWordList"
-            android:label="@string/edit_word_list_page_name"/>
+            android:label="@string/edit_word_list_page_name" />
+        <activity android:name=".results"></activity>
     </application>
 
 </manifest>

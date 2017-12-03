@@ -34,17 +34,25 @@ public class editWordList extends AppCompatActivity {
         Intent i = getIntent();
         table_name = i.getStringExtra("tableName");
 
-        // Gives debug textView text
-        debugListTV = (TextView) findViewById(R.id.debugListTV);
+        // Defines Debug Textview
+        // debugListTV = (TextView) findViewById(R.id.debugListTV);
+
+
         try {
+            // Finds query
             Cursor c = dbAdapter.getAllRows(table_name);
+
+            // Tests if the cursor returns correct table
             // String text = table_name + "\n" + displayQuery(c);
             // debugListTV.setText(text);
+
+            // Creates edittext fields + integer that contains the amount of fields
             entryAmount = showList(c, listIndex);
             c.close();
         } catch (SQLiteException e) {
             if (e.getMessage().contains("no such table")) {
                 debugListTV.setText("Oeps, we hebben niks gevonden.");
+                // TODO: REMOVE ALL BUTTONS IN THIS CASE
             }
         }
     }
@@ -143,6 +151,12 @@ public class editWordList extends AppCompatActivity {
 
             dbAdapter.insertRow(question, answer, table_name);
         } while (i < entryAmount);
+    }
+
+    public void questionTheList(View v) {
+        Intent i = new Intent(this, question.class);
+        i.putExtra("tableName", table_name);
+        startActivity(i);
     }
 
     private String displayQuery(Cursor cursor) {
