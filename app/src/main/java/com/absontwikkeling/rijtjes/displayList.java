@@ -15,6 +15,10 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+// TODO: Sort the code
+// TODO: Explain code better
+// TODO: Add change strings to @String rescources
+
 public class displayList extends AppCompatActivity {
 
     DBAdapter DLdbAdapter;

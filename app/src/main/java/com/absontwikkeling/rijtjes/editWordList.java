@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+// TODO: Sort the code
+// TODO: Explain code better
+// TODO: Add change strings to @String rescources
+
 public class editWordList extends AppCompatActivity {
 
     TextView debugListTV;

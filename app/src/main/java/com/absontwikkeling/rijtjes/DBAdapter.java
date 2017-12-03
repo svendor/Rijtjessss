@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+// TODO: Sort the code
+// TODO: Explain code better
+// TODO: Add change strings to @String rescources
+
 public class DBAdapter {
 
     // For logging:

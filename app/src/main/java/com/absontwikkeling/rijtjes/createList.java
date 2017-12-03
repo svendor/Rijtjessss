@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+// TODO: Sort the code
+// TODO: Explain code better
+// TODO: Add change strings to @String rescources
 
 public class createList extends AppCompatActivity {
 

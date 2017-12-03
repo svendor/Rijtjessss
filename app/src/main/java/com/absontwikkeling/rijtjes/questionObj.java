@@ -1,5 +1,9 @@
 package com.absontwikkeling.rijtjes;
 
+// TODO: Sort the code
+// TODO: Explain code better
+// TODO: Add change strings to @String rescources
+
 public class questionObj {
 
     private int _id;

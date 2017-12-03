@@ -13,8 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+// TODO: Sort the code
+// TODO: Explain code better
+// TODO: Add change strings to @String rescources
+
 public class HETFUCKINGMENU extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    // TODO: MAKE IT WORK
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

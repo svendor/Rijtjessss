@@ -11,6 +11,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+// TODO: Sort the code
+// TODO: Explain code better
+// TODO: Add current score indicator
+// TODO: Change GOED/FOUT-feedback
+// TODO: Add change strings to @String rescources
 
 public class question extends AppCompatActivity {
 
