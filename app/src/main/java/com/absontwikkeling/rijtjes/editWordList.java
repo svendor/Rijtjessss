@@ -142,6 +142,50 @@ public class editWordList extends AppCompatActivity {
         return i;
     }
 
+    public void addRow(View v) {
+        // Find layouts
+        linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
+        linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
+
+        //Define question edittext
+        EditText queET = new EditText(this);
+        queET.setId(generateViewId());
+        queET.setText("");
+        queET.setHeight(100);
+        queET.setWidth(2000);
+        LinearLayout.LayoutParams paramsQ = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        paramsQ.setMargins(0, 0, 0, 10);
+        queET.setLayoutParams(paramsQ);
+        queET.setGravity(8);
+        queET.setPadding(30,40,0,0);
+        linearLayoutQuestion.addView(queET);
+
+        // Index edittext id's
+        listIndex[entryAmount] = sNextGeneratedId.get()-1;
+        entryAmount++;
+
+        // Define answer edittext
+        EditText ansET = new EditText(this);
+        ansET.setId(generateViewId());
+        ansET.setText("");
+        ansET.setHeight(100);
+        ansET.setWidth(2000);
+        LinearLayout.LayoutParams paramsA = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        paramsA.setMargins(0, 0, 0, 10);
+        ansET.setLayoutParams(paramsA);
+        ansET.setGravity(8);
+        ansET.setPadding(30,40,0,0);
+        linearLayoutAnswer.addView(ansET);
+
+        // Index edittext id's
+        listIndex[entryAmount] = sNextGeneratedId.get()-1;
+        entryAmount++;
+    }
+
     public void updateList(View v) {
         dbAdapter.deleteAll(table_name);
         int i = 0;

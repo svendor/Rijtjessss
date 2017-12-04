@@ -13,23 +13,25 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    private void setupQuestionButtonListener(){
-        Button questionButton = (Button) findViewById(R.id.createListButton);
-        questionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                Intent addQuestion = new Intent(MainActivity.this, createList.class);
-                startActivity(addQuestion);
-            }
-        });
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         setupQuestionButtonListener();
+    }
+
+    // Creates button
+    private void setupQuestionButtonListener(){
+        Button b = (Button) findViewById(R.id.createListButton);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent addQuestion = new Intent(MainActivity.this, createList.class);
+                startActivity(addQuestion);
+            }
+        });
     }
 
 }
