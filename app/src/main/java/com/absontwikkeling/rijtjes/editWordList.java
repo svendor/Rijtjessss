@@ -186,6 +186,28 @@ public class editWordList extends AppCompatActivity {
         entryAmount++;
     }
 
+    public void removeRow(View v) {
+        // Find layouts
+        linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
+        linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
+
+        //Define question edittext
+        EditText queET = (EditText) findViewById(listIndex[entryAmount-1]);
+        queET.setVisibility(View.GONE);
+
+        // Remove EditText ID's
+        listIndex[entryAmount] = 0;
+        entryAmount--;
+
+        // Define answer edittext
+        EditText ansET = (EditText) findViewById(listIndex[entryAmount-1]);
+        ansET.setVisibility(View.GONE);
+
+        // Remove EditText ID's
+        listIndex[entryAmount] = 0;
+        entryAmount--;
+    }
+
     public void updateList(View v) {
         dbAdapter.deleteAll(table_name);
         int i = 0;
