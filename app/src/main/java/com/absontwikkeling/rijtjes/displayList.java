@@ -57,6 +57,12 @@ public class displayList extends AppCompatActivity {
         closeDB();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
+
     private void openDB() {
         DLdbAdapter = new DBAdapter(this);
         DLdbAdapter.open();

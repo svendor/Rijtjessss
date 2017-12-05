@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void displayListButton(View v) {
+        Intent i = new Intent(this, displayList.class);
+        startActivity(i);
+    }
+
 }
 
 // added to push merge 21-10-2017 16:16

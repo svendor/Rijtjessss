@@ -22,11 +22,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class editWordList extends AppCompatActivity {
 
     TextView debugListTV;
+    EditText tableNameET;
     DBAdapter dbAdapter;
     LinearLayout linearLayoutQuestion;
     LinearLayout linearLayoutAnswer;
     public static int entryAmount = 0;
-    public static int[] listIndex = new int[100];
+    public static int[] listIndex = new int[2000];
     public static String table_name;
 
     @Override
@@ -41,17 +42,20 @@ public class editWordList extends AppCompatActivity {
         Intent i = getIntent();
         table_name = i.getStringExtra("tableName");
 
+        // Defines tableNameET view
+        tableNameET = (EditText) findViewById(R.id.tableNameET);
+        tableNameET.setText(table_name);
+
         // Defines Debug Textview
         // debugListTV = (TextView) findViewById(R.id.debugListTV);
-
 
         try {
             // Finds query
             Cursor c = dbAdapter.getAllRows(table_name);
 
             // Tests if the cursor returns correct table
-            // String text = table_name + "\n" + displayQuery(c);
-            // debugListTV.setText(text);
+            /* String text = table_name + "\n" + displayQuery(c);
+               debugListTV.setText(text); */
 
             // Creates edittext fields + integer that contains the amount of fields
             entryAmount = showList(c, listIndex);
@@ -221,6 +225,16 @@ public class editWordList extends AppCompatActivity {
 
     public void updateList(View v) {
         dbAdapter.deleteAll(table_name);
+        dbAdapter.deleteRowMain(table_name);
+
+        table_name = tableNameET.getText().toString();
+        dbAdapter.createTable(table_name);
+        if (!dbAdapter.existsMain(table_name)) {
+            dbAdapter.insertRowMain(table_name);
+        } else {
+            dbAdapter.deleteAll(table_name);
+        }
+
         int i = 0;
         do {
             EditText queET = (EditText) findViewById(listIndex[i]);
@@ -237,6 +251,11 @@ public class editWordList extends AppCompatActivity {
     public void questionTheList(View v) {
         Intent i = new Intent(this, question.class);
         i.putExtra("tableName", table_name);
+        startActivity(i);
+    }
+
+    public void displayListButton(View v) {
+        Intent i = new Intent(this, displayList.class);
         startActivity(i);
     }
 

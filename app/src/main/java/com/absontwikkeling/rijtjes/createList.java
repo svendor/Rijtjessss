@@ -26,7 +26,6 @@ public class createList extends AppCompatActivity {
         setContentView(R.layout.activity_create_list);
 
         openDB();
-        debugTV = (TextView) findViewById(R.id.textView4);
         tableName = (EditText) findViewById(R.id.dataBaseName);
         questionWord = (EditText) findViewById(R.id.questionWord);
         answerWord = (EditText) findViewById(R.id.answerWord);
@@ -63,6 +62,7 @@ public class createList extends AppCompatActivity {
         Intent i = new Intent(this, displayList.class);
         dbAdapter.createTableMain();
         String table_name = tableName.getText().toString();
+        dbAdapter.createTable(table_name);
 
         if (!dbAdapter.existsMain(table_name)) {
             dbAdapter.insertRowMain(table_name);
