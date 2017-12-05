@@ -36,8 +36,10 @@ public class results extends AppCompatActivity {
         correctAmount = scorePoints[1];
 
         // Performs simple arithmetic to determine a score and rounds it down to
-        score = (9*correctAmount/questionAmount)+1d;
-        score = (double)Math.round(score * 100d)/100d;
+        double temp = (double)correctAmount/questionAmount;
+        double temp2 = 9*temp;
+        score = temp2 + 1d;
+        score = (double)Math.round(score * 10d)/10d;
 
         // Prints score
         result = (TextView) findViewById(R.id.result);
