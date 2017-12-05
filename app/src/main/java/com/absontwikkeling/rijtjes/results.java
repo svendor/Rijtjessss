@@ -3,6 +3,7 @@ package com.absontwikkeling.rijtjes;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 // TODO: Sort the code
@@ -35,7 +36,7 @@ public class results extends AppCompatActivity {
         correctAmount = scorePoints[1];
 
         // Performs simple arithmetic to determine a score and rounds it down to
-        score = 9*correctAmount/questionAmount+1;
+        score = (9*correctAmount/questionAmount)+1d;
         score = (double)Math.round(score * 100d)/100d;
 
         // Prints score
@@ -44,4 +45,20 @@ public class results extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    public void displayListButton(View v) {
+        Intent i = new Intent(this, displayList.class);
+        startActivity(i);
+    }
+
+    public void mainButton(View v) {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
+
 }

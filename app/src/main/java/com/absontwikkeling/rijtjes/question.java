@@ -40,6 +40,7 @@ public class question extends AppCompatActivity {
         setContentView(R.layout.activity_question);
 
         currentQuestion = 0;
+        amountCorrect = 0;
         openDB();
 
         question = (TextView) findViewById(R.id.questionTextView);
@@ -77,6 +78,8 @@ public class question extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         closeDB();
+
+        amountCorrect = 0;
     }
 
     private void openDB() {
