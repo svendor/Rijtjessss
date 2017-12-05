@@ -43,4 +43,9 @@
         <item name="android:maxWidth">200dp</item>
         </style>
 
+    <style name="AppTheme.button.2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/displaylisttextcolor</item>
+    </style>
+
 </resources>

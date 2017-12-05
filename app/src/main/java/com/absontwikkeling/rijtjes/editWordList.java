@@ -1,8 +1,11 @@
 package com.absontwikkeling.rijtjes;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -91,6 +94,14 @@ public class editWordList extends AppCompatActivity {
         }
     }
 
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
     private int showList(Cursor c, int[] listIndex) {
         // Find layouts
         linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
@@ -103,11 +114,11 @@ public class editWordList extends AppCompatActivity {
                 EditText queET = new EditText(this);
                 queET.setId(generateViewId());
                 queET.setText(c.getString(1));
-                queET.setHeight(100);
-                queET.setWidth(2000);
+                queET.setHeight(150);
+                queET.setWidth(10000);
                 LinearLayout.LayoutParams paramsQ = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                      LinearLayout.LayoutParams.WRAP_CONTENT);
                 paramsQ.setMargins(0, 0, 0, 10);
                 queET.setLayoutParams(paramsQ);
                 queET.setGravity(8);
@@ -122,8 +133,8 @@ public class editWordList extends AppCompatActivity {
                 EditText ansET = new EditText(this);
                 ansET.setId(generateViewId());
                 ansET.setText(c.getString(2));
-                ansET.setHeight(100);
-                ansET.setWidth(2000);
+                ansET.setHeight(150);
+                ansET.setWidth(10000);
                 LinearLayout.LayoutParams paramsA = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
