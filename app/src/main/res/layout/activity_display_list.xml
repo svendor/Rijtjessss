@@ -6,24 +6,16 @@
     android:layout_height="match_parent"
     tools:context="com.absontwikkeling.rijtjes.displayList">
 
-
-    <TextView
-        android:id="@+id/showList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text=""
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="8dp" />
-
-
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="360dp"
-        android:layout_height="495dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:layout_height="450dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/displayListLinearLayout"
@@ -38,5 +30,50 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/showList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/radioGroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <RadioButton
+            android:id="@+id/questionTheList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:focusable="auto"
+            android:onClick="onRadioButtonClicked"
+            android:text="Overhoren" />
+
+        <RadioButton
+            android:id="@+id/editList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="Aanpassen" />
+
+        <RadioButton
+            android:id="@+id/deleteList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="Verwijderen" />
+    </RadioGroup>
+
 
 </android.support.constraint.ConstraintLayout>

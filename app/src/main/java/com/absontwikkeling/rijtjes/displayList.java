@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -32,6 +33,7 @@ public class displayList extends AppCompatActivity {
 
     DBAdapter DLdbAdapter;
     LinearLayout linearLayoutList;
+    public static int radioState;
     // TextView showList;
 
     @Override
@@ -72,13 +74,35 @@ public class displayList extends AppCompatActivity {
         DLdbAdapter.close();
     }
 
-
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
 
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    public void onRadioButtonClicked(View v) {
+        boolean checked = ((RadioButton) v).isChecked();
+
+        // Check which radio button was clicked
+        switch(v.getId()) {
+            case R.id.questionTheList:
+                if (checked) {
+                    radioState = 0;
+                }
+                break;
+            case R.id.editList:
+                if (checked) {
+                    radioState = 1;
+                }
+                break;
+            case R.id.deleteList:
+                if (checked) {
+                    radioState = 2;
+                }
+                break;
+        }
     }
 
     private void createButtonListInLayout(Cursor c) {
@@ -103,9 +127,22 @@ public class displayList extends AppCompatActivity {
                 View.OnClickListener buttonListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(displayList.this, editWordList.class);
-                        i.putExtra("tableName" ,tableName);
-                        startActivity(i);
+                        if (radioState == 0) {
+                            Intent i = new Intent(displayList.this, question.class);
+                            i.putExtra("tableName", tableName);
+                            startActivity(i);
+
+                        } else if (radioState == 1) {
+                            Intent i = new Intent(displayList.this, editWordList.class);
+                            i.putExtra("tableName", tableName);
+                            startActivity(i);
+
+                        } else if (radioState == 2) {
+                            DLdbAdapter.deleteAll(tableName);
+                            DLdbAdapter.deleteRowMain(tableName);
+                            finish();
+                            startActivity(getIntent());
+                        }
                     }
                 };
                 button.setOnClickListener(buttonListener);
