@@ -27,7 +27,7 @@
         android:layout_marginLeft="8dp"
         android:onClick="nextQuestion"
         android:text="Volgende vraag"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/finishList"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -53,7 +53,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="vraag"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dataBaseName" />
 
@@ -67,7 +67,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="antwoord"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionWord" />
 
@@ -81,7 +81,7 @@
         android:layout_marginTop="8dp"
         android:text="Vraag: "
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/questionWord"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dataBaseName" />
@@ -95,7 +95,7 @@
         android:layout_marginTop="8dp"
         android:text="1"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/questionWord"
         app:layout_constraintLeft_toRightOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/dataBaseName"
@@ -109,7 +109,7 @@
         android:layout_marginRight="8dp"
         android:onClick="onClick_deleteCurrentList"
         android:text="Verwijder deze lijst"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
