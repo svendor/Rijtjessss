@@ -33,7 +33,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".editWordList"
-            android:label="@string/edit_word_list_page_name" />
+            android:label="@string/edit_word_list_page_name"
+            android:screenOrientation="portrait"/>
         <activity android:name=".results" />
         <activity
             android:name=".menutest2"

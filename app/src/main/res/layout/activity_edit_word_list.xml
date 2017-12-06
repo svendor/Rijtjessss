@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.absontwikkeling.rijtjes.editWordList">
 
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75"/>
+
     <EditText
         android:id="@+id/tableNameET"
         android:layout_width="wrap_content"
@@ -22,43 +30,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:onClick="updateList"
-        android:text="SAVE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp" />
-
-    <Button
-        android:id="@+id/addRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:onClick="addRow"
-        android:text="Voeg rij toe"
-        app:layout_constraintBottom_toTopOf="@+id/save"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp" />
-
-    <Button
-        android:id="@+id/removeRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="7dp"
-        android:onClick="removeRow"
-        android:text="Verwijder RIj"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/displayListButton" />
-
     <LinearLayout
+        android:id="@+id/editwordlistLinearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -69,7 +42,9 @@
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableNameET">
+        app:layout_constraintTop_toBottomOf="@id/tableNameET"
+        app:layout_constraintBottom_toTopOf="@id/guideline">
+
 
         <ScrollView
             android:layout_width="0dp"
@@ -105,22 +80,61 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/addRow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:onClick="addRow"
         android:text="Voeg rij toe"
         app:layout_constraintBottom_toTopOf="@+id/save"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:onClick="updateList"
+        android:text="SAVE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:onClick="questionTheList"
+        android:text="Overhoor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <Button
+        android:id="@+id/removeRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:onClick="removeRow"
+        android:text="Verwijder Rij"
+        app:layout_constraintBottom_toTopOf="@+id/displayListButton"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/displayListButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -132,16 +146,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:onClick="questionTheList"
-        android:text="OVerhoor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

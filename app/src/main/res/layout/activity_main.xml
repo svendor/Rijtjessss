@@ -23,7 +23,7 @@
         app:layout_constraintHorizontal_bias="0.501" />
     <!-- Knop die mij naar het activity_menutest_menutest.xml zou moeten brengen... -->
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button3"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

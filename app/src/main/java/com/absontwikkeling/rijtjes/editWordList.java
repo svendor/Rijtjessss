@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,6 +60,7 @@ public class editWordList extends AppCompatActivity {
 
             // Creates edittext fields + integer that contains the amount of fields
             entryAmount = showList(c, listIndex);
+            setLinearLayout();
             c.close();
         } catch (SQLiteException e) {
             if (e.getMessage().contains("no such table")) {
@@ -106,6 +108,22 @@ public class editWordList extends AppCompatActivity {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
+
+    private void setLinearLayout() {
+
+        // Gets linearlayout
+        LinearLayout layout = (LinearLayout) findViewById(R.id.editwordlistLinearLayout);
+        // Gets the layout params that will allow you to resize the layout
+        ViewGroup.LayoutParams params = layout.getLayoutParams();
+        // Changes the height and width to the specified *pixels*
+        params.height = (int) (getScreenHeight()*0.60);
+        params.width = (int) (getScreenWidth()*0.60);
+        layout.setLayoutParams(params);
+
+    }
+
+
+
     private int showList(Cursor c, int[] listIndex) {
         // Find layouts
         linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
@@ -121,7 +139,7 @@ public class editWordList extends AppCompatActivity {
                 queET.setHeight(145);
                 LinearLayout.LayoutParams paramsQ = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                      LinearLayout.LayoutParams.MATCH_PARENT);
+                      LinearLayout.LayoutParams.WRAP_CONTENT);
                 paramsQ.setMargins(0, 0, 0, 10);
                 queET.setLayoutParams(paramsQ);
                 queET.setGravity(8);
@@ -139,7 +157,7 @@ public class editWordList extends AppCompatActivity {
                 ansET.setHeight(145);
                 LinearLayout.LayoutParams paramsA = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
                 paramsA.setMargins(0, 0, 0, 10);
                 ansET.setLayoutParams(paramsA);
                 ansET.setGravity(8);
@@ -167,7 +185,7 @@ public class editWordList extends AppCompatActivity {
         queET.setHeight(145);
         LinearLayout.LayoutParams paramsQ = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams.WRAP_CONTENT);
         paramsQ.setMargins(0, 0, 0, 10);
         queET.setLayoutParams(paramsQ);
         queET.setGravity(8);
@@ -185,7 +203,7 @@ public class editWordList extends AppCompatActivity {
         ansET.setHeight(145);
         LinearLayout.LayoutParams paramsA = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams.WRAP_CONTENT);
         paramsA.setMargins(0, 0, 0, 10);
         ansET.setLayoutParams(paramsA);
         ansET.setGravity(8);
