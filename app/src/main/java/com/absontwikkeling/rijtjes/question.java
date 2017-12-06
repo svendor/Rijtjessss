@@ -2,6 +2,7 @@ package com.absontwikkeling.rijtjes;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,18 +21,20 @@ import android.widget.TextView;
 public class question extends AppCompatActivity {
 
     DBAdapter dbAdapter;
+    public static int[] settings = new int[2];
     public static int currentQuestion;
     public static int amountCorrect;
     public static String[][] wordList;
     public static String table_name;
+    public static boolean capitals;
+    public static boolean whitespace;
 
     public ConstraintLayout conLayout;
 
-    public TextView question;
     public EditText inputString;
-    public CheckBox capitals;
-    public CheckBox whitespace;
+    public TextView question;
     public TextView feedback;
+    public TextView grade;
 
 
     @Override
@@ -45,13 +48,26 @@ public class question extends AppCompatActivity {
 
         question = (TextView) findViewById(R.id.questionTextView);
         inputString = (EditText) findViewById(R.id.inputString);
-        capitals = (CheckBox) findViewById(R.id.capitals);
-        whitespace = (CheckBox) findViewById(R.id.whitespace);
-        feedback = (TextView) findViewById(R.id.questionOutput);
+        feedback = (TextView) findViewById(R.id.GFFeedback);
+        grade = (TextView) findViewById(R.id.grade);
 
         // Gets information from intent
         Intent i = getIntent();
         table_name = i.getStringExtra("tableName");
+        settings = i.getIntArrayExtra("settings");
+
+        //Translates settings from integer to relevant data-type
+        if (settings[0] == 1) {
+            capitals = true;
+        } else {
+            capitals = false;
+        }
+
+        if (settings[1] == 1) {
+            whitespace = true;
+        } else {
+            whitespace = false;
+        }
 
         // Get's query
         Cursor c = dbAdapter.getAllRows(table_name);
@@ -134,6 +150,8 @@ public class question extends AppCompatActivity {
 
         if (wordList[0][currentQuestion-1] != null) {
             question.setText("Vraag #" + currentQuestion + ": " + wordList[0][currentQuestion-1]);
+            double d = setGrade();
+            grade.setText("Jouw huidige cijfer is: " + d);
         } else {
             Intent i = new Intent(this, results.class);
             int[] scorePoints = new int[2];
@@ -145,6 +163,14 @@ public class question extends AppCompatActivity {
         }
     }
 
+    public double setGrade() {
+        int i = amountCorrect;
+        int j = currentQuestion-1;
+        double temp = (double)i/j;
+        double score = temp*9d+1d;
+        return (double)Math.round(score * 10d)/10d;
+    }
+
     // Sets up the listener for the button, which checks the answer and does nothing.
     private void setupCheckAnswerButton(){
         Button ansButton = (Button) findViewById(R.id.checkAnswer);
@@ -152,13 +178,15 @@ public class question extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                if (checkAnswer(inputString.getText().toString(), wordList[1][currentQuestion-1], capitals.isChecked(), whitespace.isChecked())) {
+                if (checkAnswer(inputString.getText().toString(), wordList[1][currentQuestion-1], capitals, whitespace)) {
                     amountCorrect++;
+                    feedback.setText("Jouw antwoord was goed!");
+                    feedback.setTextColor(Color.GREEN);
                     nextQuestion();
-                    feedback.setText(amountCorrect + " goed!");
                 } else {
+                    feedback.setText("Het goede antwoord was: '" + wordList[1][currentQuestion-1] + "'");
+                    feedback.setTextColor(Color.RED);
                     nextQuestion();
-                    feedback.setText("Fout!");
                 }
             }
         });

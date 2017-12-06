@@ -128,7 +128,7 @@ public class displayList extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if (radioState == 0) {
-                            Intent i = new Intent(displayList.this, question.class);
+                            Intent i = new Intent(displayList.this, settings.class);
                             i.putExtra("tableName", tableName);
                             startActivity(i);
 
