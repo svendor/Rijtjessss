@@ -185,8 +185,8 @@ public class editWordList extends AppCompatActivity {
         EditText ansET = new EditText(this);
         ansET.setId(generateViewId());
         ansET.setText("");
-        ansET.setHeight(100);
-        ansET.setWidth(2000);
+        ansET.setHeight(150);
+        ansET.setWidth(10000);
         LinearLayout.LayoutParams paramsA = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);

@@ -52,19 +52,10 @@ public class DBAdapter {
 
     // ############### Public methods: #################
 
-    // Create mainTable if it doesn't exist yet
-    public void createTableMain() {
-        db.execSQL("create table if not exists " + MAIN_TABLE_NAME + " ("
-                + KEY_ROWID_MAIN + " integer primary key autoincrement, "
-                + KEY_TABLE_NAME_MAIN + " string not null);");
-    }
-
-    // Create table for wordList
-    public void createTable(String tableName) {
-        db.execSQL("create table if not exists '" + tableName.replaceAll("\\s", "_") + "' ("
-                + KEY_ROWID + " integer primary key autoincrement, "
-                + KEY_QUESTION + " string not null, "
-                + KEY_ANSWER + " string not null);");
+    // Open the database connection.
+    public DBAdapter open() {
+        db = myDBHelper.getWritableDatabase();
+        return this;
     }
 
     public DBAdapter(Context ctx) {
@@ -72,15 +63,18 @@ public class DBAdapter {
         myDBHelper = new DatabaseHelper(context);
     }
 
-    // Open the database connection.
-    public DBAdapter open() {
-        db = myDBHelper.getWritableDatabase();
-        return this;
-    }
-
     // Close the database connection.
     public void close() {
         myDBHelper.close();
+    }
+
+    // ############## mainDB table ##############
+
+    // Create mainTable if it doesn't exist yet
+    public void createTableMain() {
+        db.execSQL("create table if not exists " + MAIN_TABLE_NAME + " ("
+                + KEY_ROWID_MAIN + " integer primary key autoincrement, "
+                + KEY_TABLE_NAME_MAIN + " string not null);");
     }
 
     // Add a new set of values to the mainTable
@@ -89,6 +83,50 @@ public class DBAdapter {
         values.put(KEY_TABLE_NAME_MAIN, tableName);
 
         return db.insert(MAIN_TABLE_NAME, null, values);
+    }
+
+    // Delete a row from mainTable, by tableName
+    public void deleteRowMain(String tableName) {
+        db.execSQL("DELETE FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + "='" + tableName + "';");
+    }
+
+    // Check if a row in mainTable exists
+    public boolean existsMain(String table_name) {
+        Cursor c = db.rawQuery("SELECT * FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + " = '" + table_name + "'", null);
+        boolean exist = (c.getCount() > 0);
+        c.close();
+        return exist;
+    }
+
+    public Cursor getRowMain(String tableName) {
+        String where = KEY_TABLE_NAME_MAIN + "=" + tableName;
+        Cursor c = db.query(true, tableName, ALL_KEYS_MAIN,
+                where, null, null, null, null, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+        return c;
+    }
+
+    // Get's all rows from mainTable
+    public Cursor getAllRowsMain() {
+        String where = null;
+        Cursor c = db.query(true, MAIN_TABLE_NAME, ALL_KEYS_MAIN,
+                where, null, null, null, null, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+        return c;
+    }
+
+    // ############ wordList tables ################
+
+    // Create table for wordList
+    public void createTable(String tableName) {
+        db.execSQL("create table if not exists '" + tableName.replaceAll("\\s", "_") + "' ("
+                + KEY_ROWID + " integer primary key autoincrement, "
+                + KEY_QUESTION + " string not null, "
+                + KEY_ANSWER + " string not null);");
     }
 
     // Add a new set of values to the database.
@@ -109,11 +147,6 @@ public class DBAdapter {
         return db.delete(tableName.replaceAll("\\s", "_"), row_ID, null) != 0;
     }
 
-    // Delete a row from mainTable, by tableName
-    public void deleteRowMain(String tableName) {
-        db.execSQL("DELETE FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + "='" + tableName + "';");
-    }
-
     // Deletes a table
     public void deleteAll(String tableName) {
         Cursor c = getAllRows(tableName.replaceAll("\\s", "_"));
@@ -127,39 +160,9 @@ public class DBAdapter {
         //db.delete(tableName, null, null);
     }
 
-    // Check if a row in mainTable exists
-    public boolean existsMain(String table_name) {
-        Cursor c = db.rawQuery("SELECT * FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + " = '" + table_name + "'", null);
-        boolean exist = (c.getCount() > 0);
-        c.close();
-        return exist;
-    }
-
-    // Get's all rows from mainTable
-    public Cursor getAllRowsMain() {
-        String where = null;
-        Cursor c = db.query(true, MAIN_TABLE_NAME, ALL_KEYS_MAIN,
-                where, null, null, null, null, null);
-        if (c != null) {
-            c.moveToFirst();
-        }
-        return c;
-    }
-
     // Return all data in the table.
     public Cursor getAllRows(String tableName) {
         Cursor c = db.rawQuery("SELECT * FROM ["+tableName.replaceAll("\\s", "_")+"]", null);
-        if (c != null) {
-            c.moveToFirst();
-        }
-        return c;
-    }
-
-
-    public Cursor getRowMain(String tableName) {
-        String where = KEY_TABLE_NAME_MAIN + "=" + tableName;
-        Cursor c = db.query(true, tableName, ALL_KEYS_MAIN,
-                where, null, null, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }
