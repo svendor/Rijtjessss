@@ -34,18 +34,24 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />  -->
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    -->
 
 
-
-    <style name="AppTheme.button" parent="Widget.AppCompat.Button.Borderless" >
+    <style name="AppTheme.button" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:maxHeight">50dp</item>
         <item name="android:maxWidth">200dp</item>
-        </style>
+    </style>
 
     <style name="AppTheme.button.2" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="android:textColor">@color/displaylisttextcolor</item>
+    </style>
+
+    <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">#Shit
+        voor HETFUCKINGMENU
+        <item name="spinBars">false</item>
+        <item name="color">@android:color/white</item>
     </style>
 
 </resources>

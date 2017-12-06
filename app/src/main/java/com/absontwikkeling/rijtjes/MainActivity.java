@@ -14,6 +14,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Creates button
+
     private void setupQuestionButtonListener(){
         Button b = (Button) findViewById(R.id.createListButton);
 
@@ -36,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void displayListButton(View v) {
         Intent i = new Intent(this, displayList.class);
+        startActivity(i);
+    }
+
+    public void menutestButton(View v) {
+        Intent i = new Intent(this, menutest2.class);
         startActivity(i);
     }
 

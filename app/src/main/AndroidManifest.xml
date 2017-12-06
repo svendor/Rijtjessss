@@ -34,7 +34,11 @@
         <activity
             android:name=".editWordList"
             android:label="@string/edit_word_list_page_name" />
-        <activity android:name=".results"></activity>
+        <activity android:name=".results" />
+        <activity
+            android:name=".menutest2"
+            android:label="@string/title_activity_menutest2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

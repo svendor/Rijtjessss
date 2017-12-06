@@ -3,21 +3,25 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_enter"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/Input" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_check"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/Check" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_practise"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/Practice" />
         <item
+            android:id="@+id/nav_test"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/Essay" />
+        <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
-            android:title="@string/Essay" />
+            android:title="@string/action_settings" />
     </group>
 
     <item android:title="@string/Extras">
