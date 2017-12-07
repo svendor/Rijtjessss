@@ -21,7 +21,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintHorizontal_bias="0.501" />
-    <!-- Knop die mij naar het activity_menutest_menutest.xml zou moeten brengen... -->
+
     <Button
         android:id="@+id/button3"
         style="@style/Widget.AppCompat.Button.Borderless"
@@ -29,11 +29,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:onClick="menutestButton"
-        android:text="Menu test"
+        android:onClick="menutest3Button"
+        android:text="Menu test 3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="108dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintHorizontal_bias="0.501" />
 

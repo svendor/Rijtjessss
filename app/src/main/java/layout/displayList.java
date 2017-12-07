@@ -1,41 +1,50 @@
-package com.absontwikkeling.rijtjes;
+package layout;
+
 
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.Rect;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.absontwikkeling.rijtjes.DBAdapter;
+import com.absontwikkeling.rijtjes.MainActivity;
+import com.absontwikkeling.rijtjes.R;
+import com.absontwikkeling.rijtjes.displayListACTIVITY;
+import com.absontwikkeling.rijtjes.editWordListACTIVITY;
+import com.absontwikkeling.rijtjes.settings;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-// TODO: Sort the code
-// TODO: Explain code better
-// TODO: Add change strings to @String rescources
-
-public class displayList extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class displayList extends Fragment {
 
     DBAdapter DLdbAdapter;
     LinearLayout linearLayoutList;
     public static int radioState;
     // TextView showList;
 
+    public displayList() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_display_list, container, false);
+    }
+
+    // TODO Java fixen voor het displayList fragment
+    /**
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +61,7 @@ public class displayList extends AppCompatActivity {
         linearLayoutList = (LinearLayout) findViewById(R.id.displayListLinearLayout);
         createButtonListInLayout(DLdbAdapter.getAllRowsMain());
     }
+
 
     @Override
     protected void onDestroy() {
@@ -74,6 +84,7 @@ public class displayList extends AppCompatActivity {
         DLdbAdapter.close();
     }
 
+    */
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
@@ -104,7 +115,8 @@ public class displayList extends AppCompatActivity {
                 break;
         }
     }
-
+    // TODO Java fixen voor het displayList fragment
+/*
     private void createButtonListInLayout(Cursor c) {
         if (c.moveToFirst()) {
             do {
@@ -128,14 +140,17 @@ public class displayList extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if (radioState == 0) {
-                            Intent i = new Intent(displayList.this, settings.class);
+                            Intent i = new Intent(displayListACTIVITY.this, settings.class);
                             i.putExtra("tableName", tableName);
                             startActivity(i);
 
                         } else if (radioState == 1) {
-                            Intent i = new Intent(displayList.this, editWordList.class);
+                            Intent i = new Intent(displayListACTIVITY.this, editWordListACTIVITY.class);
                             i.putExtra("tableName", tableName);
                             startActivity(i);
+
+
+                        }
 
                         } else if (radioState == 2) {
                             DLdbAdapter.deleteAll(tableName);
@@ -143,15 +158,20 @@ public class displayList extends AppCompatActivity {
                             finish();
                             startActivity(getIntent());
                         }
+
                     }
                 };
+
                 button.setOnClickListener(buttonListener);
 
                 // Add button to activity
                 linearLayoutList.addView(button);
+
             } while(c.moveToNext());
         }
+
     }
+    */
 
     /*
     ################### Function to check if main table works ###########################

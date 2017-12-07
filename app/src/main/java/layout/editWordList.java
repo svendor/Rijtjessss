@@ -1,18 +1,23 @@
-package com.absontwikkeling.rijtjes;
+package layout;
+
 
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.absontwikkeling.rijtjes.DBAdapter;
+import com.absontwikkeling.rijtjes.R;
+import com.absontwikkeling.rijtjes.displayListACTIVITY;
+import com.absontwikkeling.rijtjes.question;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,8 +25,26 @@ import java.util.concurrent.atomic.AtomicInteger;
 // TODO: Explain code better
 // TODO: Add change strings to @String rescources
 
-public class editWordList extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class editWordList extends Fragment {
 
+
+    public editWordList() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_edit_word_list, container, false);
+    }
+
+    //TODO Vol met errortjes, moet worden gefixt.
+/* FIXEN
     TextView debugListTV;
     EditText tableNameET;
     DBAdapter dbAdapter;
@@ -53,11 +76,11 @@ public class editWordList extends AppCompatActivity {
         try {
             // Finds query
             Cursor c = dbAdapter.getAllRows(table_name);
-
+*/
             // Tests if the cursor returns correct table
             /* String text = table_name + "\n" + displayQuery(c);
                debugListTV.setText(text); */
-
+/*
             // Creates edittext fields + integer that contains the amount of fields
             entryAmount = showList(c, listIndex);
             setLinearLayout();
@@ -139,7 +162,7 @@ public class editWordList extends AppCompatActivity {
                 queET.setHeight(145);
                 LinearLayout.LayoutParams paramsQ = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                      LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
                 paramsQ.setMargins(0, 0, 0, 10);
                 queET.setLayoutParams(paramsQ);
                 queET.setGravity(8);
@@ -269,7 +292,7 @@ public class editWordList extends AppCompatActivity {
     }
 
     public void displayListButton(View v) {
-        Intent i = new Intent(this, displayList.class);
+        Intent i = new Intent(this, displayListACTIVITY.class);
         startActivity(i);
     }
 
@@ -290,4 +313,5 @@ public class editWordList extends AppCompatActivity {
         return message;
     }
 
+    */
 }

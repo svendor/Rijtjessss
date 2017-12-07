@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,20 +14,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-// TODO: Sort the code
-// TODO: Explain code better
-// TODO: Add change strings to @String rescources
+import layout.About;
+import layout.createList;
+import layout.displayList;
 
-public class HETFUCKINGMENU extends AppCompatActivity
+public class NavMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    // TODO: MAKE IT WORK
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hetfuckingmenu);
+        setContentView(R.layout.activity_nav_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -62,7 +62,7 @@ public class HETFUCKINGMENU extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.hetfuckingmenu, menu);
+        getMenuInflater().inflate(R.menu.nav_menu, menu);
         return true;
     }
 
@@ -88,21 +88,25 @@ public class HETFUCKINGMENU extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_enter) {
-            Intent i = new Intent(this, createList.class);
-            startActivity(i);
+            createList createList = new createList();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_fragment, createList).commit();
         } else if (id == R.id.nav_check) {
-            Intent i = new Intent(this, displayList.class);
-            startActivity(i);
+            displayList displayList = new displayList();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_fragment, displayList).commit();
         } else if (id == R.id.nav_practise) {
-
+            Toast.makeText(this, "Trial and error, is er nog niet", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_test){
-
+            Toast.makeText(this, "For real, is er nog niet", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_manage) {
-
+            Toast.makeText(this, "Verdeel en heers, is er nog niet", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            Toast.makeText(this, "Uw Facebook account is gehackt", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_about) {
+            About About = new About();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_fragment, About).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -110,31 +114,4 @@ public class HETFUCKINGMENU extends AppCompatActivity
         return true;
     }
 
-    /**@Override**/
-    public boolean setonItemClickListener(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_enter) {
-            Intent i = new Intent(this, createList.class);
-            startActivity(i);
-        } else if (id == R.id.nav_check) {
-            Intent i = new Intent(this, displayList.class);
-            startActivity(i);
-        } else if (id == R.id.nav_practise) {
-
-        } else if (id == R.id.nav_test){
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

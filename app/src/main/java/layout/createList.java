@@ -1,18 +1,42 @@
-package com.absontwikkeling.rijtjes;
+package layout;
+
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.absontwikkeling.rijtjes.DBAdapter;
+import com.absontwikkeling.rijtjes.R;
+import com.absontwikkeling.rijtjes.displayListACTIVITY;
+import com.absontwikkeling.rijtjes.questionObj;
 
 // TODO: Sort the code
 // TODO: Explain code better
 // TODO: Add change strings to @String rescources
 
-public class createList extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class createList extends Fragment {
+
+
+    public createList() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_create_list, container, false);
+    }
 
     TextView debugTV;
     EditText questionWord;
@@ -20,6 +44,8 @@ public class createList extends AppCompatActivity {
     EditText tableName;
     DBAdapter dbAdapter;
 
+    // TODO Java fixen voor het createList fragment
+    /** DOET HET NIET
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +56,10 @@ public class createList extends AppCompatActivity {
         questionWord = (EditText) findViewById(R.id.questionWord);
         answerWord = (EditText) findViewById(R.id.answerWord);
     }
+     */
 
+    /*
+    // TODO FIX die Java
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -59,7 +88,7 @@ public class createList extends AppCompatActivity {
     }
 
     public void finishList(View v) {
-        Intent i = new Intent(this, displayList.class);
+        Intent i = new Intent(this, displayListACTIVITY.class);
         dbAdapter.createTableMain();
         String table_name = tableName.getText().toString();
         dbAdapter.createTable(table_name);
@@ -81,7 +110,7 @@ public class createList extends AppCompatActivity {
     public void onClick_deleteCurrentList(View v) {
         dbAdapter.deleteAll(tableName.getText().toString());
         dbAdapter.deleteRowMain(tableName.getText().toString());
-        Intent i = new Intent(this, displayList.class);
+        Intent i = new Intent(this, displayListACTIVITY.class);
         startActivity(i);
     }
 
@@ -105,5 +134,5 @@ public class createList extends AppCompatActivity {
         cursor.close();
         return message;
     }
-
+    */
 }

@@ -19,28 +19,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".createList"
+            android:name=".createListACTIVITY"
             android:label="@string/create_list_page_name" />
         <activity
-            android:name=".displayList"
+            android:name=".displayListACTIVITY"
             android:label="@string/display_list_page_name" />
         <activity
             android:name=".question"
             android:label="@string/question_page_name" />
         <activity
-            android:name=".HETFUCKINGMENU"
-            android:label="@string/title_activity_hetfuckingmenu"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".editWordList"
+            android:name=".editWordListACTIVITY"
             android:label="@string/edit_word_list_page_name"
             android:screenOrientation="portrait"/>
         <activity android:name=".results" />
+        <activity android:name=".settings" />
         <activity
-            android:name=".menutest2"
-            android:label="@string/title_activity_menutest2"
+            android:name=".NavMenu"
+            android:label="@string/title_activity_nav_menu"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".settings"></activity>
     </application>
 
 </manifest>

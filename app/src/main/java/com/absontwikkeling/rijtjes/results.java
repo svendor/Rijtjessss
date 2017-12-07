@@ -54,7 +54,7 @@ public class results extends AppCompatActivity {
     }
 
     public void displayListButton(View v) {
-        Intent i = new Intent(this, displayList.class);
+        Intent i = new Intent(this, displayListACTIVITY.class);
         startActivity(i);
     }
 
