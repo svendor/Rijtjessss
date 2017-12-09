@@ -12,8 +12,11 @@
         android:id="@+id/relativelayout_fragment"
         android:layout_width="344dp"
         android:layout_height="495dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteY="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent">
 
 <!-- Hier kunnen XML elementen worden toegevoegd die altijd zichtbaar zijn in de NavMenu activity, bovenop de fragmenten dus. -->
 

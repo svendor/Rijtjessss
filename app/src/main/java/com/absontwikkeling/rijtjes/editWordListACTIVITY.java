@@ -266,11 +266,6 @@ public class editWordListACTIVITY extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void displayListButton(View v) {
-        Intent i = new Intent(this, displayListACTIVITY.class);
-        startActivity(i);
-    }
-
     private String displayQuery(Cursor cursor) {
         String message = "";
         if (cursor.moveToFirst()) {

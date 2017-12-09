@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +31,17 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class editWordList extends Fragment {
 
+    View rootView;
+    TextView debugListTV;
+    EditText tableNameET;
+    DBAdapter dbAdapter;
+    LinearLayout linearLayoutQuestion;
+    LinearLayout linearLayoutAnswer;
+    public static int entryAmount = 0;
+    public static int[] listIndex = new int[2000];
+    public static String table_name;
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
+
 
     public editWordList() {
         // Required empty public constructor
@@ -40,47 +52,34 @@ public class editWordList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_word_list, container, false);
-    }
-
-    //TODO Vol met errortjes, moet worden gefixt.
-/* FIXEN
-    TextView debugListTV;
-    EditText tableNameET;
-    DBAdapter dbAdapter;
-    LinearLayout linearLayoutQuestion;
-    LinearLayout linearLayoutAnswer;
-    public static int entryAmount = 0;
-    public static int[] listIndex = new int[2000];
-    public static String table_name;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_word_list);
-
-        // Opens database
+        View rootView =  inflater.inflate(R.layout.fragment_edit_word_list, container, false);
+        // Opens Database
         openDB();
 
-        // Gets information from intent
-        Intent i = getIntent();
-        table_name = i.getStringExtra("tableName");
+        Bundle bundle = this.getArguments();
+        table_name = bundle.getString("tableName");
 
         // Defines tableNameET view
-        tableNameET = (EditText) findViewById(R.id.tableNameET);
+        tableNameET = (EditText) rootView.findViewById(R.id.tableNameET);
         tableNameET.setText(table_name);
 
-        // Defines Debug Textview
-        // debugListTV = (TextView) findViewById(R.id.debugListTV);
+        Button addRow = (Button) rootView.findViewById(R.id.addRowButton);
+        addRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addRow();
+            }
+        });
 
         try {
             // Finds query
             Cursor c = dbAdapter.getAllRows(table_name);
-*/
+
             // Tests if the cursor returns correct table
             /* String text = table_name + "\n" + displayQuery(c);
                debugListTV.setText(text); */
-/*
+
+
             // Creates edittext fields + integer that contains the amount of fields
             entryAmount = showList(c, listIndex);
             setLinearLayout();
@@ -91,24 +90,23 @@ public class editWordList extends Fragment {
                 // TODO: REMOVE ALL BUTTONS IN THIS CASE
             }
         }
+
+        return rootView;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         closeDB();
     }
 
     private void openDB() {
-        dbAdapter = new DBAdapter(this);
+        dbAdapter = new DBAdapter(getContext());
         dbAdapter.open();
     }
 
     private void closeDB() {
         dbAdapter.close();
     }
-
-    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
     // https://stackoverflow.com/questions/1714297/android-view-setidint-id-programmatically-how-to-avoid-id-conflicts
     private static int generateViewId() {
@@ -131,11 +129,10 @@ public class editWordList extends Fragment {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-
     private void setLinearLayout() {
 
         // Gets linearlayout
-        LinearLayout layout = (LinearLayout) findViewById(R.id.editwordlistLinearLayout);
+        LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.editwordlistLinearLayout);
         // Gets the layout params that will allow you to resize the layout
         ViewGroup.LayoutParams params = layout.getLayoutParams();
         // Changes the height and width to the specified *pixels*
@@ -145,18 +142,16 @@ public class editWordList extends Fragment {
 
     }
 
-
-
     private int showList(Cursor c, int[] listIndex) {
         // Find layouts
-        linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
-        linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
+        linearLayoutAnswer = (LinearLayout) rootView.findViewById(R.id.answerLinearLayout);
+        linearLayoutQuestion = (LinearLayout) rootView.findViewById(R.id.questionLinearLayout);
 
         int i = 0;
         if (c.moveToFirst()) {
             do {
                 //Define question edittext
-                EditText queET = new EditText(this);
+                EditText queET = new EditText(getContext());
                 queET.setId(generateViewId());
                 queET.setText(c.getString(1));
                 queET.setHeight(145);
@@ -174,7 +169,7 @@ public class editWordList extends Fragment {
                 i++;
 
                 // Define answer edittext
-                EditText ansET = new EditText(this);
+                EditText ansET = new EditText(getContext());
                 ansET.setId(generateViewId());
                 ansET.setText(c.getString(2));
                 ansET.setHeight(145);
@@ -196,13 +191,13 @@ public class editWordList extends Fragment {
         return i;
     }
 
-    public void addRow(View v) {
+    public void addRow() {
         // Find layouts
-        linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
-        linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
+        linearLayoutAnswer = (LinearLayout) rootView.findViewById(R.id.answerLinearLayout);
+        linearLayoutQuestion = (LinearLayout) rootView.findViewById(R.id.questionLinearLayout);
 
         //Define question edittext
-        EditText queET = new EditText(this);
+        EditText queET = new EditText(getContext());
         queET.setId(generateViewId());
         queET.setText("");
         queET.setHeight(145);
@@ -220,7 +215,7 @@ public class editWordList extends Fragment {
         entryAmount++;
 
         // Define answer edittext
-        EditText ansET = new EditText(this);
+        EditText ansET = new EditText(getContext());
         ansET.setId(generateViewId());
         ansET.setText("");
         ansET.setHeight(145);
@@ -238,13 +233,13 @@ public class editWordList extends Fragment {
         entryAmount++;
     }
 
-    public void removeRow(View v) {
+    public void removeRow() {
         // Find layouts
-        linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
-        linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
+        linearLayoutAnswer = (LinearLayout) rootView.findViewById(R.id.answerLinearLayout);
+        linearLayoutQuestion = (LinearLayout) rootView.findViewById(R.id.questionLinearLayout);
 
         //Define question edittext
-        EditText queET = (EditText) findViewById(listIndex[entryAmount-1]);
+        EditText queET = (EditText) rootView.findViewById(listIndex[entryAmount-1]);
         queET.setVisibility(View.GONE);
 
         // Remove EditText ID's
@@ -252,7 +247,7 @@ public class editWordList extends Fragment {
         entryAmount--;
 
         // Define answer edittext
-        EditText ansET = (EditText) findViewById(listIndex[entryAmount-1]);
+        EditText ansET = (EditText) rootView.findViewById(listIndex[entryAmount-1]);
         ansET.setVisibility(View.GONE);
 
         // Remove EditText ID's
@@ -260,7 +255,7 @@ public class editWordList extends Fragment {
         entryAmount--;
     }
 
-    public void updateList(View v) {
+    public void updateList() {
         dbAdapter.deleteAll(table_name);
         dbAdapter.deleteRowMain(table_name);
 
@@ -274,10 +269,10 @@ public class editWordList extends Fragment {
 
         int i = 0;
         do {
-            EditText queET = (EditText) findViewById(listIndex[i]);
+            EditText queET = (EditText) rootView.findViewById(listIndex[i]);
             String question = queET.getText().toString();
             i++;
-            EditText ansET = (EditText) findViewById((listIndex[i]));
+            EditText ansET = (EditText) rootView.findViewById((listIndex[i]));
             String answer = ansET.getText().toString();
             i++;
 
@@ -285,33 +280,14 @@ public class editWordList extends Fragment {
         } while (i < entryAmount);
     }
 
-    public void questionTheList(View v) {
-        Intent i = new Intent(this, question.class);
+    public void questionTheList() {
+        Intent i = new Intent(getActivity(), question.class);
         i.putExtra("tableName", table_name);
         startActivity(i);
     }
 
-    public void displayListButton(View v) {
-        Intent i = new Intent(this, displayListACTIVITY.class);
+    public void displayListButton() {
+        Intent i = new Intent(getActivity(), displayListACTIVITY.class);
         startActivity(i);
     }
-
-    private String displayQuery(Cursor cursor) {
-        String message = "";
-        if (cursor.moveToFirst()) {
-            do {
-                // Process the data:
-                String question = cursor.getString(DBAdapter.COL_QUESTION);
-                String answer = cursor.getString(DBAdapter.COL_ANSWER);
-
-                // Append data to the message:
-                message += "Vraag = " + question
-                        +", Antwoord = " + answer
-                        +"\n";
-            } while(cursor.moveToNext());
-        }
-        return message;
-    }
-
-    */
 }
