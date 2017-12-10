@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Verijderen"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="@dimen/mediumtextsize"/>
+                android:textSize="@dimen/mediumtextsize" />
         </RadioGroup>
 
     </android.support.constraint.ConstraintLayout>

@@ -106,7 +106,6 @@ public class editWordListACTIVITY extends AppCompatActivity {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-
     private void setLinearLayout() {
 
         // Gets linearlayout
@@ -119,8 +118,6 @@ public class editWordListACTIVITY extends AppCompatActivity {
         layout.setLayoutParams(params);
 
     }
-
-
 
     private int showList(Cursor c, int[] listIndex) {
         // Find layouts

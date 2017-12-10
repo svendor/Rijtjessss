@@ -33,21 +33,22 @@ import com.absontwikkeling.rijtjes.settings;
 public class displayList extends Fragment {
 
     DBAdapter DLdbAdapter;
+    View view;
     LinearLayout linearLayoutList;
     public static int radioState;
     // TextView showList;
-    View view;
 
     public displayList() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_display_list, container, false);
+
+        setScrollView();
 
         // Debugging for displayQuery()
         // showList = (TextView) findViewById(R.id.showList);
@@ -83,6 +84,26 @@ public class displayList extends Fragment {
         createButtonListInLayout(DLdbAdapter.getAllRowsMain());
 
         return view;
+    }
+
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    public void setScrollView() {
+        // Gets scrollView
+        ScrollView scrollView = view.findViewById(R.id.scrollView2);
+        // Gets the layout params that will allow you to resize the layout
+        ViewGroup.LayoutParams params = scrollView.getLayoutParams();
+        // Changes the height and width to the specified *pixels*
+        params.height = (int) (getScreenHeight()*0.60);
+        params.width = (int) (getScreenWidth()*0.60);
+        scrollView.setLayoutParams(params);
+
     }
 
     public void onDestroyView() {
