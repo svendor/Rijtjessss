@@ -12,6 +12,7 @@ public class settings extends AppCompatActivity {
     public static String tableName;
     CheckBox whitespace;
     CheckBox capitals;
+    // CheckBox direction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class settings extends AppCompatActivity {
 
         whitespace = (CheckBox) findViewById(R.id.whitespaceCB);
         capitals = (CheckBox) findViewById(R.id.capitalsCB);
+        // direction = (CheckBox) findViewById(R.id.directionCB);
 
         Intent i = getIntent();
         tableName = i.getStringExtra("tableName");

@@ -218,21 +218,23 @@ public class editWordListACTIVITY extends AppCompatActivity {
         linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
         linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
 
-        //Define question edittext
-        EditText queET = (EditText) findViewById(listIndex[entryAmount-1]);
-        queET.setVisibility(View.GONE);
+        if (entryAmount > 1) {
+            //Define question edittext
+            EditText queET = (EditText) findViewById(listIndex[entryAmount-1]);
+            queET.setVisibility(View.GONE);
 
-        // Remove EditText ID's
-        listIndex[entryAmount] = 0;
-        entryAmount--;
+            // Remove EditText ID's
+            listIndex[entryAmount] = 0;
+            entryAmount--;
 
-        // Define answer edittext
-        EditText ansET = (EditText) findViewById(listIndex[entryAmount-1]);
-        ansET.setVisibility(View.GONE);
+            // Define answer edittext
+            EditText ansET = (EditText) findViewById(listIndex[entryAmount-1]);
+            ansET.setVisibility(View.GONE);
 
-        // Remove EditText ID's
-        listIndex[entryAmount] = 0;
-        entryAmount--;
+            // Remove EditText ID's
+            listIndex[entryAmount] = 0;
+            entryAmount--;
+        }
     }
 
     public void updateList(View v) {
