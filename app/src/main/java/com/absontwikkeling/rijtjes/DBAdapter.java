@@ -149,15 +149,19 @@ public class DBAdapter {
 
     // Deletes a table
     public void deleteAll(String tableName) {
-        Cursor c = getAllRows(tableName.replaceAll("\\s", "_"));
+        /*Cursor c = getAllRows(tableName.replaceAll("\\s", "_"));
         long rowId = c.getColumnIndexOrThrow(KEY_ROWID);
         if (c.moveToFirst()) {
             do {
-                deleteRow(c.getLong((int) rowId), tableName.replaceAll("\\s", "_"));
+                deleteRow(c.getLong((int) rowId), tableName.replaceAll("\\s","_"));
             } while (c.moveToNext());
         }
-        c.close();
-        //db.delete(tableName, null, null);
+        c.close();*/
+        db.execSQL("TRUNCATE TABLE '" + tableName.replaceAll("\\s","_") + "';");
+    }
+
+    public void deleteTable(String tableName) {
+        db.execSQL("DROP TABLE IF EXISTS '" + tableName.replaceAll("\\s","_") + "';");
     }
 
     // Return all data in the table.
