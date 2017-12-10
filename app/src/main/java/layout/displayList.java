@@ -32,6 +32,7 @@ import com.absontwikkeling.rijtjes.settings;
 public class displayList extends Fragment {
 
     DBAdapter DLdbAdapter;
+    View view;
     LinearLayout linearLayoutList;
     public static int radioState;
     // TextView showList;
@@ -45,7 +46,7 @@ public class displayList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_display_list, container, false);
+        view = inflater.inflate(R.layout.fragment_display_list, container, false);
 
         // Debugging for displayQuery()
         // showList = (TextView) findViewById(R.id.showList);
@@ -130,8 +131,10 @@ public class displayList extends Fragment {
                             startActivity(i);
 
                         } else if (radioState == 2) {
-                            DLdbAdapter.deleteAll(tableName);
+                            DLdbAdapter.deleteTable(tableName);
                             DLdbAdapter.deleteRowMain(tableName);
+                            displayList fragment = (displayList) getFragmentManager().findFragmentById(R.id.relativelayout_fragment);
+                            getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
                         }
 
                     }

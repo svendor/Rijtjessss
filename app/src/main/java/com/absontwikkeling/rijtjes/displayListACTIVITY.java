@@ -125,7 +125,7 @@ public class displayListACTIVITY extends AppCompatActivity {
                             startActivity(i);
 
                         } else if (radioState == 2) {
-                            DLdbAdapter.deleteAll(tableName);
+                            DLdbAdapter.deleteTable(tableName);
                             DLdbAdapter.deleteRowMain(tableName);
                             finish();
                             startActivity(getIntent());
