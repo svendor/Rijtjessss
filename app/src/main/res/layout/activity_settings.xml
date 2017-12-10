@@ -6,25 +6,42 @@
     android:layout_height="match_parent"
     tools:context="com.absontwikkeling.rijtjes.settings">
 
+    <TextView
+        android:id="@+id/Overhoor_opties"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginLeft="@dimen/standard_margin"
+        android:text="@string/Overhoor_opties"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/bigtextsize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <CheckBox
         android:id="@+id/whitespaceCB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginLeft="@dimen/standard_margin"
         android:checked="true"
-        android:text="Let op spaties"
+        android:text="@string/Let_op_spaties"
+        android:textColor="@color/colorLightBlack"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/Overhoor_opties" />
 
     <CheckBox
         android:id="@+id/capitalsCB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginLeft="@dimen/standard_margin"
         android:checked="true"
-        android:text="Let op hoofdletters"
+        android:text="@string/Let_op_hoofdletter"
+        android:textColor="@color/colorLightBlack"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/whitespaceCB" />
 
@@ -32,11 +49,13 @@
         android:id="@+id/overhoor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:layout_marginLeft="@dimen/standard_margin"
+        android:layout_marginRight="@dimen/standard_margin"
         android:onClick="applySettings"
-        android:text="Overhoor"
+        android:text="@string/Overhoor"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/buttonteztsize_big"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

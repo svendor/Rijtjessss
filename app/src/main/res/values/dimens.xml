@@ -5,5 +5,10 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="bigtextsize">32sp</dimen>
+    <dimen name="mediumtextsize">16sp</dimen>
+    <dimen name="mediumbigtextsize">24sp</dimen>
+    <dimen name="buttonteztsize_big">16sp</dimen>
+    <dimen name="standard_margin">8dp</dimen>
 
 </resources>

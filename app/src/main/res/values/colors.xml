@@ -6,4 +6,5 @@
     <color name="jemoeder">#00FF00</color>
     <color name="colortext">#000000</color>
     <color name="displaylisttextcolor">#454545</color>
+    <color name="colorLightBlack">#454545</color>
 </resources>

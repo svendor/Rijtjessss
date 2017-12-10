@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 
 import com.absontwikkeling.rijtjes.DBAdapter;
 import com.absontwikkeling.rijtjes.MainActivity;
@@ -35,6 +36,7 @@ public class displayList extends Fragment {
     LinearLayout linearLayoutList;
     public static int radioState;
     // TextView showList;
+    View view;
 
     public displayList() {
         // Required empty public constructor
@@ -96,6 +98,7 @@ public class displayList extends Fragment {
     private void closeDB() {
         DLdbAdapter.close();
     }
+
 
     private void createButtonListInLayout(Cursor c) {
         if (c.moveToFirst()) {
