@@ -3,8 +3,11 @@
     <color name="colorPrimary">#F5F5F5</color>
     <color name="colorPrimaryDark">#E0E0E0</color>
     <color name="colorAccent">#00d5ff</color>
-    <color name="jemoeder">#00FF00</color>
+    <color name="colorAccentDark">#2b4bed</color>
+    <color name="colorGoed">#00ab00</color>
+    <color name="colorFout">#d6060a</color>
     <color name="colortext">#000000</color>
     <color name="displaylisttextcolor">#454545</color>
     <color name="colorLightBlack">#454545</color>
+    <color name="colorButton">#dd4b39</color>
 </resources>
