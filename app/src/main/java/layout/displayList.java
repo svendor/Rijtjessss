@@ -33,7 +33,6 @@ import com.absontwikkeling.rijtjes.settings;
 public class displayList extends Fragment {
 
     DBAdapter DLdbAdapter;
-    View view;
     LinearLayout linearLayoutList;
     public static int radioState;
     // TextView showList;
