@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="2dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:paddingBottom="5dp"
         android:text="ijtjes"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
