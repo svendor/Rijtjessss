@@ -27,7 +27,7 @@
         android:layout_marginStart="@dimen/standard_margin"
         android:layout_marginLeft="@dimen/standard_margin"
         android:onClick="displayListButton"
-        android:text="@string/Alle_lijsten"
+        android:text="@string/All_lists"
         android:textColor="@color/colorLightBlack"
         android:textSize="@dimen/buttonteztsize_big"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -20,18 +20,23 @@
     <string name="Share">Deel</string>
     <string name="title_activity_menutest2">Menutest2</string>
     <string name="title_activity_nav_menu">NavMenu :D</string>
-    <string name="Overhoor_opties">Overhoor opties</string>
-    <string name="Let_op_spaties">Let op spaties</string>
-    <string name="Let_op_hoofdletter">Let op hoofdletter</string>
-    <string name="Overhoor">Overhoor</string>
-    <string name="Check_antwoord">Check antwoord</string>
-    <string name="Jouw_antwoord">Jouw antwoord</string>
-    <string name="Alle_lijsten">Alle Lijsten</string>
+    <string name="Test_options">Overhoor opties</string>
+    <string name="Pay_attention_to_whitespaces">Let op spaties</string>
+    <string name="Pay_attention_to_capitle_letters">Let op hoofdletter</string>
+    <string name="Test">Overhoor</string>
+    <string name="Check_answer">Check antwoord</string>
+    <string name="Your_answer">Jouw antwoord</string>
+    <string name="All_lists">Alle Lijsten</string>
     <string name="Home">Home</string>
-    <string name="Maak_lijst">Maak lijst</string>
-    <string name="Naam_lijst">Naam lijst</string>
-    <string name="Aanpassen">Aanpassen</string>
-    <string name="Verijderen">Verwijderen</string>
+    <string name="Create_list">Maak lijst</string>
+    <string name="Name_list">Naam lijst</string>
+    <string name="Change">Aanpassen</string>
+    <string name="Delete">Verwijderen</string>
+    <string name="Add_row">Voeg rij toe</string>
+    <string name="Delete_row">Verwijder rij</string>
+    <string name="Save">Opslaan</string>
+
+
 
     <string name="About_us_text">Wij zijn Bas Cornelissen, Arun Mulder en Sven de Ronde. Wij zijn AWESOME!</string>
 

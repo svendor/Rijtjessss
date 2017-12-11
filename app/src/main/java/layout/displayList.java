@@ -100,8 +100,7 @@ public class displayList extends Fragment {
         // Gets the layout params that will allow you to resize the layout
         ViewGroup.LayoutParams params = scrollView.getLayoutParams();
         // Changes the height and width to the specified *pixels*
-        params.height = (int) (getScreenHeight()*0.60);
-        params.width = (int) (getScreenWidth()*0.60);
+        params.height = (int) (getScreenHeight()*0.75);
         scrollView.setLayoutParams(params);
 
     }

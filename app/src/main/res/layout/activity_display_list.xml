@@ -58,21 +58,21 @@
             android:duplicateParentState="true"
             android:focusable="auto"
             android:onClick="onRadioButtonClicked"
-            android:text="Overhoren" />
+            android:text="@string/Test" />
 
         <RadioButton
             android:id="@+id/editList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked"
-            android:text="Aanpassen" />
+            android:text="@string/Change" />
 
         <RadioButton
             android:id="@+id/deleteList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked"
-            android:text="Verwijderen" />
+            android:text="@string/Delete" />
     </RadioGroup>
 
 
