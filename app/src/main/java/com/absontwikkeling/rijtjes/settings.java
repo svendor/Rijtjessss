@@ -9,6 +9,9 @@ import android.widget.RadioButton;
 
 public class settings extends AppCompatActivity {
 
+    DBAdapter dbAdapter;
+    DBAdapter dbAdapterMain;
+
     public static int [] settings = new int[3];
     public static int radioState = 1;
     public static String tableName;
@@ -20,6 +23,8 @@ public class settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        openDB();
+
         whitespace = (CheckBox) findViewById(R.id.whitespaceCB);
         capitals = (CheckBox) findViewById(R.id.capitalsCB);
 
@@ -30,6 +35,19 @@ public class settings extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        closeDB();
+    }
+
+    private void openDB() {
+        dbAdapter = new DBAdapter(this, DBAdapter.DATABASE_NAME, DBAdapter.DATABASE_VERSION);
+        dbAdapter.open();
+        dbAdapterMain = new DBAdapter(this, DBAdapter.DATABASE_MAIN_NAME, DBAdapter.DATABASE_MAIN_VERSION);
+        dbAdapterMain.open();
+    }
+
+    private void closeDB() {
+        dbAdapter.close();
+        dbAdapterMain.close();
     }
 
     public void onRadioButtonClicked(View v) {

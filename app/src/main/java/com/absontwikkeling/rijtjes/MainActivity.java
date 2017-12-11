@@ -29,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent addQuestion = new Intent(MainActivity.this, createListACTIVITY.class);
+                Intent addQuestion = new Intent(MainActivity.this, NavMenu.class);
                 startActivity(addQuestion);
             }
         });
     }
 
     public void displayListButton(View v) {
-        Intent i = new Intent(this, displayListACTIVITY.class);
+        Intent i = new Intent(this, NavMenu.class);
         startActivity(i);
     }
 

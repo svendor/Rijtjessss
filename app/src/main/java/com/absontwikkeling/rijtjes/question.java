@@ -21,6 +21,7 @@ import android.widget.TextView;
 public class question extends AppCompatActivity {
 
     DBAdapter dbAdapter;
+    DBAdapter dbAdapterMain;
     public static int[] settings = new int[3];
     public static int currentQuestion;
     public static int amountCorrect;
@@ -92,12 +93,15 @@ public class question extends AppCompatActivity {
     }
 
     private void openDB() {
-        dbAdapter = new DBAdapter(this);
+        dbAdapter = new DBAdapter(this, DBAdapter.DATABASE_NAME, DBAdapter.DATABASE_VERSION);
         dbAdapter.open();
+        dbAdapterMain = new DBAdapter(this, DBAdapter.DATABASE_MAIN_NAME, DBAdapter.DATABASE_MAIN_VERSION);
+        dbAdapterMain.open();
     }
 
     private void closeDB() {
         dbAdapter.close();
+        dbAdapterMain.close();
     }
 
     public String[][] putInArray(Cursor c) {

@@ -19,12 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".createListACTIVITY"
-            android:label="@string/create_list_page_name" />
-        <activity
-            android:name=".displayListACTIVITY"
-            android:label="@string/display_list_page_name" />
-        <activity
             android:name=".question"
             android:label="@string/question_page_name" />
         <activity

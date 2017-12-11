@@ -23,6 +23,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
     TextView debugListTV;
     EditText tableNameET;
     DBAdapter dbAdapter;
+    DBAdapter dbAdapterMain;
     LinearLayout linearLayoutQuestion;
     LinearLayout linearLayoutAnswer;
     public static int entryAmount = 0;
@@ -75,12 +76,15 @@ public class editWordListACTIVITY extends AppCompatActivity {
     }
 
     private void openDB() {
-        dbAdapter = new DBAdapter(this);
+        dbAdapter = new DBAdapter(this, DBAdapter.DATABASE_NAME, DBAdapter.DATABASE_VERSION);
         dbAdapter.open();
+        dbAdapterMain = new DBAdapter(this, DBAdapter.DATABASE_MAIN_NAME, DBAdapter.DATABASE_MAIN_VERSION);
+        dbAdapterMain.open();
     }
 
     private void closeDB() {
         dbAdapter.close();
+        dbAdapterMain.close();
     }
 
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
@@ -236,12 +240,12 @@ public class editWordListACTIVITY extends AppCompatActivity {
 
     public void updateList(View v) {
         dbAdapter.deleteAll(table_name);
-        dbAdapter.deleteRowMain(table_name);
+        dbAdapterMain.deleteRowMain(table_name);
 
         table_name = tableNameET.getText().toString();
         dbAdapter.createTable(table_name);
-        if (!dbAdapter.existsMain(table_name)) {
-            dbAdapter.insertRowMain(table_name);
+        if (!dbAdapterMain.existsMain(table_name)) {
+            dbAdapterMain.insertRowMain(table_name);
         } else {
             dbAdapter.deleteAll(table_name);
         }

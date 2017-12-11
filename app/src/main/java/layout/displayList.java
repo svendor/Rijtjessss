@@ -1,29 +1,22 @@
 package layout;
 
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 
 import com.absontwikkeling.rijtjes.DBAdapter;
-import com.absontwikkeling.rijtjes.MainActivity;
-import com.absontwikkeling.rijtjes.NavMenu;
 import com.absontwikkeling.rijtjes.R;
-import com.absontwikkeling.rijtjes.displayListACTIVITY;
 import com.absontwikkeling.rijtjes.editWordListACTIVITY;
 import com.absontwikkeling.rijtjes.settings;
 
@@ -32,7 +25,8 @@ import com.absontwikkeling.rijtjes.settings;
  */
 public class displayList extends Fragment {
 
-    DBAdapter DLdbAdapter;
+    DBAdapter dbAdapter;
+    DBAdapter dbAdapterMain;
     View view;
     LinearLayout linearLayoutList;
     public static int radioState;
@@ -81,7 +75,7 @@ public class displayList extends Fragment {
 
         // Creates list of buttons
         linearLayoutList = view.findViewById(R.id.displayListLinearLayout);
-        createButtonListInLayout(DLdbAdapter.getAllRowsMain());
+        createButtonListInLayout(dbAdapterMain.getAllRowsMain());
 
         return view;
     }
@@ -111,14 +105,16 @@ public class displayList extends Fragment {
     }
 
     private void openDB() {
-        DLdbAdapter = new DBAdapter(getContext());
-        DLdbAdapter.open();
+        dbAdapter = new DBAdapter(getContext(), DBAdapter.DATABASE_NAME, DBAdapter.DATABASE_VERSION);
+        dbAdapter.open();
+        dbAdapterMain = new DBAdapter(getContext(), DBAdapter.DATABASE_MAIN_NAME, DBAdapter.DATABASE_MAIN_VERSION);
+        dbAdapterMain.open();
     }
 
     private void closeDB() {
-        DLdbAdapter.close();
+        dbAdapter.close();
+        dbAdapterMain.close();
     }
-
 
     private void createButtonListInLayout(Cursor c) {
         if (c.moveToFirst()) {
@@ -153,8 +149,8 @@ public class displayList extends Fragment {
                             startActivity(i);
 
                         } else if (radioState == 2) {
-                            DLdbAdapter.deleteTable(tableName);
-                            DLdbAdapter.deleteRowMain(tableName);
+                            dbAdapter.deleteTable(tableName);
+                            dbAdapter.deleteRowMain(tableName);
                             displayList fragment = (displayList) getFragmentManager().findFragmentById(R.id.relativelayout_fragment);
                             getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
                         }

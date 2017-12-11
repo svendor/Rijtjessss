@@ -16,16 +16,7 @@ public class DBAdapter {
     // For logging:
     private static final String TAG = "DBAdapter";
 
-    // DB wordList Fields
-    public static final String KEY_ROWID = "_id";
-    public static final String KEY_QUESTION = "question";
-    public static final String KEY_ANSWER = "answer";
-    public static final int COL_ROWID = 0;
-    public static final int COL_QUESTION = 1;
-    public static final int COL_ANSWER = 2;
-    public static final String[] ALL_KEYS = new String[] {KEY_ROWID, KEY_QUESTION, KEY_ANSWER};
-
-    // DB mainTable Fields (The table which indexes the wordLists)
+    // DB 'mainTable' Fields
     public static final String KEY_ROWID_MAIN = "_id";
     public static final String KEY_TABLE_NAME_MAIN = "table_name";
     public static final int COL_ROWID_MAIN = 0;
@@ -34,10 +25,22 @@ public class DBAdapter {
     public static final String[] ALL_KEYS_MAIN = new String[] {KEY_ROWID_MAIN, KEY_TABLE_NAME_MAIN};
     public static final String DATABASE_TABLE = "mainTable";
 
-    // DB General info
-    public static final String DATABASE_NAME = "wordLists";
-    public static final int DATABASE_VERSION = 2;
+    // DB 'mainTable' General info
+    public static final String DATABASE_MAIN_NAME = "main_table";
+    public static final int DATABASE_MAIN_VERSION = 2;
 
+    // DB 'wordList' Fields (The table which indexes the wordLists)
+    public static final String KEY_ROWID = "_id";
+    public static final String KEY_QUESTION = "question";
+    public static final String KEY_ANSWER = "answer";
+    public static final int COL_ROWID = 0;
+    public static final int COL_QUESTION = 1;
+    public static final int COL_ANSWER = 2;
+    public static final String[] ALL_KEYS = new String[] {KEY_ROWID, KEY_QUESTION, KEY_ANSWER};
+
+    // DB 'wordLists' General info
+    public static final String DATABASE_NAME = "wordLists";
+    public static final int DATABASE_VERSION = 4;
     private static final String DATABASE_CREATE_SQL =
             "create table " + DATABASE_TABLE
                     + " (" + KEY_ROWID + " integer primary key autoincrement, "
@@ -58,9 +61,9 @@ public class DBAdapter {
         return this;
     }
 
-    public DBAdapter(Context ctx) {
+    public DBAdapter(Context ctx, String name, int i) {
         this.context = ctx;
-        myDBHelper = new DatabaseHelper(context);
+        myDBHelper = new DatabaseHelper(context, name, i);
     }
 
     // Close the database connection.
@@ -149,15 +152,15 @@ public class DBAdapter {
 
     // Deletes a table
     public void deleteAll(String tableName) {
-        /*Cursor c = getAllRows(tableName.replaceAll("\\s", "_"));
+        Cursor c = getAllRows(tableName.replaceAll("\\s", "_"));
         long rowId = c.getColumnIndexOrThrow(KEY_ROWID);
         if (c.moveToFirst()) {
             do {
                 deleteRow(c.getLong((int) rowId), tableName.replaceAll("\\s","_"));
             } while (c.moveToNext());
         }
-        c.close();*/
-        db.execSQL("TRUNCATE TABLE '" + tableName.replaceAll("\\s","_") + "';");
+        c.close();
+        //db.execSQL("TRUNCATE TABLE '" + tableName.replaceAll("\\s","_") + "';");
     }
 
     public void deleteTable(String tableName) {
@@ -197,8 +200,6 @@ public class DBAdapter {
         return db.update(DATABASE_TABLE, newValues, where, null) != 0;
     }
 
-
-
     /////////////////////////////////////////////////////////////////////
     //	Private Helper Classes:
     /////////////////////////////////////////////////////////////////////
@@ -209,22 +210,19 @@ public class DBAdapter {
      */
     private static class DatabaseHelper extends SQLiteOpenHelper
     {
-        DatabaseHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        DatabaseHelper(Context context, String name, int i) {
+            super(context, name, null, i);
         }
 
         @Override
         public void onCreate(SQLiteDatabase _db) {
-            _db.execSQL(DATABASE_CREATE_SQL);
+            //_db.execSQL(DATABASE_CREATE_SQL);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase _db, int oldVersion, int newVersion) {
             Log.w(TAG, "Upgrading application's database from version " + oldVersion
                     + " to " + newVersion + ", which will destroy all old data!");
-
-            // Destroy old database:
-            _db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
 
             // Recreate new database:
             onCreate(_db);

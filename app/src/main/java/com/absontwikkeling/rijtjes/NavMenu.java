@@ -1,10 +1,8 @@
 package com.absontwikkeling.rijtjes;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 import layout.About;
 import layout.createList;
 import layout.displayList;
-import layout.editWordList;
 
 public class NavMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

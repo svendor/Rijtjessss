@@ -30,6 +30,7 @@ public class createList extends Fragment {
     View rootView;
     EditText tableName;
     DBAdapter dbAdapter;
+    DBAdapter dbAdapterMain;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,21 +57,24 @@ public class createList extends Fragment {
     }
 
     private void openDB() {
-        dbAdapter = new DBAdapter(getContext());
+        dbAdapter = new DBAdapter(getContext(), DBAdapter.DATABASE_NAME, DBAdapter.DATABASE_VERSION);
         dbAdapter.open();
+        dbAdapterMain = new DBAdapter(getContext(), DBAdapter.DATABASE_MAIN_NAME, DBAdapter.DATABASE_MAIN_VERSION);
+        dbAdapterMain.open();
     }
 
     private void closeDB() {
         dbAdapter.close();
+        dbAdapterMain.close();
     }
 
     public void finishList() {
-        dbAdapter.createTableMain();
+        dbAdapterMain.createTableMain();
         String table_name = tableName.getText().toString();
         dbAdapter.createTable(table_name);
 
-        if (!dbAdapter.existsMain(table_name)) {
-            dbAdapter.insertRowMain(table_name);
+        if (!dbAdapterMain.existsMain(table_name)) {
+            dbAdapterMain.insertRowMain(table_name);
         }
 
         displayList fragment = new displayList();
