@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/Check_antwoord"
+        android:text="@string/Check_answer"
         android:textColor="@color/colorLightBlack"
         android:textSize="@dimen/buttonteztsize_big"
         android:visibility="visible"
