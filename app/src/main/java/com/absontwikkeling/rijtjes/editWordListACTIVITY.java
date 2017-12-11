@@ -260,7 +260,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
     }
 
     public void questionTheList(View v) {
-        Intent i = new Intent(this, question.class);
+        Intent i = new Intent(this, settings.class);
         i.putExtra("tableName", table_name);
         startActivity(i);
     }

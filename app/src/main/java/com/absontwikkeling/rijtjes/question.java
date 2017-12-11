@@ -21,13 +21,14 @@ import android.widget.TextView;
 public class question extends AppCompatActivity {
 
     DBAdapter dbAdapter;
-    public static int[] settings = new int[2];
+    public static int[] settings = new int[3];
     public static int currentQuestion;
     public static int amountCorrect;
     public static String[][] wordList;
     public static String table_name;
     public static boolean capitals;
     public static boolean whitespace;
+    public static int defaultDirection;
 
     public ConstraintLayout conLayout;
 
@@ -57,17 +58,9 @@ public class question extends AppCompatActivity {
         settings = i.getIntArrayExtra("settings");
 
         //Translates settings from integer to relevant data-type
-        if (settings[0] == 1) {
-            capitals = true;
-        } else {
-            capitals = false;
-        }
-
-        if (settings[1] == 1) {
-            whitespace = true;
-        } else {
-            whitespace = false;
-        }
+        capitals = settings[0] == 1;
+        whitespace = settings[1] == 1;
+        defaultDirection = settings[2];
 
         // Get's query
         Cursor c = dbAdapter.getAllRows(table_name);
@@ -147,9 +140,13 @@ public class question extends AppCompatActivity {
     public void nextQuestion() {
         currentQuestion++;
         inputString.setText("");
+        int integer = 0;
+        if (defaultDirection == 0) {
+            integer++;
+        }
 
         if (wordList[0][currentQuestion-1] != null) {
-            question.setText("Vraag #" + currentQuestion + ": " + wordList[0][currentQuestion-1]);
+            question.setText("Vraag #" + currentQuestion + ": " + wordList[integer][currentQuestion-1]);
             double d = setGrade();
             grade.setText("Jouw huidige cijfer is: " + d);
         } else {
@@ -199,13 +196,13 @@ public class question extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                if (checkAnswer(inputString.getText().toString(), wordList[1][currentQuestion-1], capitals, whitespace)) {
+                if (checkAnswer(inputString.getText().toString(), wordList[defaultDirection][currentQuestion-1], capitals, whitespace)) {
                     amountCorrect++;
                     feedback.setText("Jouw antwoord was goed!");
                     feedback.setTextColor(Color.GREEN);
                     nextQuestion();
                 } else {
-                    feedback.setText("Het goede antwoord was: '" + wordList[1][currentQuestion-1] + "'");
+                    feedback.setText("Het goede antwoord was: '" + wordList[defaultDirection][currentQuestion-1] + "'");
                     feedback.setTextColor(Color.RED);
                     nextQuestion();
                     Button b = (Button) findViewById(R.id.wasCorrect);

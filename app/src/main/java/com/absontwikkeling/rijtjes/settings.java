@@ -5,14 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 
 public class settings extends AppCompatActivity {
 
-    public static int [] settings = new int[2];
+    public static int [] settings = new int[3];
+    public static int radioState = 1;
     public static String tableName;
     CheckBox whitespace;
     CheckBox capitals;
-    // CheckBox direction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,6 @@ public class settings extends AppCompatActivity {
 
         whitespace = (CheckBox) findViewById(R.id.whitespaceCB);
         capitals = (CheckBox) findViewById(R.id.capitalsCB);
-        // direction = (CheckBox) findViewById(R.id.directionCB);
 
         Intent i = getIntent();
         tableName = i.getStringExtra("tableName");
@@ -30,6 +30,24 @@ public class settings extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void onRadioButtonClicked(View v) {
+        boolean checked = ((RadioButton) v).isChecked();
+
+        // Check which radio button was clicked
+        switch(v.getId()) {
+            case R.id.reverseDirectionRB:
+                if (checked) {
+                    radioState = 0;
+                }
+                break;
+            case R.id.defaultDirectionRB:
+                if (checked) {
+                    radioState = 1;
+                }
+                break;
+        }
     }
 
     public void applySettings(View v) {
@@ -44,6 +62,8 @@ public class settings extends AppCompatActivity {
         if (whitespace.isChecked()) {
             settings[1] = 1;
         }
+
+        settings[2] = radioState;
 
         Intent i = new Intent(this, question.class);
         i.putExtra("settings", settings);
