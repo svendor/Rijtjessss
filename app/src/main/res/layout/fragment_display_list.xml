@@ -34,10 +34,8 @@
             android:id="@+id/scrollView2"
             android:layout_width="0dp"
             android:layout_height="450dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -73,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:duplicateParentState="true"
                 android:focusable="auto"
-                android:text="@string/Overhoor"
+                android:text="@string/Test"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/mediumtextsize"/>
 
@@ -81,7 +79,7 @@
                 android:id="@+id/editList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Aanpassen"
+                android:text="@string/Change"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/mediumtextsize"/>
 
@@ -89,7 +87,7 @@
                 android:id="@+id/deleteList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Verijderen"
+                android:text="@string/Delete"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/mediumtextsize" />
         </RadioGroup>
