@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#2b4bed</color>
     <color name="colorAccent">#ffaa00</color>
     <color name="colorAccentDark">#cc7700</color>
+    <color name="colorAccentDoubleDark">#004500</color>
     <color name="colorGoed">#00ab00</color>
     <color name="colorFout">#d6060a</color>
     <color name="colortext">#000000</color>

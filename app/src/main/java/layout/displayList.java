@@ -6,7 +6,10 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +79,18 @@ public class displayList extends Fragment {
         // Creates list of buttons
         linearLayoutList = view.findViewById(R.id.displayListLinearLayout);
         createButtonListInLayout(dbAdapterMain.getAllRowsMain());
+
+        // Defines function of Floating Action Button that add a new list
+        // TODO Zorg ervoor dat deze knop ook het menu switched naar het andere framgent.
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createList createList = new createList();
+                FragmentManager manager = getFragmentManager();
+                manager.beginTransaction().replace(R.id.relativelayout_fragment, createList).commit();
+            }
+        });
 
         return view;
     }
