@@ -153,14 +153,35 @@ public class question extends AppCompatActivity {
             double d = setGrade();
             grade.setText("Jouw huidige cijfer is: " + d);
         } else {
-            Intent i = new Intent(this, results.class);
-            int[] scorePoints = new int[2];
-            scorePoints[0] = currentQuestion-1;
-            scorePoints[1] = amountCorrect;
-            i.putExtra("scorePoints", scorePoints);
-            startActivity(i);
+            double d = setGrade();
+            grade.setText("Jouw cijfer is: " + d);
+            Button b = (Button) findViewById(R.id.checkAnswer);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(question.this, results.class);
+                    int[] scorePoints = new int[2];
+                    scorePoints[0] = currentQuestion-1;
+                    scorePoints[1] = amountCorrect;
+                    i.putExtra("scorePoints", scorePoints);
+                    startActivity(i);
+                }
+            });
+            b.setText("Naar resultaten");
+            question.setText("Einde toets");
+            inputString.setVisibility(View.GONE);
 
         }
+    }
+
+    public void wasCorrect(View v) {
+        Button b = (Button) findViewById(R.id.wasCorrect);
+        b.setVisibility(View.INVISIBLE);
+        amountCorrect++;
+        double d = setGrade();
+        grade.setText("Jouw huidige cijfer is: " + d);
+        feedback.setText("Jouw antwoord was goed!");
+        feedback.setTextColor(Color.GREEN);
     }
 
     public double setGrade() {
@@ -187,6 +208,8 @@ public class question extends AppCompatActivity {
                     feedback.setText("Het goede antwoord was: '" + wordList[1][currentQuestion-1] + "'");
                     feedback.setTextColor(Color.RED);
                     nextQuestion();
+                    Button b = (Button) findViewById(R.id.wasCorrect);
+                    b.setVisibility(View.VISIBLE);
                 }
             }
         });
