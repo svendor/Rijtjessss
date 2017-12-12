@@ -144,13 +144,9 @@ public class question extends AppCompatActivity {
     public void nextQuestion() {
         currentQuestion++;
         inputString.setText("");
-        int integer = 0;
-        if (defaultDirection == 0) {
-            integer++;
-        }
 
         if (wordList[0][currentQuestion-1] != null) {
-            question.setText("Vraag #" + currentQuestion + ": " + wordList[integer][currentQuestion-1]);
+            question.setText("Vraag #" + currentQuestion + ": " + wordList[defaultDirection][currentQuestion-1]);
             double d = setGrade();
             grade.setText("Jouw huidige cijfer is: " + d);
         } else {
@@ -200,13 +196,18 @@ public class question extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                if (checkAnswer(inputString.getText().toString(), wordList[defaultDirection][currentQuestion-1], capitals, whitespace)) {
+                int integer = 1;
+                if (defaultDirection == 1) {
+                    integer--;
+                }
+
+                if (checkAnswer(inputString.getText().toString(), wordList[integer][currentQuestion-1], capitals, whitespace)) {
                     amountCorrect++;
                     feedback.setText("Jouw antwoord was goed!");
                     feedback.setTextColor(Color.GREEN);
                     nextQuestion();
                 } else {
-                    feedback.setText("Het goede antwoord was: '" + wordList[defaultDirection][currentQuestion-1] + "'");
+                    feedback.setText("Het goede antwoord was: '" + wordList[integer][currentQuestion-1] + "'");
                     feedback.setTextColor(Color.RED);
                     nextQuestion();
                     Button b = (Button) findViewById(R.id.wasCorrect);

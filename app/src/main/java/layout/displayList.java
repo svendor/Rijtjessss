@@ -45,7 +45,7 @@ public class displayList extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_display_list, container, false);
 
-        setScrollView();
+        // setScrollView();
 
         // Debugging for displayQuery()
         // showList = (TextView) findViewById(R.id.showList);
@@ -57,8 +57,6 @@ public class displayList extends Fragment {
         {
             @Override
             public void onCheckedChanged(RadioGroup group, int i) {
-                // checkedId is the RadioButton selected
-
                 switch(i) {
                     case R.id.questionTheList:
                         radioState = 0;

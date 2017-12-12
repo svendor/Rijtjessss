@@ -23,7 +23,15 @@ public class DBAdapter {
     public static final int COL_TABLE_NAME_MAIN = 1;
     public static final String MAIN_TABLE_NAME = "list_table";
     public static final String[] ALL_KEYS_MAIN = new String[] {KEY_ROWID_MAIN, KEY_TABLE_NAME_MAIN};
-    public static final String DATABASE_TABLE = "mainTable";
+
+    // DB 'settings' Fields
+    public static final String KEY_SETTINGS_ROWID = "_id";
+    public static final String KEY_SETTINGS_VALUE = "value";
+    public static final int COL_SETTINGS_ROWID = 0;
+    public static final int COL_SETTINGS_VALUE = 1;
+    public static final String SETTINGS_TABLE_NAME = "settings";
+    public static final String[] ALL_KEYS_SETTINGS = new String[] {KEY_SETTINGS_ROWID, KEY_SETTINGS_VALUE};
+
 
     // DB 'mainTable' General info
     public static final String DATABASE_MAIN_NAME = "main_table";
@@ -41,12 +49,6 @@ public class DBAdapter {
     // DB 'wordLists' General info
     public static final String DATABASE_NAME = "wordLists";
     public static final int DATABASE_VERSION = 4;
-    private static final String DATABASE_CREATE_SQL =
-            "create table " + DATABASE_TABLE
-                    + " (" + KEY_ROWID + " integer primary key autoincrement, "
-                    + KEY_QUESTION + " string not null, "
-                    + KEY_ANSWER + " string not null"
-                    + ");";
 
     // Context of application who uses us.
     private final Context context;
@@ -122,6 +124,72 @@ public class DBAdapter {
         return c;
     }
 
+    // ############ settings tables ################
+
+    public void createTableSettings() {
+        db.execSQL("create table if not exists " + SETTINGS_TABLE_NAME + " ("
+                + KEY_SETTINGS_ROWID + " integer primary key, "
+                + KEY_SETTINGS_VALUE + " integer not null);");
+    }
+
+    // Add a new set of values to the 'settings'
+    public long insertRowSettings(int value, int id) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_SETTINGS_VALUE, value);
+        String where = KEY_SETTINGS_ROWID + "=" + id;
+
+        return db.insert(SETTINGS_TABLE_NAME, where, values);
+    }
+
+    /*
+    // Delete a row from 'settings', by tableName
+    public void deleteRowSettings(String settingsName) {
+        db.execSQL("DELETE FROM " + SETTINGS_TABLE_NAME + " WHERE " + KEY_SETTINGS_NAME + "='" + settingsName + "';");
+    }
+
+    // Check if a row in 'settings' exists
+    public boolean existsSettings() {
+        Cursor c = db.rawQuery("SELECT * FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + " = '" + table_name + "'", null);
+        boolean exist = (c.getCount() > 0);
+        c.close();
+        return exist;
+    }
+
+    public Cursor getRowSettings() {
+        String where = KEY_TABLE_NAME_MAIN + "=" + tableName;
+        Cursor c = db.query(true, tableName, ALL_KEYS_MAIN,
+                where, null, null, null, null, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+        return c;
+    }
+    */
+
+    // Get's all rows from 'settings'
+    public Cursor getAllRowsSettings() {
+        String where = null;
+        Cursor c = db.query(true, SETTINGS_TABLE_NAME, ALL_KEYS_SETTINGS,
+                where, null, null, null, null, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+        return c;
+    }
+
+    // Updates row in 'settings' table
+    public boolean updateRowSettings(long rowId, int i) {
+        String where = KEY_SETTINGS_ROWID + "=" + rowId;
+
+        // Create row's data:
+        ContentValues newValues = new ContentValues();
+        newValues.put(KEY_SETTINGS_VALUE, i);
+
+        // Insert it into the database.
+        return db.update(SETTINGS_TABLE_NAME, newValues, where, null) != 0;
+    }
+
+
     // ############ wordList tables ################
 
     // Create table for wordList
@@ -150,7 +218,7 @@ public class DBAdapter {
         return db.delete(tableName.replaceAll("\\s", "_"), row_ID, null) != 0;
     }
 
-    // Deletes a table
+    // Removes all data from a table
     public void deleteAll(String tableName) {
         Cursor c = getAllRows(tableName.replaceAll("\\s", "_"));
         long rowId = c.getColumnIndexOrThrow(KEY_ROWID);
@@ -163,6 +231,7 @@ public class DBAdapter {
         //db.execSQL("TRUNCATE TABLE '" + tableName.replaceAll("\\s","_") + "';");
     }
 
+    // Deletes a table
     public void deleteTable(String tableName) {
         db.execSQL("DROP TABLE IF EXISTS '" + tableName.replaceAll("\\s","_") + "';");
     }
@@ -174,30 +243,6 @@ public class DBAdapter {
             c.moveToFirst();
         }
         return c;
-    }
-
-    // Get a specific row (by rowId)
-    public Cursor getRow(long rowId) {
-        String where = KEY_ROWID + "=" + rowId;
-        Cursor c = 	db.query(true, DATABASE_TABLE, ALL_KEYS,
-                where, null, null, null, null, null);
-        if (c != null) {
-            c.moveToFirst();
-        }
-        return c;
-    }
-
-    // Change an existing row to be equal to new data.
-    public boolean updateRow(long rowId, String question, String answer) {
-        String where = KEY_ROWID + "=" + rowId;
-
-        // Create row's data:
-        ContentValues newValues = new ContentValues();
-        newValues.put(KEY_QUESTION, question);
-        newValues.put(KEY_ANSWER, answer);
-
-        // Insert it into the database.
-        return db.update(DATABASE_TABLE, newValues, where, null) != 0;
     }
 
     /////////////////////////////////////////////////////////////////////
