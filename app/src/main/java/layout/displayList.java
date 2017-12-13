@@ -21,6 +21,7 @@ import android.widget.ScrollView;
 import com.absontwikkeling.rijtjes.DBAdapter;
 import com.absontwikkeling.rijtjes.R;
 import com.absontwikkeling.rijtjes.editWordListACTIVITY;
+import com.absontwikkeling.rijtjes.question;
 import com.absontwikkeling.rijtjes.settings;
 
 /**
@@ -152,7 +153,7 @@ public class displayList extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (radioState == 0) {
-                            Intent i = new Intent(getActivity(), settings.class);
+                            Intent i = new Intent(getActivity(), question.class);
                             i.putExtra("tableName", tableName);
                             startActivity(i);
 

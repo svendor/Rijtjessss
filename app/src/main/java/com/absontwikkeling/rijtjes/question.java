@@ -56,7 +56,21 @@ public class question extends AppCompatActivity {
         // Gets information from intent
         Intent i = getIntent();
         table_name = i.getStringExtra("tableName");
-        settings = i.getIntArrayExtra("settings");
+        // settings = i.getIntArrayExtra("settings");
+
+        Cursor cursor = dbAdapterMain.getAllRowsSettings();
+
+        if (cursor.moveToFirst()) {
+            for (int j = 0; j < settings.length; j++) {
+                settings[j] = cursor.getInt(DBAdapter.COL_SETTINGS_VALUE);
+                cursor.moveToNext();
+            }
+        } else {
+            for (int j = 0; j < settings.length; j++) {
+                settings[j] = 0;
+            }
+        }
+        cursor.close();
 
         //Translates settings from integer to relevant data-type
         capitals = settings[0] == 1;

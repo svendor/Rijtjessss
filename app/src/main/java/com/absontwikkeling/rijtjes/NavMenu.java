@@ -65,6 +65,9 @@ public class NavMenu extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            layout.settings settings = new layout.settings();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_fragment, settings).commit();
             return true;
         }
 
