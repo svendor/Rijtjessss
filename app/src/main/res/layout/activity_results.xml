@@ -29,7 +29,7 @@
         android:onClick="displayListButton"
         android:text="@string/All_lists"
         android:textColor="@color/colorLightBlack"
-        android:textSize="@dimen/buttonteztsize_big"
+        android:textSize="@dimen/buttontextsize_big"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -43,7 +43,7 @@
         android:onClick="mainButton"
         android:text="@string/Home"
         android:textColor="@color/colorLightBlack"
-        android:textSize="@dimen/buttonteztsize_big"
+        android:textSize="@dimen/buttontextsize_big"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>
