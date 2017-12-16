@@ -36,6 +36,9 @@
     <string name="Delete_row">Verwijder rij</string>
     <string name="Save">Opslaan</string>
     <string name="Was_right">Was wel goed</string>
+    <string name="Test_reversed">Omgekeerd</string>
+    <string name="Test_as_made">Zoals ingevoerd</string>
+    <string name="Test_direction">Overhoorrichting:</string>
 
 
     <string name="About_us_text">Wij zijn Bas Cornelissen, Arun Mulder en Sven de Ronde. Wij zijn AWESOME!</string>
