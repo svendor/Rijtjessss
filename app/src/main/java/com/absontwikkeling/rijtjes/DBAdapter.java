@@ -55,7 +55,9 @@ public class DBAdapter {
     private DatabaseHelper myDBHelper;
     private SQLiteDatabase db;
 
-    // ############### Public methods: #################
+    ///////////////////////////////////////////////////////
+    // ############### Public methods: ################# //
+    ///////////////////////////////////////////////////////
 
     // Open the database connection.
     public DBAdapter open() {
@@ -73,7 +75,9 @@ public class DBAdapter {
         myDBHelper.close();
     }
 
-    // ############## mainDB table ##############
+    /////////////////////////////////////////////////////
+    // ################ mainDB tables ################ //
+    /////////////////////////////////////////////////////
 
     // Create mainTable if it doesn't exist yet
     public void createTableMain() {
@@ -124,7 +128,9 @@ public class DBAdapter {
         return c;
     }
 
-    // ############ settings tables ################
+    ///////////////////////////////////////////////////////
+    // ################ settings tables ################ //
+    ///////////////////////////////////////////////////////
 
     public void createTableSettings() {
         db.execSQL("create table if not exists " + SETTINGS_TABLE_NAME + " ("
@@ -189,8 +195,9 @@ public class DBAdapter {
         return db.update(SETTINGS_TABLE_NAME, newValues, where, null) != 0;
     }
 
-
-    // ############ wordList tables ################
+    ///////////////////////////////////////////////////////
+    // ################ wordList tables ################ //
+    ///////////////////////////////////////////////////////
 
     // Create table for wordList
     public void createTable(String tableName) {
@@ -253,8 +260,8 @@ public class DBAdapter {
      * Private class which handles database creation and upgrading.
      * Used to handle low-level database access.
      */
-    private static class DatabaseHelper extends SQLiteOpenHelper
-    {
+    private static class DatabaseHelper extends SQLiteOpenHelper {
+
         DatabaseHelper(Context context, String name, int i) {
             super(context, name, null, i);
         }
