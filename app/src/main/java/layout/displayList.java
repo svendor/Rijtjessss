@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.absontwikkeling.rijtjes.DBAdapter;
 import com.absontwikkeling.rijtjes.R;
@@ -159,9 +160,16 @@ public class displayList extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (radioState == 0) {
-                            Intent i = new Intent(getActivity(), question.class);
-                            i.putExtra("tableName", tableName);
-                            startActivity(i);
+                            if (dbAdapter.getAllRows(tableName).moveToFirst()) {
+                                Intent i = new Intent(getActivity(), question.class);
+                                i.putExtra("tableName", tableName);
+                                startActivity(i);
+                            } else {
+                                Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
+                                i.putExtra("tableName", tableName);
+                                startActivity(i);
+                                Toast.makeText(getContext(), "Er moeten wel woorden in jouw lijst staan!", Toast.LENGTH_SHORT).show();
+                            }
 
                         } else if (radioState == 1) {
                             Intent i = new Intent(getActivity(), editWordListACTIVITY.class);

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -269,9 +270,13 @@ public class editWordListACTIVITY extends AppCompatActivity {
     }
 
     public void questionTheList(View v) {
-        Intent i = new Intent(this, question.class);
-        i.putExtra("tableName", table_name);
-        startActivity(i);
+        if (entryAmount != 0) {
+            Intent i = new Intent(this, question.class);
+            i.putExtra("tableName", table_name);
+            startActivity(i);
+        } else {
+            Toast.makeText(this, "Er moeten wel woorden in jouw lijst staan opgeslagen!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private String displayQuery(Cursor cursor) {
