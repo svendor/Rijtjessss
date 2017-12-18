@@ -85,6 +85,7 @@ public class displayList extends Fragment {
             createList fragment = new createList();
             FragmentManager fragMan = getFragmentManager();
             fragMan.beginTransaction().replace(R.id.relativelayout_fragment, fragment).commit();
+            Toast.makeText(getContext(), "Maak eerst een lijst", Toast.LENGTH_SHORT).show();
         }
 
         // Defines function of Floating Action Button that add a new list

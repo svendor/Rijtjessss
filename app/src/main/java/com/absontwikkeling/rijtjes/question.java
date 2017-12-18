@@ -58,7 +58,16 @@ public class question extends AppCompatActivity {
         table_name = i.getStringExtra("tableName");
         // settings = i.getIntArrayExtra("settings");
 
-        Cursor cursor = dbAdapterMain.getAllRowsSettings();
+        Cursor cursor;
+        try {
+            cursor = dbAdapterMain.getAllRowsSettings();
+        } catch (Exception e) {
+            dbAdapterMain.createTableSettings();
+            for (int j = 0; j < settings.length; j++) {
+                dbAdapterMain.insertRowSettings(0, j+1);
+            }
+            cursor = dbAdapterMain.getAllRowsSettings();
+        }
 
         if (cursor.moveToFirst()) {
             for (int j = 0; j < settings.length; j++) {

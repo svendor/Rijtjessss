@@ -113,7 +113,6 @@ public class editWordListACTIVITY extends AppCompatActivity {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-
     public void setScrollView() {
         // Neemt de scrollView
         ScrollView scrollView = (ScrollView)findViewById(R.id.scrollView_edit_word_list);
@@ -248,6 +247,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
         if (entryAmount == 0) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
+            Toast.makeText(this, "Lijst verwijderd", Toast.LENGTH_SHORT).show();
         } else {
             table_name = tableNameET.getText().toString();
             dbAdapter.createTable(table_name);
