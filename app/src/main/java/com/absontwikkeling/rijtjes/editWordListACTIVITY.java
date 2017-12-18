@@ -242,25 +242,30 @@ public class editWordListACTIVITY extends AppCompatActivity {
         dbAdapter.deleteAll(table_name);
         dbAdapterMain.deleteRowMain(table_name);
 
-        table_name = tableNameET.getText().toString();
-        dbAdapter.createTable(table_name);
-        if (!dbAdapterMain.existsMain(table_name)) {
-            dbAdapterMain.insertRowMain(table_name);
+        if (entryAmount == 0) {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
         } else {
-            dbAdapter.deleteAll(table_name);
+            table_name = tableNameET.getText().toString();
+            dbAdapter.createTable(table_name);
+            if (!dbAdapterMain.existsMain(table_name)) {
+                dbAdapterMain.insertRowMain(table_name);
+            } else {
+                dbAdapter.deleteAll(table_name);
+            }
+
+            int i = 0;
+            do {
+                EditText queET = (EditText) findViewById(listIndex[i]);
+                String question = queET.getText().toString();
+                i++;
+                EditText ansET = (EditText) findViewById((listIndex[i]));
+                String answer = ansET.getText().toString();
+                i++;
+
+                dbAdapter.insertRow(question, answer, table_name);
+            } while (i < entryAmount);
         }
-
-        int i = 0;
-        do {
-            EditText queET = (EditText) findViewById(listIndex[i]);
-            String question = queET.getText().toString();
-            i++;
-            EditText ansET = (EditText) findViewById((listIndex[i]));
-            String answer = ansET.getText().toString();
-            i++;
-
-            dbAdapter.insertRow(question, answer, table_name);
-        } while (i < entryAmount);
     }
 
     public void questionTheList(View v) {

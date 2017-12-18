@@ -77,7 +77,13 @@ public class displayList extends Fragment {
 
         // Creates list of buttons
         linearLayoutList = view.findViewById(R.id.displayListLinearLayout);
-        createButtonListInLayout(dbAdapterMain.getAllRowsMain());
+        if (dbAdapterMain.getAllRowsMain() != null) {
+            createButtonListInLayout(dbAdapterMain.getAllRowsMain());
+        } else {
+            createList fragment = new createList();
+            FragmentManager fragMan = getFragmentManager();
+            fragMan.beginTransaction().replace(R.id.relativelayout_fragment, fragment).commit();
+        }
 
         // Defines function of Floating Action Button that add a new list
         // TODO Zorg ervoor dat deze knop ook het menu switched naar het andere framgent.
@@ -113,8 +119,8 @@ public class displayList extends Fragment {
 
     }
 
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDetach() {
+        super.onDetach();
         closeDB();
     }
 
@@ -164,7 +170,7 @@ public class displayList extends Fragment {
 
                         } else if (radioState == 2) {
                             dbAdapter.deleteTable(tableName);
-                            dbAdapter.deleteRowMain(tableName);
+                            dbAdapterMain.deleteRowMain(tableName);
                             displayList fragment = (displayList) getFragmentManager().findFragmentById(R.id.relativelayout_fragment);
                             getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
                         }
