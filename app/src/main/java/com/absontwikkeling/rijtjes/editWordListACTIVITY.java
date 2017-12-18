@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
     DBAdapter dbAdapterMain;
     LinearLayout linearLayoutQuestion;
     LinearLayout linearLayoutAnswer;
+    View view;
     public static int entryAmount = 0;
     public static int[] listIndex = new int[2000];
     public static String table_name;
@@ -60,7 +62,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
 
             // Creates edittext fields + integer that contains the amount of fields
             entryAmount = showList(c, listIndex);
-            setLinearLayout();
+            setScrollView();
             c.close();
         } catch (SQLiteException e) {
             if (e.getMessage().contains("no such table")) {
@@ -111,18 +113,18 @@ public class editWordListACTIVITY extends AppCompatActivity {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    private void setLinearLayout() {
 
-        // Gets linearlayout
-        LinearLayout layout = (LinearLayout) findViewById(R.id.editwordlistLinearLayout);
-        // Gets the layout params that will allow you to resize the layout
-        ViewGroup.LayoutParams params = layout.getLayoutParams();
-        // Changes the height and width to the specified *pixels*
+    public void setScrollView() {
+        // Neemt de scrollView
+        ScrollView scrollView = (ScrollView)findViewById(R.id.scrollView_edit_word_list);
+        // Geeft de parameters die de mogelijkheid geven om de lay-out aan te passen
+        ViewGroup.LayoutParams params = scrollView.getLayoutParams();
+        // Verandert in dit geval de hoogte tot 60% van het scherm van het apparaat
         params.height = (int) (getScreenHeight()*0.60);
-        params.width = (int) (getScreenWidth()*0.60);
-        layout.setLayoutParams(params);
+        scrollView.setLayoutParams(params);
 
     }
+
 
     private int showList(Cursor c, int[] listIndex) {
         // Find layouts

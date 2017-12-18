@@ -8,9 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/colortext</item>
         <item name="android:titleTextStyle">@color/colortext</item>
-        <item name="buttonStyle">@style/AppTheme.button</item>
         <item name="titleTextColor">@color/displaylisttextcolor</item>
         <item name="subtitleTextColor">@android:color/white</item>
+        <item name="buttonStyle">@style/AppTheme.button</item>
     </style>
 
     <!--
@@ -35,7 +35,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    -->
+
 
 
     <style name="AppTheme.button" parent="Widget.AppCompat.Button.Borderless">
@@ -43,6 +43,7 @@
         <item name="android:maxWidth">200dp</item>
     </style>
 
+    <!-- Wij maken gebruik van de Widget.AppCompat.Button.Borderless, die standaaard in Android Studio beschikbaar is, voor de layout van de button en bepalen zelf de hoogte en breedte van deze buttons. -->
     <style name="AppTheme.button.2" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="android:textColor">@color/displaylisttextcolor</item>

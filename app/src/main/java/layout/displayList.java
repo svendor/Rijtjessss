@@ -101,20 +101,22 @@ public class displayList extends Fragment {
         return view;
     }
 
+    //  Haalt het aantal pixels van de breedte het scherm van het apparaat
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
 
+    //  Haalt het aantal pixels van de hoogte het scherm van het apparaat
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
     public void setScrollView() {
-        // Gets scrollView
+        // Neemt de scrollView
         ScrollView scrollView = view.findViewById(R.id.scrollView2);
-        // Gets the layout params that will allow you to resize the layout
+        // Geeft de parameters die de mogelijkheid geven om de lay-out aan te passen
         ViewGroup.LayoutParams params = scrollView.getLayoutParams();
-        // Changes the height and width to the specified *pixels*
+        // Verandert in dit geval de hoogte tot 75% van het scherm van het apparaat
         params.height = (int) (getScreenHeight()*0.75);
         scrollView.setLayoutParams(params);
 
@@ -140,26 +142,33 @@ public class displayList extends Fragment {
     private void createButtonListInLayout(Cursor c) {
         if (c.moveToFirst()) {
             do {
-                // Define button
+                // Definieer Button
                 Button button = new Button(getContext());
-                // Layout
+                // Layout button
+                // Geeft naam button
                 final String tableName = c.getString(DBAdapter.COL_TABLE_NAME_MAIN);
+                // Tekst lay-out van de button
                 button.setText(tableName);
                 button.setTextColor(Color.parseColor("#454545"));
+                // Vorm en kleur van de button
                 button.setBackgroundResource(R.drawable.button);
+                //Zorgen ervoor dat er margers tussen de buttons zijn
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
-                params.setMargins(0, 0, 0, 10);
+                params.setMargins(0, 0, 0, 8);
                 button.setLayoutParams(params);
-                button.setGravity(8);
-                button.setPadding(30,40,0,0);
-                button.setBackgroundResource(0); // Maakt background doorzichtig geloof ik, maar niet zeker, want zie niet of de buttons nog werken -Arun
+                //Zorgen ervoor dat de tekst op een goede plek staat
+                button.setGravity(10);
+                button.setPadding(50,40,0,0);
+                // Maakt backgroundresource doorzichtig
+                button.setBackgroundResource(0);
                 // Function
                 View.OnClickListener buttonListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (radioState == 0) {
+                        if  // definieert functie radioButton
+                                (radioState == 0) {
                             if (dbAdapter.getAllRows(tableName).moveToFirst()) {
                                 Intent i = new Intent(getActivity(), question.class);
                                 i.putExtra("tableName", tableName);
@@ -171,12 +180,14 @@ public class displayList extends Fragment {
                                 Toast.makeText(getContext(), "Er moeten wel woorden in jouw lijst staan!", Toast.LENGTH_SHORT).show();
                             }
 
-                        } else if (radioState == 1) {
+                        } else if // definieert functie radioButton editList
+                                (radioState == 1) {
                             Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
                             i.putExtra("tableName", tableName);
                             startActivity(i);
 
-                        } else if (radioState == 2) {
+                        } else if // definieert functie radioButton deleteList
+                                (radioState == 2) {
                             dbAdapter.deleteTable(tableName);
                             dbAdapterMain.deleteRowMain(tableName);
                             displayList fragment = (displayList) getFragmentManager().findFragmentById(R.id.relativelayout_fragment);
@@ -188,7 +199,7 @@ public class displayList extends Fragment {
 
                 button.setOnClickListener(buttonListener);
 
-                // Add button to activity
+                // Voeg button toe aan activity
                 linearLayoutList.addView(button);
 
             } while(c.moveToNext());
