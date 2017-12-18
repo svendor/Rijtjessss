@@ -45,5 +45,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="versionName">"Versie: "</string>
+    <string name="notGood">HIER GAAT WAT FOUT!</string>
+    <string name="versionCode">"Versienummer: "</string>
 
 </resources>
