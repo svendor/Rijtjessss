@@ -75,6 +75,7 @@ public class displayList extends Fragment {
 
         // Opens database
         openDB();
+        dbAdapterMain.createTableMain();
 
         // Creates list of buttons
         linearLayoutList = view.findViewById(R.id.displayListLinearLayout);
