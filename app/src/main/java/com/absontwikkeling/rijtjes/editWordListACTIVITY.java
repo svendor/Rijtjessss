@@ -29,8 +29,9 @@ public class editWordListACTIVITY extends AppCompatActivity {
     LinearLayout linearLayoutQuestion;
     LinearLayout linearLayoutAnswer;
     View view;
-    public static int entryAmount = 0;
-    public static int[] listIndex = new int[2000];
+    public int entryAmount = 0;
+    public int savedAmount = 0;
+    public int[] listIndex = new int[2000];
     public static String table_name;
 
     @Override
@@ -62,6 +63,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
 
             // Creates edittext fields + integer that contains the amount of fields
             entryAmount = showList(c, listIndex);
+            savedAmount = entryAmount;
             setScrollView();
             c.close();
         } catch (SQLiteException e) {
@@ -244,6 +246,8 @@ public class editWordListACTIVITY extends AppCompatActivity {
         dbAdapter.deleteAll(table_name);
         dbAdapterMain.deleteRowMain(table_name);
 
+        savedAmount = entryAmount;
+
         if (entryAmount == 0) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
@@ -272,7 +276,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
     }
 
     public void questionTheList(View v) {
-        if (entryAmount != 0) {
+        if (savedAmount != 0) {
             Intent i = new Intent(this, question.class);
             i.putExtra("tableName", table_name);
             startActivity(i);
