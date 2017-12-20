@@ -7,9 +7,9 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +20,12 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.absontwikkeling.rijtjes.DBAdapter;
+import com.absontwikkeling.rijtjes.OnCustomTouchListener;
 import com.absontwikkeling.rijtjes.R;
 import com.absontwikkeling.rijtjes.editWordListACTIVITY;
 import com.absontwikkeling.rijtjes.question;
-import com.absontwikkeling.rijtjes.settings;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +34,7 @@ public class displayList extends Fragment {
 
     DBAdapter dbAdapter;
     DBAdapter dbAdapterMain;
+    private GestureDetector gDetector;
     View view;
     LinearLayout linearLayoutList;
     public static int radioState;
@@ -141,6 +144,21 @@ public class displayList extends Fragment {
         dbAdapterMain.close();
     }
 
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
+
+    // https://stackoverflow.com/questions/1714297/android-view-setidint-id-programmatically-how-to-avoid-id-conflicts
+    private static int generateViewId() {
+        for (;;) {
+            final int result = sNextGeneratedId.get();
+            // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
+            int newValue = result + 1;
+            if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
+            if (sNextGeneratedId.compareAndSet(result, newValue)) {
+                return result;
+            }
+        }
+    }
+
     private void createButtonListInLayout(Cursor c) {
         if (c.moveToFirst()) {
             do {
@@ -166,7 +184,68 @@ public class displayList extends Fragment {
                 // Maakt backgroundresource doorzichtig
                 button.setBackgroundResource(0);
                 // Function
-                View.OnClickListener buttonListener = new View.OnClickListener() {
+                button.setId(generateViewId());
+                final int id = sNextGeneratedId.get();
+                button.setOnTouchListener(new OnCustomTouchListener(getContext()) {
+                    @Override
+                    public void onSingleTap() {
+                        if (dbAdapter.getAllRows(tableName).moveToFirst()) {
+                            Intent i = new Intent(getActivity(), question.class);
+                            i.putExtra("tableName", tableName);
+                            startActivity(i);
+                        } else {
+                            Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
+                            i.putExtra("tableName", tableName);
+                            startActivity(i);
+                            Toast.makeText(getContext(), "Er moeten wel woorden in jouw lijst staan!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onDoubleTouch() {
+                        Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
+                        i.putExtra("tableName", tableName);
+                        startActivity(i);
+                    }
+
+                    public void onSwipeRight() {
+                        view.findViewById(id);
+                        view.setVisibility(View.GONE);
+                        dbAdapter.deleteTable(tableName);
+                        dbAdapterMain.deleteRowMain(tableName);
+                        displayList fragment = (displayList) getFragmentManager().findFragmentById(R.id.relativelayout_fragment);
+                        getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
+                    }
+                });
+
+                // Voeg button toe aan activity
+                linearLayoutList.addView(button);
+
+            } while(c.moveToNext());
+        }
+
+    }
+
+    /*
+    ################### Function to check if main table works ###########################
+
+    private String displayQuery(Cursor cursor) {
+        String message = "";
+        if (cursor.moveToFirst()) {
+            do {
+                // Process the data:
+                String listName = cursor.getString(DBAdapter.COL_TABLE_NAME_MAIN);
+
+                // Append data to the message:
+                message += listName +"\n";
+            } while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        return message;
+    }
+
+    View.OnClickListener buttonListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if  // definieert functie radioButton
@@ -198,35 +277,15 @@ public class displayList extends Fragment {
 
                     }
                 };
-
                 button.setOnClickListener(buttonListener);
-
-                // Voeg button toe aan activity
-                linearLayoutList.addView(button);
-
-            } while(c.moveToNext());
-        }
-
-    }
-
-
-    /*
-    ################### Function to check if main table works ###########################
-
-    private String displayQuery(Cursor cursor) {
-        String message = "";
-        if (cursor.moveToFirst()) {
-            do {
-                // Process the data:
-                String listName = cursor.getString(DBAdapter.COL_TABLE_NAME_MAIN);
-
-                // Append data to the message:
-                message += listName +"\n";
-            } while(cursor.moveToNext());
-        }
-
-        cursor.close();
-        return message;
-    }
+                button.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
+                        i.putExtra("tableName", tableName);
+                        startActivity(i);
+                        return true;
+                    }
+                });
     */
 }

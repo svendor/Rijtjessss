@@ -37,6 +37,10 @@ public class NavMenu extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        displayList displayList = new displayList();
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.relativelayout_fragment, displayList).commit();
     }
 
     @Override
