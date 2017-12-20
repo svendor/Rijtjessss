@@ -50,7 +50,8 @@ public class results extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        Intent i = new Intent(this, NavMenu.class);
+        startActivity(i);
     }
 
     public void displayListButton(View v) {
