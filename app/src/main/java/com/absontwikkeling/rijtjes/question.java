@@ -104,8 +104,6 @@ public class question extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(this, NavMenu.class);
-        startActivity(i);
     }
 
     @Override
