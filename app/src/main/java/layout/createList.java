@@ -29,6 +29,8 @@ public class createList extends Fragment {
 
     View rootView;
     EditText tableName;
+    EditText language1ET;
+    EditText language2ET;
     DBAdapter dbAdapter;
     DBAdapter dbAdapterMain;
 
@@ -39,6 +41,8 @@ public class createList extends Fragment {
 
         openDB();
         tableName = (EditText) rootView.findViewById(R.id.dataBaseName);
+        language1ET = (EditText) rootView.findViewById(R.id.language1ET);
+        language2ET = (EditText) rootView.findViewById(R.id.language2ET);
 
         Button finishList = (Button) rootView.findViewById(R.id.finishList);
         finishList.setOnClickListener(new View.OnClickListener() {
@@ -71,10 +75,12 @@ public class createList extends Fragment {
     public void finishList() {
         dbAdapterMain.createTableMain();
         String table_name = tableName.getText().toString();
+        String language1 = language1ET.getText().toString();
+        String language2 = language2ET.getText().toString();
         dbAdapter.createTable(table_name);
 
         if (!dbAdapterMain.existsMain(table_name)) {
-            dbAdapterMain.insertRowMain(table_name);
+            dbAdapterMain.insertRowMain(table_name, language1, language2);
         }
 
         displayList fragment = new displayList();

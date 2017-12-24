@@ -9,8 +9,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,11 +24,14 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.absontwikkeling.rijtjes.DBAdapter;
+import com.absontwikkeling.rijtjes.NavMenu;
 import com.absontwikkeling.rijtjes.OnCustomTouchListener;
 import com.absontwikkeling.rijtjes.R;
 import com.absontwikkeling.rijtjes.editWordListACTIVITY;
 import com.absontwikkeling.rijtjes.question;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -35,9 +42,10 @@ public class displayList extends Fragment {
     DBAdapter dbAdapter;
     DBAdapter dbAdapterMain;
     private GestureDetector gDetector;
+    private RecyclerView recyclerView;
+    private RVAdapter rvAdapter;
+    public List<item_data> data;
     View view;
-    LinearLayout linearLayoutList;
-    public static int radioState;
     // TextView showList;
 
     public displayList() {
@@ -50,46 +58,27 @@ public class displayList extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_display_list, container, false);
 
-        // setScrollView();
-
-        // Debugging for displayQuery()
-        // showList = (TextView) findViewById(R.id.showList);
-        // showList.setText(displayQuery(DLdbAdapter.getAllRowsMain()));
-
-        RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.radioGroup);
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int i) {
-                switch(i) {
-                    case R.id.questionTheList:
-                        radioState = 0;
-                        break;
-                    case R.id.editList:
-                        radioState = 1;
-                        break;
-                    case R.id.deleteList:
-                        radioState = 2;
-                        break;
-                }
-            }
-        });
-
         // Opens database
         openDB();
         dbAdapterMain.createTableMain();
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewDL);
+        List<item_data> data = getData(dbAdapterMain.getAllRowsMain());
 
-        // Creates list of buttons
-        linearLayoutList = view.findViewById(R.id.displayListLinearLayout);
-        if (dbAdapterMain.getAllRowsMain() != null) {
-            createButtonListInLayout(dbAdapterMain.getAllRowsMain());
+        // Populates recyclerView with items
+        if (dbAdapterMain.getAllRowsMain() != null | data.size() != 0) {
+            rvAdapter = new RVAdapter(getContext(), data, this);
+            recyclerView.setAdapter(rvAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            ItemTouchHelper ith = new ItemTouchHelper(createCallBack());
+            ith.attachToRecyclerView(recyclerView);
+            // createButtonListInLayout(dbAdapterMain.getAllRowsMain());
         } else {
             createList fragment = new createList();
             FragmentManager fragMan = getFragmentManager();
             fragMan.beginTransaction().replace(R.id.relativelayout_fragment, fragment).commit();
             Toast.makeText(getContext(), "Maak eerst een lijst", Toast.LENGTH_SHORT).show();
         }
+
 
         // Defines function of Floating Action Button that add a new list
         // TODO Zorg ervoor dat deze knop ook het menu switched naar het andere framgent.
@@ -106,25 +95,28 @@ public class displayList extends Fragment {
         return view;
     }
 
-    //  Haalt het aantal pixels van de breedte het scherm van het apparaat
-    public static int getScreenWidth() {
-        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    private ItemTouchHelper.SimpleCallback createCallBack() {
+        return new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                removeItem((long) viewHolder.itemView.getTag(), position);
+            }
+        };
     }
 
-    //  Haalt het aantal pixels van de hoogte het scherm van het apparaat
-    public static int getScreenHeight() {
-        return Resources.getSystem().getDisplayMetrics().heightPixels;
-    }
-
-    public void setScrollView() {
-        // Neemt de scrollView
-        ScrollView scrollView = view.findViewById(R.id.scrollView2);
-        // Geeft de parameters die de mogelijkheid geven om de lay-out aan te passen
-        ViewGroup.LayoutParams params = scrollView.getLayoutParams();
-        // Verandert in dit geval de hoogte tot 75% van het scherm van het apparaat
-        params.height = (int) (getScreenHeight()*0.75);
-        scrollView.setLayoutParams(params);
-
+    private void removeItem(long id, int position) {
+        Cursor c = dbAdapterMain.getRowMainByID(id);
+        String tableName = c.getString(DBAdapter.COL_TABLE_NAME_MAIN);
+        dbAdapterMain.deleteRowMainByID(id);
+        dbAdapter.deleteTable(tableName);
+        rvAdapter.data.remove(position);
+        rvAdapter.notifyItemRemoved(position);
     }
 
     public void onDetach() {
@@ -159,6 +151,40 @@ public class displayList extends Fragment {
         }
     }
 
+    public static List<item_data> getData(Cursor c) {
+        List<item_data> data = new ArrayList<>();
+        if (c.moveToFirst()) {
+            do {
+                item_data row = new item_data();
+                row.listName = c.getString(DBAdapter.COL_TABLE_NAME_MAIN);
+                row.language1 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_1);
+                row.language2 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_2);
+                row.id = c.getInt(DBAdapter.COL_ROWID_MAIN);
+                data.add(row);
+            } while (c.moveToNext());
+        }
+        return data;
+    }
+
+    public void editList(int pos, List<item_data> data) {
+        String table_name = data.get(pos).listName;
+        Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
+        i.putExtra("tableName", table_name);
+        startActivity(i);
+    }
+
+    public void questionTheList(int pos, List<item_data> data) {
+        String table_name = data.get(pos).listName;
+        if (dbAdapter.getRowCount(table_name) != 0) {
+            Intent i = new Intent(getActivity(), question.class);
+            i.putExtra("tableName", table_name);
+            startActivity(i);
+        } else {
+            Toast.makeText(getContext(), "Er moeten wel woorden in jouw lijst staan opgeslagen!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /*
     private void createButtonListInLayout(Cursor c) {
         if (c.moveToFirst()) {
             do {
@@ -224,68 +250,6 @@ public class displayList extends Fragment {
             } while(c.moveToNext());
         }
 
-    }
+    } */
 
-    /*
-    ################### Function to check if main table works ###########################
-
-    private String displayQuery(Cursor cursor) {
-        String message = "";
-        if (cursor.moveToFirst()) {
-            do {
-                // Process the data:
-                String listName = cursor.getString(DBAdapter.COL_TABLE_NAME_MAIN);
-
-                // Append data to the message:
-                message += listName +"\n";
-            } while(cursor.moveToNext());
-        }
-
-        cursor.close();
-        return message;
-    }
-
-    View.OnClickListener buttonListener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if  // definieert functie radioButton
-                                (radioState == 0) {
-                            if (dbAdapter.getAllRows(tableName).moveToFirst()) {
-                                Intent i = new Intent(getActivity(), question.class);
-                                i.putExtra("tableName", tableName);
-                                startActivity(i);
-                            } else {
-                                Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
-                                i.putExtra("tableName", tableName);
-                                startActivity(i);
-                                Toast.makeText(getContext(), "Er moeten wel woorden in jouw lijst staan!", Toast.LENGTH_SHORT).show();
-                            }
-
-                        } else if // definieert functie radioButton editList
-                                (radioState == 1) {
-                            Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
-                            i.putExtra("tableName", tableName);
-                            startActivity(i);
-
-                        } else if // definieert functie radioButton deleteList
-                                (radioState == 2) {
-                            dbAdapter.deleteTable(tableName);
-                            dbAdapterMain.deleteRowMain(tableName);
-                            displayList fragment = (displayList) getFragmentManager().findFragmentById(R.id.relativelayout_fragment);
-                            getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
-                        }
-
-                    }
-                };
-                button.setOnClickListener(buttonListener);
-                button.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
-                        i.putExtra("tableName", tableName);
-                        startActivity(i);
-                        return true;
-                    }
-                });
-    */
 }

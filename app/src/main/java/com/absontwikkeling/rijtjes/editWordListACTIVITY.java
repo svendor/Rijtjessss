@@ -243,6 +243,10 @@ public class editWordListACTIVITY extends AppCompatActivity {
     }
 
     public void updateList(View v) {
+        Cursor c = dbAdapterMain.getRowMain(table_name);
+        String language1 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_1);
+        String language2 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_2);
+
         dbAdapter.deleteAll(table_name);
         dbAdapterMain.deleteRowMain(table_name);
 
@@ -256,7 +260,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
             table_name = tableNameET.getText().toString();
             dbAdapter.createTable(table_name);
             if (!dbAdapterMain.existsMain(table_name)) {
-                dbAdapterMain.insertRowMain(table_name);
+                dbAdapterMain.insertRowMain(table_name, language1, language2);
             } else {
                 dbAdapter.deleteAll(table_name);
             }

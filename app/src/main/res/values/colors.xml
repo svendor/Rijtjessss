@@ -9,6 +9,7 @@
     <color name="colorFout">#d6060a</color>
     <color name="colortext">#000000</color>
     <color name="displaylisttextcolor">#454545</color>
-    <color name="colorLightBlack">#454545</color>
+    <color name="colorLightBlack">#404040</color>
+    <color name="colorLightGray">#909090</color>
     <color name="colorButton">#dd4b39</color>
 </resources>

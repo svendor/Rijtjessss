@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 // TODO: Sort the code
@@ -19,10 +20,14 @@ public class DBAdapter {
     // DB 'mainTable' Fields
     public static final String KEY_ROWID_MAIN = "_id";
     public static final String KEY_TABLE_NAME_MAIN = "table_name";
+    public static final String KEY_MAIN_LANGUAGE_1 = "language_1";
+    public static final String KEY_MAIN_LANGUAGE_2 = "language_2";
     public static final int COL_ROWID_MAIN = 0;
     public static final int COL_TABLE_NAME_MAIN = 1;
+    public static final int COL_MAIN_LANGUAGE_1 = 2;
+    public static final int COL_MAIN_LANGUAGE_2 = 3;
     public static final String MAIN_TABLE_NAME = "list_table";
-    public static final String[] ALL_KEYS_MAIN = new String[] {KEY_ROWID_MAIN, KEY_TABLE_NAME_MAIN};
+    public static final String[] ALL_KEYS_MAIN = new String[] {KEY_ROWID_MAIN, KEY_TABLE_NAME_MAIN, KEY_MAIN_LANGUAGE_1, KEY_MAIN_LANGUAGE_2};
 
     // DB 'settings' Fields
     public static final String KEY_SETTINGS_ROWID = "_id";
@@ -34,8 +39,8 @@ public class DBAdapter {
 
 
     // DB 'mainTable' General info
-    public static final String DATABASE_MAIN_NAME = "main_table";
-    public static final int DATABASE_MAIN_VERSION = 2;
+    public static final String DATABASE_MAIN_NAME = "main_database";
+    public static final int DATABASE_MAIN_VERSION = 5;
 
     // DB 'wordList' Fields (The table which indexes the wordLists)
     public static final String KEY_ROWID = "_id";
@@ -83,13 +88,17 @@ public class DBAdapter {
     public void createTableMain() {
         db.execSQL("create table if not exists " + MAIN_TABLE_NAME + " ("
                 + KEY_ROWID_MAIN + " integer primary key autoincrement, "
-                + KEY_TABLE_NAME_MAIN + " string not null);");
+                + KEY_TABLE_NAME_MAIN + " string not null, "
+                + KEY_MAIN_LANGUAGE_1 + " integer not null, "
+                + KEY_MAIN_LANGUAGE_2 + " integer not null);");
     }
 
     // Add a new set of values to the mainTable
-    public long insertRowMain(String tableName) {
+    public long insertRowMain(String tableName, String language1, String language2) {
         ContentValues values = new ContentValues();
         values.put(KEY_TABLE_NAME_MAIN, tableName);
+        values.put(KEY_MAIN_LANGUAGE_1, language1);
+        values.put(KEY_MAIN_LANGUAGE_2, language2);
 
         return db.insert(MAIN_TABLE_NAME, null, values);
     }
@@ -97,6 +106,10 @@ public class DBAdapter {
     // Delete a row from mainTable, by tableName
     public void deleteRowMain(String tableName) {
         db.execSQL("DELETE FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_TABLE_NAME_MAIN + "='" + tableName + "';");
+    }
+
+    public void deleteRowMainByID(long id) {
+        db.execSQL("DELETE FROM " + MAIN_TABLE_NAME + " WHERE " + KEY_ROWID_MAIN + " = " + id + ";");
     }
 
     // Check if a row in mainTable exists
@@ -109,8 +122,17 @@ public class DBAdapter {
 
     public Cursor getRowMain(String tableName) {
         String where = KEY_TABLE_NAME_MAIN + "=" + tableName;
-        Cursor c = db.query(true, tableName, ALL_KEYS_MAIN,
+        Cursor c = db.query(true, MAIN_TABLE_NAME, ALL_KEYS_MAIN,
                 where, null, null, null, null, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+        return c;
+    }
+
+    public Cursor getRowMainByID(long id) {
+        String where = KEY_ROWID_MAIN + "=" + id;
+        Cursor c = db.query(true, MAIN_TABLE_NAME, ALL_KEYS_MAIN, where, null, null, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }
@@ -252,6 +274,17 @@ public class DBAdapter {
         return c;
     }
 
+    public int getRowCount(String table_name) {
+        int count = 0;
+        Cursor c = getAllRows(table_name);
+        if (c.moveToFirst()) {
+            do {
+                count++;
+            } while (c.moveToNext());
+        }
+        return count;
+    }
+
     /////////////////////////////////////////////////////////////////////
     //	Private Helper Classes:
     /////////////////////////////////////////////////////////////////////
@@ -275,6 +308,9 @@ public class DBAdapter {
         public void onUpgrade(SQLiteDatabase _db, int oldVersion, int newVersion) {
             Log.w(TAG, "Upgrading application's database from version " + oldVersion
                     + " to " + newVersion + ", which will destroy all old data!");
+
+            _db.execSQL("DROP TABLE " + MAIN_TABLE_NAME + ";");
+            _db.execSQL("DROP TABLE " + SETTINGS_TABLE_NAME + ";");
 
             // Recreate new database:
             onCreate(_db);
