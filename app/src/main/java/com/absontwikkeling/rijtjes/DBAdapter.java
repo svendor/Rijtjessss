@@ -121,9 +121,8 @@ public class DBAdapter {
     }
 
     public Cursor getRowMain(String tableName) {
-        String where = KEY_TABLE_NAME_MAIN + "=" + tableName;
-        Cursor c = db.query(true, MAIN_TABLE_NAME, ALL_KEYS_MAIN,
-                where, null, null, null, null, null);
+        String where = KEY_TABLE_NAME_MAIN + "='" + tableName + "'";
+        Cursor c = db.query(true, MAIN_TABLE_NAME, ALL_KEYS_MAIN, where, null, null, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }
@@ -295,8 +294,10 @@ public class DBAdapter {
      */
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
+        private String database_name;
         DatabaseHelper(Context context, String name, int i) {
             super(context, name, null, i);
+            database_name = name;
         }
 
         @Override
@@ -309,8 +310,12 @@ public class DBAdapter {
             Log.w(TAG, "Upgrading application's database from version " + oldVersion
                     + " to " + newVersion + ", which will destroy all old data!");
 
-            _db.execSQL("DROP TABLE " + MAIN_TABLE_NAME + ";");
-            _db.execSQL("DROP TABLE " + SETTINGS_TABLE_NAME + ";");
+            if (this.database_name == DATABASE_MAIN_NAME) {
+                _db.execSQL("DROP TABLE " + MAIN_TABLE_NAME + ";");
+                _db.execSQL("DROP TABLE " + SETTINGS_TABLE_NAME + ";");
+            } else if (this.database_name == DATABASE_NAME) {
+                _db.execSQL("DROP TABLE " + DATABASE_NAME);
+            }
 
             // Recreate new database:
             onCreate(_db);
