@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -38,6 +39,8 @@ public class editWordListACTIVITY extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_word_list);
+
+        setupButtons();
 
         // Opens database
         openDB();
@@ -78,6 +81,11 @@ public class editWordListACTIVITY extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         closeDB();
+    }
+
+    public void onBackPressed() {
+        Intent i = new Intent(this, NavMenu.class);
+        startActivity(i);
     }
 
     private void openDB() {
@@ -176,6 +184,38 @@ public class editWordListACTIVITY extends AppCompatActivity {
         return i;
     }
 
+    private void setupButtons() {
+        Button saveButton = (Button) findViewById(R.id.saveButton);
+        Button quizButton = (Button) findViewById(R.id.quizButton);
+        Button addRow = (Button) findViewById(R.id.addRow);
+        Button removeRow = (Button) findViewById(R.id.removeRow);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateList(view);
+            }
+        });
+        quizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                questionTheList(view);
+            }
+        });
+        addRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addRow(view);
+            }
+        });
+        removeRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeRow(view);
+            }
+        });
+    }
+
     public void addRow(View v) {
         // Find layouts
         linearLayoutAnswer = (LinearLayout) findViewById(R.id.answerLinearLayout);
@@ -253,7 +293,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
         savedAmount = entryAmount;
 
         if (entryAmount == 0) {
-            Intent i = new Intent(this, MainActivity.class);
+            Intent i = new Intent(this, NavMenu.class);
             startActivity(i);
             Toast.makeText(this, "Lijst verwijderd", Toast.LENGTH_SHORT).show();
         } else {
