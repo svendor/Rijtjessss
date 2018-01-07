@@ -141,7 +141,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
         linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
 
         int i = 0;
-        if (c.moveToFirst()) {
+        if (c != null && c.moveToFirst()) {
             do {
                 //Define question edittext
                 EditText queET = new EditText(this);
@@ -283,9 +283,13 @@ public class editWordListACTIVITY extends AppCompatActivity {
     }
 
     public void updateList(View v) {
-        Cursor c = dbAdapterMain.getRowMain(table_name);
-        String language1 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_1);
-        String language2 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_2);
+        Cursor c = dbAdapterMain.getRowMain(getIntent().getStringExtra("tableName"));
+        String language1 = "Nederlands";
+        String language2 = "Nederlands";
+        if (c != null && c.moveToFirst()) {
+            language1 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_1);
+            language2 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_2);
+        }
 
         dbAdapter.deleteAll(table_name);
         dbAdapterMain.deleteRowMain(table_name);
