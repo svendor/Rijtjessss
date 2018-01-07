@@ -168,8 +168,12 @@ public class displayList extends Fragment {
 
     public void editList(int pos, List<item_data> data) {
         String table_name = data.get(pos).listName;
+        String language1 = data.get(pos).language1;
+        String language2 = data.get(pos).language2;
         Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
         i.putExtra("tableName", table_name);
+        i.putExtra("lan1", language1);
+        i.putExtra("lan2", language2);
         startActivity(i);
     }
 

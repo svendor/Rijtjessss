@@ -41,33 +41,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <EditText
-        android:id="@+id/language1ET"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/language1Spinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="taal 1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataBaseName" />
+        app:layout_constraintTop_toBottomOf="@+id/dataBaseName"
+        tools:layout_editor_absoluteX="0dp" />
 
-    <EditText
-        android:id="@+id/language2ET"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/language2Spinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="taal 2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/language1ET" />
+        app:layout_constraintTop_toBottomOf="@+id/language1Spinner"
+        tools:layout_editor_absoluteX="0dp" />
 </android.support.constraint.ConstraintLayout>
 

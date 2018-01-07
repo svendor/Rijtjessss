@@ -1,4 +1,11 @@
 <resources>
+    <string-array name="languagues">
+        <item>Duits</item>
+        <item>Engels</item>
+        <item>Frans</item>
+        <item>Nederlands</item>
+    </string-array>
+
     <string name="app_name">Rijtjes</string>
     <string name="bekijken_page_name">Rijtjes</string>
     <string name="title_activity_hetfuckingmenu">HETFUCKINGMENU</string>

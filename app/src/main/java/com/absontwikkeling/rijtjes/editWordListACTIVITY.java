@@ -33,7 +33,9 @@ public class editWordListACTIVITY extends AppCompatActivity {
     public int entryAmount = 0;
     public int savedAmount = 0;
     public int[] listIndex = new int[2000];
-    public static String table_name;
+    public String table_name;
+    public String language1;
+    public String language2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class editWordListACTIVITY extends AppCompatActivity {
         // Gets information from intent
         Intent i = getIntent();
         table_name = i.getStringExtra("tableName");
+        language1 = i.getStringExtra("lan1");
+        language2 = i.getStringExtra("lan2");
 
         // Defines tableNameET view
         tableNameET = (EditText) findViewById(R.id.tableNameET);
@@ -283,13 +287,6 @@ public class editWordListACTIVITY extends AppCompatActivity {
     }
 
     public void updateList(View v) {
-        Cursor c = dbAdapterMain.getRowMain(getIntent().getStringExtra("tableName"));
-        String language1 = "Nederlands";
-        String language2 = "Nederlands";
-        if (c != null && c.moveToFirst()) {
-            language1 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_1);
-            language2 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_2);
-        }
 
         dbAdapter.deleteAll(table_name);
         dbAdapterMain.deleteRowMain(table_name);
