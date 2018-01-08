@@ -6,7 +6,9 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,6 +47,7 @@ public class displayList extends Fragment {
     private RecyclerView recyclerView;
     private RVAdapter rvAdapter;
     public List<item_data> data;
+    public boolean deleteConfirmed = false;
     View view;
     // TextView showList;
 
@@ -62,7 +65,7 @@ public class displayList extends Fragment {
         openDB();
         dbAdapterMain.createTableMain();
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewDL);
-        List<item_data> data = getData(dbAdapterMain.getAllRowsMain());
+        final List<item_data> data = getData(dbAdapterMain.getAllRowsMain());
 
         // Populates recyclerView with items
         if (dbAdapterMain.getAllRowsMain() != null | data.size() != 0) {
@@ -105,9 +108,28 @@ public class displayList extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                removeItem((long) viewHolder.itemView.getTag(), position);
+                showUndoSnackbar((long) viewHolder.itemView.getTag(), position, rvAdapter.data.get(position));
             }
         };
+    }
+
+    private void showUndoSnackbar(final long id, final int position, final item_data item) {
+        Snackbar.make(view, "Weet je het zeker?", Snackbar.LENGTH_LONG).setAction("Ja", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        removeItem(id, position);
+                    }
+                }
+        ).addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                super.onDismissed(transientBottomBar, event);
+                if (!deleteConfirmed) {
+                    rvAdapter.data.add(position, item);
+                    rvAdapter.notifyItemInserted(position);
+                }
+            }
+        }).show();
     }
 
     private void removeItem(long id, int position) {
@@ -117,6 +139,7 @@ public class displayList extends Fragment {
         dbAdapter.deleteTable(tableName);
         rvAdapter.data.remove(position);
         rvAdapter.notifyItemRemoved(position);
+        deleteConfirmed = true;
     }
 
     public void onDetach() {
