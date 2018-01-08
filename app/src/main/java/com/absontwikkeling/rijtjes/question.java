@@ -183,6 +183,7 @@ public class question extends AppCompatActivity {
                     scorePoints[0] = currentQuestion-1;
                     scorePoints[1] = amountCorrect;
                     i.putExtra("scorePoints", scorePoints);
+                    i.putExtra("tableName", table_name);
                     startActivity(i);
                 }
             });

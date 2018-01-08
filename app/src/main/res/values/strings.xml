@@ -17,6 +17,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="retest">Maak opnieuw</string>
     <string name="filler">filler</string>
     <string name="action_settings">Instellingen</string>
     <string name="Essay">Toetsen</string>

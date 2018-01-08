@@ -43,7 +43,6 @@ public class displayList extends Fragment {
 
     DBAdapter dbAdapter;
     DBAdapter dbAdapterMain;
-    private GestureDetector gDetector;
     private RecyclerView recyclerView;
     private RVAdapter rvAdapter;
     public List<item_data> data;
