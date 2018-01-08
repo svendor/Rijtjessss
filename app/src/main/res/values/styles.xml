@@ -6,8 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/colortext</item>
-        <item name="android:titleTextStyle">@color/colortext</item>
+        <item name="android:textColor">@color/colorblack</item>
+        <item name="android:titleTextStyle">@color/colorblack</item>
         <item name="titleTextColor">@color/displaylisttextcolor</item>
         <item name="subtitleTextColor">@android:color/white</item>
         <item name="buttonStyle">@style/AppTheme.button</item>
@@ -35,8 +35,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-
 
     <style name="AppTheme.button" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:maxHeight">50dp</item>

@@ -92,15 +92,17 @@ public class NavMenu extends AppCompatActivity
             displayList displayList = new displayList();
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.relativelayout_fragment, displayList).commit();
-        } else if (id == R.id.nav_practise) {
+        } /*else if (id == R.id.nav_practise) {
             Toast.makeText(this, "Trial and error, is er nog niet", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_test){
             Toast.makeText(this, "For real, is er nog niet", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_manage) {
-            Toast.makeText(this, "Verdeel en heers, is er nog niet", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_share) {
+        } */ else if (id == R.id.nav_manage) {
+            layout.settings settings = new layout.settings();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_fragment, settings).commit();
+        } /* else if (id == R.id.nav_share) {
             Toast.makeText(this, "Uw Facebook account is gehackt", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_about) {
+        } */ else if (id == R.id.nav_about) {
             About About = new About();
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.relativelayout_fragment, About).commit();

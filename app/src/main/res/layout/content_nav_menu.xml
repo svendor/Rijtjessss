@@ -8,6 +8,8 @@
     tools:context="com.absontwikkeling.rijtjes.NavMenu"
     tools:showIn="@layout/app_bar_nav_menu">
 
+
+
     <RelativeLayout
         android:id="@+id/relativelayout_fragment"
         android:layout_width="0dp"
