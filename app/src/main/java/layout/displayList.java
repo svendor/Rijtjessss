@@ -55,8 +55,6 @@ public class displayList extends Fragment {
         // Required empty public constructor
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,12 +68,14 @@ public class displayList extends Fragment {
         final List<item_data> data = getData(dbAdapterMain.getAllRowsMain());
 
         // Populates recyclerView with items
-        if (dbAdapterMain.getAllRowsMain() != null | data.size() != 0) {
+        if (dbAdapterMain.getAllRowsMain() != null && data.size() != 0) {
             rvAdapter = new RVAdapter(getContext(), data, this);
             recyclerView.setAdapter(rvAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(layoutManager);
             ItemTouchHelper ith = new ItemTouchHelper(createCallBack());
             ith.attachToRecyclerView(recyclerView);
+            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation()));
             // createButtonListInLayout(dbAdapterMain.getAllRowsMain());
         } else {
             createList fragment = new createList();

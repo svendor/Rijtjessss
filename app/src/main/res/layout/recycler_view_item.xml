@@ -5,7 +5,6 @@
     android:id="@+id/recycler_item_view_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="1dp"
     android:background="@color/colorWhiteBackground">
 
     <TextView
