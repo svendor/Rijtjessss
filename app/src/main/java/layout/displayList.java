@@ -126,6 +126,8 @@ public class displayList extends Fragment {
             @Override
             public void onDismissed(Snackbar transientBottomBar, int event) {
                 super.onDismissed(transientBottomBar, event);
+                rvAdapter.data.remove(position);
+                rvAdapter.notifyItemRemoved(position);
                 if (!deleteConfirmed) {
                     rvAdapter.data.add(position, item);
                     rvAdapter.notifyItemInserted(position);
@@ -139,8 +141,6 @@ public class displayList extends Fragment {
         String tableName = c.getString(DBAdapter.COL_TABLE_NAME_MAIN);
         dbAdapterMain.deleteRowMainByID(id);
         dbAdapter.deleteTable(tableName);
-        rvAdapter.data.remove(position);
-        rvAdapter.notifyItemRemoved(position);
         deleteConfirmed = true;
     }
 
@@ -178,7 +178,7 @@ public class displayList extends Fragment {
 
     public static List<item_data> getData(Cursor c) {
         List<item_data> data = new ArrayList<>();
-        if (c.moveToFirst()) {
+        if (c.moveToLast()) {
             do {
                 item_data row = new item_data();
                 row.listName = c.getString(DBAdapter.COL_TABLE_NAME_MAIN);
@@ -186,7 +186,7 @@ public class displayList extends Fragment {
                 row.language2 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_2);
                 row.id = c.getInt(DBAdapter.COL_ROWID_MAIN);
                 data.add(row);
-            } while (c.moveToNext());
+            } while (c.moveToPrevious());
         }
         return data;
     }

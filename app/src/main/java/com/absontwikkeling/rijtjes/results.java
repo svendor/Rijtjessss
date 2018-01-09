@@ -62,7 +62,8 @@ public class results extends AppCompatActivity {
     }
 
     public void mainButton(View v) {
-        Intent i = new Intent(this, NavMenu.class);
+        Intent i = new Intent(this, question.class);
+        i.putExtra("tableName", table_name);
         startActivity(i);
     }
 

@@ -317,6 +317,9 @@ public class editWordListACTIVITY extends AppCompatActivity {
 
                 dbAdapter.insertRow(question, answer, table_name);
             } while (i < entryAmount);
+            Intent j = new Intent(this, NavMenu.class);
+            startActivity(j);
+            Toast.makeText(this, "Lijst gemaakt", Toast.LENGTH_SHORT).show();
         }
     }
 

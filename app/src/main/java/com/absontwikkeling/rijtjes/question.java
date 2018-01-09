@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -100,6 +101,12 @@ public class question extends AppCompatActivity {
 
         // Set's up the button
         setupCheckAnswerButton();
+        findViewById(R.id.stopButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopQuiz();
+            }
+        });
     }
 
     @Override
@@ -238,5 +245,20 @@ public class question extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void stopQuiz() {
+        Snackbar.make(findViewById(android.R.id.content), "Wil je stoppen met de overhoring?", Snackbar.LENGTH_LONG).setAction("Ja", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(question.this, results.class);
+                int[] scorePoints = new int[2];
+                scorePoints[0] = currentQuestion-1;
+                scorePoints[1] = amountCorrect;
+                i.putExtra("scorePoints", scorePoints);
+                i.putExtra("tableName", table_name);
+                startActivity(i);
+            }
+        }).show();
     }
 }
