@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -32,12 +33,16 @@ public class editWordListACTIVITY extends AppCompatActivity {
     public int entryAmount = 0;
     public int savedAmount = 0;
     public int[] listIndex = new int[2000];
-    public static String table_name;
+    public String table_name;
+    public String language1;
+    public String language2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_word_list);
+
+        setupButtons();
 
         // Opens database
         openDB();
@@ -45,6 +50,8 @@ public class editWordListACTIVITY extends AppCompatActivity {
         // Gets information from intent
         Intent i = getIntent();
         table_name = i.getStringExtra("tableName");
+        language1 = i.getStringExtra("lan1");
+        language2 = i.getStringExtra("lan2");
 
         // Defines tableNameET view
         tableNameET = (EditText) findViewById(R.id.tableNameET);
@@ -78,6 +85,11 @@ public class editWordListACTIVITY extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         closeDB();
+    }
+
+    public void onBackPressed() {
+        Intent i = new Intent(this, NavMenu.class);
+        startActivity(i);
     }
 
     private void openDB() {
@@ -133,7 +145,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
         linearLayoutQuestion = (LinearLayout) findViewById(R.id.questionLinearLayout);
 
         int i = 0;
-        if (c.moveToFirst()) {
+        if (c != null && c.moveToFirst()) {
             do {
                 //Define question edittext
                 EditText queET = new EditText(this);
@@ -174,6 +186,38 @@ public class editWordListACTIVITY extends AppCompatActivity {
             } while (c.moveToNext());
         }
         return i;
+    }
+
+    private void setupButtons() {
+        Button saveButton = (Button) findViewById(R.id.saveButton);
+        Button quizButton = (Button) findViewById(R.id.quizButton);
+        Button addRow = (Button) findViewById(R.id.addRow);
+        Button removeRow = (Button) findViewById(R.id.removeRow);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateList(view);
+            }
+        });
+        quizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                questionTheList(view);
+            }
+        });
+        addRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addRow(view);
+            }
+        });
+        removeRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeRow(view);
+            }
+        });
     }
 
     public void addRow(View v) {
@@ -243,9 +287,6 @@ public class editWordListACTIVITY extends AppCompatActivity {
     }
 
     public void updateList(View v) {
-        Cursor c = dbAdapterMain.getRowMain(table_name);
-        String language1 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_1);
-        String language2 = c.getString(DBAdapter.COL_MAIN_LANGUAGE_2);
 
         dbAdapter.deleteAll(table_name);
         dbAdapterMain.deleteRowMain(table_name);
@@ -253,7 +294,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
         savedAmount = entryAmount;
 
         if (entryAmount == 0) {
-            Intent i = new Intent(this, MainActivity.class);
+            Intent i = new Intent(this, NavMenu.class);
             startActivity(i);
             Toast.makeText(this, "Lijst verwijderd", Toast.LENGTH_SHORT).show();
         } else {

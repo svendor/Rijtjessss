@@ -16,6 +16,7 @@ public class results extends AppCompatActivity {
     public static int questionAmount;
     public static int[] scorePoints;
     public static double score;
+    public String table_name;
 
     TextView result;
 
@@ -30,6 +31,7 @@ public class results extends AppCompatActivity {
         // Defines array in which the information will be stored, and stores it
         scorePoints = new int[2];
         scorePoints = i.getIntArrayExtra("scorePoints");
+        table_name = i.getStringExtra("tableName");
 
         // Stores the information in separate variables
         questionAmount = scorePoints[0];
@@ -60,7 +62,7 @@ public class results extends AppCompatActivity {
     }
 
     public void mainButton(View v) {
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, NavMenu.class);
         startActivity(i);
     }
 

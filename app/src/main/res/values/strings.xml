@@ -1,4 +1,11 @@
 <resources>
+    <string-array name="languagues">
+        <item>Duits</item>
+        <item>Engels</item>
+        <item>Frans</item>
+        <item>Nederlands</item>
+    </string-array>
+
     <string name="app_name">Rijtjes</string>
     <string name="bekijken_page_name">Rijtjes</string>
     <string name="title_activity_hetfuckingmenu">HETFUCKINGMENU</string>
@@ -10,6 +17,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="retest">Maak opnieuw</string>
     <string name="filler">filler</string>
     <string name="action_settings">Instellingen</string>
     <string name="Essay">Toetsen</string>
@@ -41,8 +49,8 @@
     <string name="Test_as_made">Zoals ingevoerd</string>
     <string name="Test_direction">Overhoorrichting:</string>
 
-    <string name="Welcome_text">Welkom bij Rijtjes. Als u suggesties heeft of bugs vindt, laat het ons weten door te mailen naar rijtjesapp-beta@zegmaarbas.nl</string>
-    <string name="About_us_text">Wij zijn Bas Cornelissen, Arun Mulder en Sven de Ronde. Wij zijn AWESOME!</string>
+
+    <string name="About_us_text">Deze app hebben wij gemaakt voor ons profielwerkstuk. Ons profielwerkstuk is nu klaar, maar mogelijk voegen we nog meer functies toe. Het is de eerste app die we hebben gemaakt, dus er zouden nog wat foutjes in kunnen zitten. Als je er eentje vindt, laat het ons dan weten door te mailen naar \'rijtjesapp\@zegmaarbas.nl\'. Bedankt voor het gebruik van onze app!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
