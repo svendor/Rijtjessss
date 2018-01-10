@@ -56,6 +56,10 @@ public class editWordListACTIVITY extends AppCompatActivity {
         // Defines tableNameET view
         tableNameET = (EditText) findViewById(R.id.tableNameET);
         tableNameET.setText(table_name);
+        TextView lan1tv = (TextView) findViewById(R.id.lan1TV);
+        lan1tv.setText(language1);
+        TextView lan2tv = (TextView) findViewById(R.id.lan2TV);
+        lan2tv.setText(language2);
 
         // Defines Debug Textview
         // debugListTV = (TextView) findViewById(R.id.debugListTV);

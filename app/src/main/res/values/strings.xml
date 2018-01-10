@@ -4,6 +4,8 @@
         <item>Engels</item>
         <item>Frans</item>
         <item>Nederlands</item>
+        <item>Latijn</item>
+        <item>Grieks</item>
     </string-array>
 
     <string name="app_name">Rijtjes</string>
