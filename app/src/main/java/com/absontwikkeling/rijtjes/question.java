@@ -172,7 +172,7 @@ public class question extends AppCompatActivity {
 
     public void nextQuestion() {
         currentQuestion++;
-        inputString.setText("");
+        inputString.setHint(R.string.Your_answer);
 
         if (wordList[0][currentQuestion-1] != null) {
             question.setText("Vraag #" + currentQuestion + ": " + wordList[defaultDirection][currentQuestion-1]);

@@ -28,7 +28,6 @@
         android:layout_marginStart="@dimen/standard_margin"
         android:layout_marginLeft="@dimen/standard_margin"
         android:inputType="text"
-        android:text="@string/Your_answer"
         android:textColor="@color/colorLightBlack"
         android:textSize="@dimen/mediumtextsize"
         app:layout_constraintLeft_toLeftOf="parent"

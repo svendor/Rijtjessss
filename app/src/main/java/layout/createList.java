@@ -44,6 +44,7 @@ public class createList extends Fragment {
         tableName = (EditText) rootView.findViewById(R.id.dataBaseName);
         language1Spinner = (Spinner) rootView.findViewById(R.id.language1Spinner);
         language2Spinner = (Spinner) rootView.findViewById(R.id.language2Spinner);
+        tableName.setHint("Naam lijst");
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.languagues, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

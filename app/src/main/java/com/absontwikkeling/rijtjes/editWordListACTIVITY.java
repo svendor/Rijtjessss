@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -163,6 +164,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
                 queET.setLayoutParams(paramsQ);
                 queET.setGravity(8);
                 queET.setPadding(30,40,0,0);
+                //queET.setMaxLines(1);
                 linearLayoutQuestion.addView(queET);
 
                 // Index edittext id's
@@ -181,6 +183,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
                 ansET.setLayoutParams(paramsA);
                 ansET.setGravity(8);
                 ansET.setPadding(30,40,0,0);
+                //ansET.setMaxLines(1);
                 linearLayoutAnswer.addView(ansET);
 
                 // Index edittext id's
@@ -241,6 +244,15 @@ public class editWordListACTIVITY extends AppCompatActivity {
         queET.setLayoutParams(paramsQ);
         queET.setGravity(8);
         queET.setPadding(30,40,0,0);
+        queET.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if (keyEvent.getAction()==KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    return true;
+                }
+                return false;
+            }
+        });
         linearLayoutQuestion.addView(queET);
 
         // Index edittext id's
@@ -259,6 +271,15 @@ public class editWordListACTIVITY extends AppCompatActivity {
         ansET.setLayoutParams(paramsA);
         ansET.setGravity(8);
         ansET.setPadding(30,40,0,0);
+        queET.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    return true;
+                }
+                return false;
+            }
+        });
         linearLayoutAnswer.addView(ansET);
 
         // Index edittext id's
@@ -323,7 +344,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
             } while (i < entryAmount);
             Intent j = new Intent(this, NavMenu.class);
             startActivity(j);
-            Toast.makeText(this, "Lijst gemaakt", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lijst opgeslagen", Toast.LENGTH_SHORT).show();
         }
     }
 
