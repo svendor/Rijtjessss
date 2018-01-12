@@ -116,7 +116,7 @@ public class displayList extends Fragment {
     }
 
     private void showUndoSnackbar(final long id, final int position, final item_data item) {
-        Snackbar.make(view, "Weet je het zeker?", Snackbar.LENGTH_LONG).setAction("Ja", new View.OnClickListener() {
+        Snackbar.make(view, "Weet je zeker dat je deze lijst wilt verwijderen?", Snackbar.LENGTH_LONG).setAction("Ja", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         removeItem(id, position);

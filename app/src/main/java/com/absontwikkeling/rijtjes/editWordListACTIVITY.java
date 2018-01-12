@@ -56,6 +56,10 @@ public class editWordListACTIVITY extends AppCompatActivity {
         // Defines tableNameET view
         tableNameET = (EditText) findViewById(R.id.tableNameET);
         tableNameET.setText(table_name);
+        TextView lan1tv = (TextView) findViewById(R.id.lan1TV);
+        lan1tv.setText(language1);
+        TextView lan2tv = (TextView) findViewById(R.id.lan2TV);
+        lan2tv.setText(language2);
 
         // Defines Debug Textview
         // debugListTV = (TextView) findViewById(R.id.debugListTV);
@@ -133,7 +137,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
         // Geeft de parameters die de mogelijkheid geven om de lay-out aan te passen
         ViewGroup.LayoutParams params = scrollView.getLayoutParams();
         // Verandert in dit geval de hoogte tot 60% van het scherm van het apparaat
-        params.height = (int) (getScreenHeight()*0.60);
+        params.height = (int) (getScreenHeight()*0.55);
         scrollView.setLayoutParams(params);
 
     }
