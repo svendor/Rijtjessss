@@ -143,6 +143,7 @@ public class editWordListACTIVITY extends AppCompatActivity {
 
     }
 
+    // TODO: Delete deze todo, is namelijk een test
 
     private int showList(Cursor c, int[] listIndex) {
         // Find layouts
