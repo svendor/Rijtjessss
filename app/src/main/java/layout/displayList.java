@@ -66,11 +66,13 @@ public class displayList extends Fragment {
         toolbar = (Toolbar) ((NavMenu)getActivity()).findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.display_list_page_name);
         ((NavMenu) getActivity()).setSupportActionBar(toolbar);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewDL);
 
         // Opens database
         openDB();
+        // Ensures there's no NullPointerException
         dbAdapterMain.createTableMain();
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewDL);
+        // Gets data from database
         final List<item_data> data = getData(dbAdapterMain.getAllRowsMain());
 
         // Populates recyclerView with items
