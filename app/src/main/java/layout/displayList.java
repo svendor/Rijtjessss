@@ -84,26 +84,14 @@ public class displayList extends Fragment {
             ItemTouchHelper ith = new ItemTouchHelper(createCallBack());
             ith.attachToRecyclerView(recyclerView);
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation()));
-            // createButtonListInLayout(dbAdapterMain.getAllRowsMain());
         } else {
             createList fragment = new createList();
-            FragmentManager fragMan = getFragmentManager();
-            fragMan.beginTransaction().replace(R.id.relativelayout_fragment, fragment).commit();
+            FragmentManager manager = getFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_fragment, fragment).commit();
             Toast.makeText(getContext(), "Maak eerst een lijst", Toast.LENGTH_SHORT).show();
         }
 
-
-        // Defines function of Floating Action Button that add a new list
-        // TODO Zorg ervoor dat deze knop ook het menu switched naar het andere framgent.
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createList createList = new createList();
-                FragmentManager manager = getFragmentManager();
-                manager.beginTransaction().replace(R.id.relativelayout_fragment, createList).commit();
-            }
-        });
+        makeFAB();
 
         return view;
     }
@@ -133,6 +121,20 @@ public class displayList extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void makeFAB() {
+        // Defines function of Floating Action Button that add a new list
+        // TODO Zorg ervoor dat deze knop ook het menu switched naar het andere framgent.
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createList createList = new createList();
+                FragmentManager manager = getFragmentManager();
+                manager.beginTransaction().replace(R.id.relativelayout_fragment, createList).commit();
+            }
+        });
     }
 
     private ItemTouchHelper.SimpleCallback createCallBack() {
@@ -197,21 +199,6 @@ public class displayList extends Fragment {
         dbAdapterMain.close();
     }
 
-    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
-
-    // https://stackoverflow.com/questions/1714297/android-view-setidint-id-programmatically-how-to-avoid-id-conflicts
-    private static int generateViewId() {
-        for (;;) {
-            final int result = sNextGeneratedId.get();
-            // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
-            int newValue = result + 1;
-            if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
-            if (sNextGeneratedId.compareAndSet(result, newValue)) {
-                return result;
-            }
-        }
-    }
-
     public static List<item_data> getData(Cursor c) {
         List<item_data> data = new ArrayList<>();
         if (c.moveToLast()) {
@@ -235,17 +222,6 @@ public class displayList extends Fragment {
         ewl.setArguments(args);
         FragmentManager manager = getFragmentManager();
         manager.beginTransaction().replace(R.id.relativelayout_fragment, ewl).commit();
-
-        /*
-        String table_name = data.get(pos).listName;
-        String language1 = data.get(pos).language1;
-        String language2 = data.get(pos).language2;
-        Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
-        i.putExtra("tableName", table_name);
-        i.putExtra("lan1", language1);
-        i.putExtra("lan2", language2);
-        startActivity(i);
-         */
     }
 
     public void questionTheList(int pos, List<item_data> data) {
