@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/app_bar_search"
+        android:visible="false"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Zoeken"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView"/>
+
+    <item
+        android:id="@+id/action_add_row"
+        android:visible="false"
+        android:orderInCategory="49"
+        android:title=""
+        android:icon="@drawable/ic_action_add"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_save_list"
+        android:visible="false"
+        android:orderInCategory="50"
+        android:title=""
+        android:icon="@drawable/ic_action_save"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

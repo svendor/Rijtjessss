@@ -2,9 +2,7 @@ package layout;
 
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
@@ -14,24 +12,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.absontwikkeling.rijtjes.DBAdapter;
 import com.absontwikkeling.rijtjes.NavMenu;
-import com.absontwikkeling.rijtjes.OnCustomTouchListener;
 import com.absontwikkeling.rijtjes.R;
-import com.absontwikkeling.rijtjes.editWordListACTIVITY;
 import com.absontwikkeling.rijtjes.question;
+import editWordList.editWordList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +43,8 @@ public class displayList extends Fragment {
     public List<item_data> data;
     public boolean deleteConfirmed = false;
     View view;
+    Toolbar toolbar;
+    Menu menu;
     // TextView showList;
 
     public displayList() {
@@ -56,10 +52,20 @@ public class displayList extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_display_list, container, false);
+
+        toolbar = (Toolbar) ((NavMenu)getActivity()).findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.display_list_page_name);
+        ((NavMenu) getActivity()).setSupportActionBar(toolbar);
 
         // Opens database
         openDB();
@@ -98,6 +104,33 @@ public class displayList extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        this.menu = menu;
+        // menu.findItem(R.id.app_bar_search).setVisible(true);
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        switch (item.getItemId()) {
+            case(R.id.action_settings):
+                layout.settings settings = new layout.settings();
+                FragmentManager manager = getFragmentManager();
+                manager.beginTransaction().replace(R.id.relativelayout_fragment, settings).commit();
+                return true;
+            case(R.id.app_bar_search):
+                Toast.makeText(getContext(), "Gezocht", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private ItemTouchHelper.SimpleCallback createCallBack() {
@@ -144,8 +177,9 @@ public class displayList extends Fragment {
         deleteConfirmed = true;
     }
 
-    public void onDetach() {
-        super.onDetach();
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         closeDB();
     }
 
@@ -192,6 +226,15 @@ public class displayList extends Fragment {
     }
 
     public void editList(int pos, List<item_data> data) {
+        editWordList ewl = new editWordList();
+        Bundle args = new Bundle();
+        String arg1 = data.get(pos).listName;
+        args.putString(editWordList.TABLE_NAME, arg1);
+        ewl.setArguments(args);
+        FragmentManager manager = getFragmentManager();
+        manager.beginTransaction().replace(R.id.relativelayout_fragment, ewl).commit();
+
+        /*
         String table_name = data.get(pos).listName;
         String language1 = data.get(pos).language1;
         String language2 = data.get(pos).language2;
@@ -200,6 +243,7 @@ public class displayList extends Fragment {
         i.putExtra("lan1", language1);
         i.putExtra("lan2", language2);
         startActivity(i);
+         */
     }
 
     public void questionTheList(int pos, List<item_data> data) {
@@ -212,73 +256,4 @@ public class displayList extends Fragment {
             Toast.makeText(getContext(), "Er moeten wel woorden in jouw lijst staan opgeslagen!", Toast.LENGTH_SHORT).show();
         }
     }
-
-    /*
-    private void createButtonListInLayout(Cursor c) {
-        if (c.moveToFirst()) {
-            do {
-                // Definieer Button
-                Button button = new Button(getContext());
-                // Layout button
-                // Geeft naam button
-                final String tableName = c.getString(DBAdapter.COL_TABLE_NAME_MAIN);
-                // Tekst lay-out van de button
-                button.setText(tableName);
-                button.setTextColor(Color.parseColor("#454545"));
-                // Vorm en kleur van de button
-                button.setBackgroundResource(R.drawable.button);
-                //Zorgen ervoor dat er margers tussen de buttons zijn
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
-                params.setMargins(0, 0, 0, 8);
-                button.setLayoutParams(params);
-                //Zorgen ervoor dat de tekst op een goede plek staat
-                button.setGravity(10);
-                button.setPadding(50,40,0,0);
-                // Maakt backgroundresource doorzichtig
-                button.setBackgroundResource(0);
-                // Function
-                button.setId(generateViewId());
-                final int id = sNextGeneratedId.get();
-                button.setOnTouchListener(new OnCustomTouchListener(getContext()) {
-                    @Override
-                    public void onSingleTap() {
-                        if (dbAdapter.getAllRows(tableName).moveToFirst()) {
-                            Intent i = new Intent(getActivity(), question.class);
-                            i.putExtra("tableName", tableName);
-                            startActivity(i);
-                        } else {
-                            Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
-                            i.putExtra("tableName", tableName);
-                            startActivity(i);
-                            Toast.makeText(getContext(), "Er moeten wel woorden in jouw lijst staan!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onDoubleTouch() {
-                        Intent i = new Intent(getActivity(), editWordListACTIVITY.class);
-                        i.putExtra("tableName", tableName);
-                        startActivity(i);
-                    }
-
-                    public void onSwipeRight() {
-                        view.findViewById(id);
-                        view.setVisibility(View.GONE);
-                        dbAdapter.deleteTable(tableName);
-                        dbAdapterMain.deleteRowMain(tableName);
-                        displayList fragment = (displayList) getFragmentManager().findFragmentById(R.id.relativelayout_fragment);
-                        getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
-                    }
-                });
-
-                // Voeg button toe aan activity
-                linearLayoutList.addView(button);
-
-            } while(c.moveToNext());
-        }
-
-    } */
-
 }

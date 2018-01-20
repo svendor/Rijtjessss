@@ -246,6 +246,10 @@ public class DBAdapter {
         return db.delete(tableName.replaceAll("\\s", "_"), row_ID, null) != 0;
     }
 
+    public void deleteRowByID(String table_name, long id) {
+        db.execSQL("DELETE FROM '" + table_name.replaceAll("\\s","_") + "' WHERE " + KEY_ROWID + " = " + id + ";");
+    }
+
     // Removes all data from a table
     public void deleteAll(String tableName) {
         Cursor c = getAllRows(tableName.replaceAll("\\s", "_"));

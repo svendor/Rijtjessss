@@ -23,21 +23,21 @@ public class question extends AppCompatActivity {
 
     DBAdapter dbAdapter;
     DBAdapter dbAdapterMain;
-    public static int[] settings = new int[3];
-    public static int currentQuestion;
-    public static int amountCorrect;
-    public static String[][] wordList;
-    public static String table_name;
-    public static boolean capitals;
-    public static boolean whitespace;
-    public static int defaultDirection;
+    private static int[] settings = new int[3];
+    private static int currentQuestion;
+    private static int amountCorrect;
+    private static String[][] wordList;
+    private static String table_name;
+    private static boolean capitals;
+    private static boolean whitespace;
+    private static int defaultDirection;
 
-    public ConstraintLayout conLayout;
+    private ConstraintLayout conLayout;
 
-    public EditText inputString;
-    public TextView question;
-    public TextView feedback;
-    public TextView grade;
+    private EditText inputString;
+    private TextView question;
+    private TextView feedback;
+    private TextView grade;
 
 
     @Override
